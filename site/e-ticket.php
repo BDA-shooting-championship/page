@@ -130,38 +130,68 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Details Grid -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
-                        <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                            <span class="text-gray-400 block mb-0.5">ID Registrasi</span>
-                            <span class="font-mono font-bold text-copper-600 dark:text-copper-400"><?= htmlspecialchars($ticket['registration_id']) ?></span>
+                    <!-- Details Grid: Isian Form Pendaftaran & Kategori -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 text-xs">
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">ID Registrasi</span>
+                            <span class="font-mono font-bold text-copper-600 dark:text-copper-400 text-sm"><?= htmlspecialchars($ticket['registration_id']) ?></span>
                         </div>
-                        <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                            <span class="text-gray-400 block mb-0.5">Kategori</span>
-                            <span class="font-bold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($ticket['kategori']) ?></span>
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Kategori Lomba</span>
+                            <span class="font-bold text-gray-900 dark:text-white"><?= htmlspecialchars($ticket['kategori']) ?></span>
                         </div>
-                        <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                            <span class="text-gray-400 block mb-0.5">Tanggal Lomba</span>
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Status Pembayaran</span>
+                            <span class="font-bold text-green-600 dark:text-green-400 flex items-center gap-1">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> LUNAS
+                            </span>
+                        </div>
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Satuan / Club</span>
+                            <span class="font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($ticket['satuan']) ?></span>
+                        </div>
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">No. WhatsApp</span>
+                            <span class="font-mono font-semibold text-gray-800 dark:text-gray-200"><?= htmlspecialchars($ticket['telepon']) ?></span>
+                        </div>
+                        <div class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Tanggal Pelaksanaan</span>
                             <span class="font-semibold text-gray-800 dark:text-gray-200">17 — 18 Okt 2026</span>
                         </div>
                     </div>
 
                     <!-- KTA Image Preview if Available -->
                     <?php if (!empty($ticket['kta_filename'])): ?>
-                        <div class="pt-2">
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Foto KTA / Identitas:</span>
-                            <div class="w-full max-w-xs h-36 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">
-                                <img src="/uploads/kta/<?= htmlspecialchars($ticket['kta_filename']) ?>" alt="Foto KTA" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none'">
+                        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700/60">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i data-lucide="id-card" class="w-4 h-4 text-copper-500"></i>
+                                    Foto KTA / Tanda Pengenal Peserta
+                                </span>
+                                <a href="/uploads/kta/<?= htmlspecialchars($ticket['kta_filename']) ?>" target="_blank" class="text-xs text-copper-600 dark:text-copper-400 font-semibold hover:underline flex items-center gap-1">
+                                    <span>Buka Gambar Asli</span>
+                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </div>
+                            <div class="w-full sm:max-w-md h-48 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                                <img src="/uploads/kta/<?= htmlspecialchars($ticket['kta_filename']) ?>" alt="Foto KTA <?= htmlspecialchars($ticket['nama']) ?>" class="w-full h-full object-contain p-1" onerror="this.parentElement.style.display='none'">
                             </div>
                         </div>
                     <?php endif; ?>
 
-                    <!-- Important Notice -->
-                    <div class="p-4 rounded-xl bg-copper-50 dark:bg-copper-900/20 border border-copper-200 dark:border-copper-800 text-xs text-copper-900 dark:text-copper-200 space-y-1">
-                        <p class="font-bold flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-copper-600"></i> Ketentuan Masuk Lapangan:</p>
-                        <p>1. Tunjukkan E-Ticket ini (digital atau print) saat daftar ulang di meja registrasi.</p>
-                        <p>2. Wajib membawa senjata dan perlengkapan safety (earmuff & safety glasses) pribadi.</p>
-                        <p>3. Hadir 30 menit sebelum jadwal pertandingan dimulai.</p>
+                    <!-- Important Notice / Catatan Wajib Peserta -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-r from-copper-50 to-amber-50 dark:from-copper-950/30 dark:to-gray-900 border border-copper-300 dark:border-copper-800/80 text-xs text-gray-800 dark:text-gray-200 space-y-2">
+                        <p class="font-bold text-copper-700 dark:text-copper-300 text-sm flex items-center gap-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-copper-600 dark:text-copper-400"></i>
+                            Catatan Penting Untuk Peserta:
+                        </p>
+                        <ul class="space-y-1.5 list-disc list-inside text-gray-700 dark:text-gray-300">
+                            <li><strong>Simpan pesan, link E-Ticket, atau tangkapan layar (screenshot) QR Code ini</strong> agar tidak hilang.</li>
+                            <li>Tunjukkan E-Ticket &amp; QR Code ini saat <strong>Daftar Ulang</strong> di meja registrasi lapangan tembak.</li>
+                            <li><strong>Wajib membawa fisik KTA &amp; KTP Asli</strong> untuk verifikasi data keabsahan peserta.</li>
+                            <li>Seluruh peserta <strong>Wajib Hadir saat Technical Meeting (TM)</strong> sebelum rangkaian pertandingan dimulai.</li>
+                            <li>Membawa perlengkapan safety (earmuff / earplug dan safety glasses) pribadi.</li>
+                        </ul>
                     </div>
 
                     <!-- Print / Share Actions -->
@@ -169,7 +199,7 @@ require_once __DIR__ . '/includes/header.php';
                         <button onclick="window.print()" class="flex-1 py-3 bg-copper-600 hover:bg-copper-700 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md">
                             <i data-lucide="printer" class="w-4 h-4"></i> Cetak / Simpan PDF
                         </button>
-                        <a href="https://wa.me/?text=<?= urlencode("E-Ticket Resmi BDA Shooting Championship 2026 atas nama " . $ticket['nama'] . ": " . SITE_URL . "/e-ticket.php?id=" . $ticket['registration_id']) ?>" target="_blank" class="px-5 py-3 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
+                        <a href="https://wa.me/?text=<?= urlencode("E-Ticket Resmi BDA Shooting Championship 2026 atas nama " . $ticket['nama'] . " (No. Peserta: " . ($ticket['no_peserta'] ?: '-') . "): " . SITE_URL . "/e-ticket.php?id=" . $ticket['registration_id']) ?>" target="_blank" class="px-5 py-3 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
                             <i data-lucide="share-2" class="w-4 h-4"></i> Bagikan
                         </a>
                     </div>

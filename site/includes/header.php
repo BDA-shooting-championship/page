@@ -86,7 +86,6 @@ $currentPage = $currentPage ?? '';
                 <a href="/" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'home' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Beranda</a>
                 <a href="/daftar.php" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'daftar' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Pendaftaran</a>
                 <a href="/live-score.php" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'live-score' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Live Score</a>
-                <a href="/admin/index.php" class="text-xs px-2.5 py-1 rounded-md border border-gray-300 dark:border-gray-700 hover:border-copper-500 font-semibold transition <?= $currentPage === 'admin' ? 'text-copper-600 border-copper-600' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white' ?>">Admin</a>
                 <!-- Dark Mode Toggle -->
                 <button @click="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="Toggle Theme">
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
@@ -108,7 +107,6 @@ $currentPage = $currentPage ?? '';
             <a href="/" class="block py-2 text-sm font-medium hover:text-copper-600">Beranda</a>
             <a href="/daftar.php" class="block py-2 text-sm font-medium hover:text-copper-600">Pendaftaran</a>
             <a href="/live-score.php" class="block py-2 text-sm font-medium hover:text-copper-600">Live Score</a>
-            <a href="/admin/index.php" class="block py-2 text-sm font-medium hover:text-copper-600">Admin Dashboard</a>
             <button @click="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')" class="py-2 text-sm font-medium hover:text-copper-600">Toggle Dark Mode</button>
         </div>
     </div>

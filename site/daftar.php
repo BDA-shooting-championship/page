@@ -81,25 +81,6 @@ require_once __DIR__ . '/includes/header.php';
                     </p>
                 </div>
 
-                <!-- Info Bank Box -->
-                <div class="mb-8 p-5 bg-gradient-to-r from-copper-50 to-orange-50 dark:from-gray-800 dark:to-gray-800/80 border border-copper-200 dark:border-copper-800/50 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4" x-data="{ copied: false }">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs uppercase font-bold tracking-wider text-copper-600 dark:text-copper-400">Pembayaran Pendaftaran</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-copper-200/60 dark:bg-copper-900/50 text-copper-800 dark:text-copper-300 font-medium">Rp 200.000 / Kategori</span>
-                        </div>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mt-1">
-                            Bank BRI — <span class="font-mono text-base font-bold text-copper-700 dark:text-copper-300">053801071906503</span> (a.n. Ahyandi Hi Karim)
-                        </p>
-                    </div>
-                    <button type="button" @click="navigator.clipboard.writeText('053801071906503'); copied = true; setTimeout(() => copied = false, 2000)" 
-                            class="px-4 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-xs font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition shrink-0 flex items-center gap-1.5 shadow-sm">
-                        <i data-lucide="copy" class="w-3.5 h-3.5" x-show="!copied"></i>
-                        <i data-lucide="check" class="w-3.5 h-3.5 text-green-600" x-show="copied" x-cloak></i>
-                        <span x-text="copied ? 'Tersalin!' : 'Salin Rekening'"></span>
-                    </button>
-                </div>
-
                 <!-- Alert Error -->
                 <div x-show="errorMessage" x-cloak class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-sm text-red-700 dark:text-red-400 flex items-start gap-3">
                     <i data-lucide="alert-circle" class="w-5 h-5 shrink-0 mt-0.5"></i>
@@ -207,6 +188,25 @@ require_once __DIR__ . '/includes/header.php';
                                 Total Biaya: (<span x-text="selectedKategori.length"></span> Kategori)
                             </span>
                             <span class="font-display font-bold text-xl text-copper-600 dark:text-copper-400" x-text="formatRupiah(totalBiaya)"></span>
+                        </div>
+
+                        <!-- Rekening Pembayaran (Setelah Total Biaya) -->
+                        <div class="mt-4 p-5 bg-gradient-to-r from-copper-50 to-orange-50 dark:from-gray-900 dark:to-gray-900/90 border border-copper-200 dark:border-copper-800/60 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4" x-data="{ copied: false }">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs uppercase font-bold tracking-wider text-copper-600 dark:text-copper-400">Rekening Pembayaran</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded bg-copper-200/60 dark:bg-copper-900/50 text-copper-800 dark:text-copper-300 font-medium">Transfer sesuai nominal di atas</span>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mt-1.5">
+                                    Bank BRI — <span class="font-mono text-base font-bold text-copper-700 dark:text-copper-300">053801071906503</span> (a.n. Ahyandi Hi Karim)
+                                </p>
+                            </div>
+                            <button type="button" @click="navigator.clipboard.writeText('053801071906503'); copied = true; setTimeout(() => copied = false, 2000)" 
+                                    class="px-4 py-2 bg-white dark:bg-gray-800 border border-copper-300 dark:border-gray-700 text-xs font-semibold rounded-lg hover:bg-copper-50 dark:hover:bg-gray-700 text-copper-700 dark:text-copper-300 transition shrink-0 flex items-center gap-1.5 shadow-sm">
+                                <i data-lucide="copy" class="w-3.5 h-3.5" x-show="!copied"></i>
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-green-600" x-show="copied" x-cloak></i>
+                                <span x-text="copied ? 'Tersalin!' : 'Salin Rekening'"></span>
+                            </button>
                         </div>
                     </div>
 

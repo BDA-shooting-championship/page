@@ -51,16 +51,19 @@ try {
 
     // Auto-generate no_peserta when status is Verified and no_peserta is not yet assigned
     if ($status === 'Verified' && empty($noPeserta)) {
-        $stmt = $db->query("SELECT no_peserta FROM registrations WHERE no_peserta IS NOT NULL AND no_peserta != '' ORDER BY id DESC LIMIT 1");
-        $lastPeserta = $stmt->fetchColumn();
-
-        if ($lastPeserta && preg_match('/BSC-(\d+)/', $lastPeserta, $matches)) {
-            $nextNumber = ((int)$matches[1]) + 1;
-        } else {
-            $nextNumber = 1;
+        $stmt = $db->query("SELECT no_peserta FROM registrations WHERE no_peserta LIKE 'BSC-26%'");
+        $allPeserta = $stmt ? $stmt->fetchAll(PDO::FETCH_COLUMN) : [];
+        $maxNumber = 0;
+        foreach ($allPeserta as $p) {
+            if (preg_match('/BSC-26(\d+)/i', $p, $matches)) {
+                $num = (int)$matches[1];
+                if ($num > $maxNumber) {
+                    $maxNumber = $num;
+                }
+            }
         }
-
-        $noPeserta = 'BSC-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        $nextNumber = $maxNumber + 1;
+        $noPeserta = 'BSC-26' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
     }
 
     // Update the registration

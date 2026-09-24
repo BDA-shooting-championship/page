@@ -11,7 +11,7 @@ define('DB_PASS', '@Sigsauer750');
 
 // Admin
 define('ADMIN_USER', 'admin');
-define('ADMIN_PASS', 'bsc2026admin');
+define('ADMIN_PASS', 'BDA750admin');
 define('ADMIN_TOKEN', 'bsc2026-secret-token');
 
 // Site

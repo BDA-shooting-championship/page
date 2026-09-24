@@ -415,22 +415,33 @@ include __DIR__ . '/../includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Documents -->
+                    <!-- Documents (KTA & Bukti Transfer) with Zoom/View -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <!-- KTA Photo -->
-                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5">
-                            <h3 class="font-display font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                <i data-lucide="id-card" class="w-5 h-5 text-copper-500"></i>
-                                Foto KTA
-                            </h3>
+                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-200 dark:border-gray-700/60">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-display font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <i data-lucide="id-card" class="w-5 h-5 text-copper-500"></i>
+                                    Foto KTA / Identitas
+                                </h3>
+                                <template x-if="selectedReg.kta_filename">
+                                    <a :href="'/uploads/kta/' + selectedReg.kta_filename" target="_blank" class="text-xs text-copper-600 dark:text-copper-400 font-semibold hover:underline flex items-center gap-1">
+                                        <span>Buka Full</span>
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </template>
+                            </div>
                             <template x-if="selectedReg.kta_filename">
-                                <a :href="'/uploads/kta/' + selectedReg.kta_filename" target="_blank" class="block">
+                                <a :href="'/uploads/kta/' + selectedReg.kta_filename" target="_blank" class="block group relative">
                                     <img
                                         :src="'/uploads/kta/' + selectedReg.kta_filename"
                                         :alt="'KTA ' + selectedReg.nama"
-                                        class="w-full h-48 object-cover rounded-lg border border-gray-200 dark:border-gray-700 hover:opacity-90 transition cursor-zoom-in"
+                                        class="w-full h-48 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 group-hover:opacity-90 transition cursor-zoom-in"
                                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%23f3f4f6%22 width=%22400%22 height=%22300%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%239ca3af%22 font-size=%2214%22>Gambar tidak tersedia</text></svg>'"
                                     >
+                                    <span class="absolute bottom-2 right-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[10px] text-white font-medium flex items-center gap-1">
+                                        <i data-lucide="zoom-in" class="w-3 h-3"></i> Klik perbesar
+                                    </span>
                                 </a>
                             </template>
                             <template x-if="!selectedReg.kta_filename">
@@ -441,19 +452,30 @@ include __DIR__ . '/../includes/header.php';
                         </div>
 
                         <!-- Bukti Transfer -->
-                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5">
-                            <h3 class="font-display font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                <i data-lucide="receipt" class="w-5 h-5 text-copper-500"></i>
-                                Bukti Transfer
-                            </h3>
+                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-200 dark:border-gray-700/60">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-display font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <i data-lucide="receipt" class="w-5 h-5 text-copper-500"></i>
+                                    Bukti Transfer Pembayaran
+                                </h3>
+                                <template x-if="selectedReg.bukti_filename">
+                                    <a :href="'/uploads/bukti/' + selectedReg.bukti_filename" target="_blank" class="text-xs text-copper-600 dark:text-copper-400 font-semibold hover:underline flex items-center gap-1">
+                                        <span>Buka Full</span>
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </template>
+                            </div>
                             <template x-if="selectedReg.bukti_filename">
-                                <a :href="'/uploads/bukti/' + selectedReg.bukti_filename" target="_blank" class="block">
+                                <a :href="'/uploads/bukti/' + selectedReg.bukti_filename" target="_blank" class="block group relative">
                                     <img
                                         :src="'/uploads/bukti/' + selectedReg.bukti_filename"
                                         :alt="'Bukti Transfer ' + selectedReg.nama"
-                                        class="w-full h-48 object-cover rounded-lg border border-gray-200 dark:border-gray-700 hover:opacity-90 transition cursor-zoom-in"
+                                        class="w-full h-48 object-contain rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 group-hover:opacity-90 transition cursor-zoom-in"
                                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%23f3f4f6%22 width=%22400%22 height=%22300%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 fill=%22%239ca3af%22 font-size=%2214%22>Gambar tidak tersedia</text></svg>'"
                                     >
+                                    <span class="absolute bottom-2 right-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[10px] text-white font-medium flex items-center gap-1">
+                                        <i data-lucide="zoom-in" class="w-3 h-3"></i> Klik perbesar
+                                    </span>
                                 </a>
                             </template>
                             <template x-if="!selectedReg.bukti_filename">
@@ -463,6 +485,27 @@ include __DIR__ . '/../includes/header.php';
                             </template>
                         </div>
                     </div>
+
+                    <!-- E-Ticket Preview Link (if verified) -->
+                    <template x-if="selectedReg.status === 'verified'">
+                        <div class="p-4 rounded-xl bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold shrink-0">
+                                    <i data-lucide="ticket" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider font-bold text-green-700 dark:text-green-400">Peserta Resmi Terkonfirmasi</p>
+                                    <p class="text-sm font-semibold text-gray-900 dark:text-white mt-0.5">
+                                        Nomor Peserta: <span class="font-mono text-base font-bold text-copper-600 dark:text-copper-400" x-text="selectedReg.no_peserta"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <a :href="'/e-ticket.php?id=' + selectedReg.registration_id" target="_blank" class="px-4 py-2 bg-white dark:bg-gray-800 border border-green-300 dark:border-green-700 text-green-700 dark:text-green-400 hover:bg-green-50 text-xs font-bold rounded-lg transition flex items-center gap-1.5 shadow-sm shrink-0">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                Lihat Halaman E-Ticket
+                            </a>
+                        </div>
+                    </template>
 
                     <!-- Admin Notes -->
                     <template x-if="selectedReg.admin_notes">
@@ -477,69 +520,77 @@ include __DIR__ . '/../includes/header.php';
 
                     <!-- Admin Notes Input -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <i data-lucide="pencil" class="w-4 h-4 inline"></i>
                             Catatan Admin (opsional)
                         </label>
                         <textarea
                             x-model="adminNotes"
                             rows="2"
-                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition resize-none"
-                            placeholder="Tambahkan catatan..."
+                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition resize-none"
+                            placeholder="Tambahkan catatan verifikasi..."
                         ></textarea>
                     </div>
 
-                    <!-- No Peserta Input (shown for verify action) -->
+                    <!-- No Peserta Input (Auto-generate BSC-26xxx if empty) -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            <i data-lucide="hash" class="w-4 h-4 inline"></i>
-                            No. Peserta (wajib untuk verifikasi)
-                        </label>
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                <i data-lucide="hash" class="w-4 h-4 inline text-copper-500"></i>
+                                Nomor Peserta (Format: BSC-26xxx)
+                            </label>
+                            <span class="text-[11px] text-gray-400">Otomatis generate BSC-26xxx jika dikosongkan</span>
+                        </div>
                         <input
                             type="text"
                             x-model="noPeserta"
-                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition"
-                            placeholder="Contoh: BSC-001"
+                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm font-mono focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition"
+                            placeholder="Kosongkan untuk auto-generate (contoh: BSC-26001)"
                         >
                     </div>
                 </div>
 
-                <!-- Modal Footer -->
+                <!-- Modal Footer with Contextual Actions -->
                 <div class="sticky bottom-0 z-10 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-6 py-4 rounded-b-2xl">
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <!-- Verify -->
-                        <button
-                            @click="updateStatus('verified')"
-                            :disabled="updating"
-                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition shadow"
-                        >
-                            <i data-lucide="check-circle" class="w-4 h-4"></i>
-                            <span x-text="updating === 'verified' ? 'Memproses...' : 'Verifikasi'"></span>
-                        </button>
+                        <!-- Action 1: Konfirmasi / Verifikasi (Otomatis generate BSC-26xxx) -->
+                        <template x-if="selectedReg.status !== 'verified'">
+                            <button
+                                @click="updateStatus('verified')"
+                                :disabled="updating"
+                                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-lg transition shadow-lg shadow-green-600/20"
+                            >
+                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                <span x-text="updating === 'verified' ? 'Memproses Konfirmasi...' : 'Konfirmasi Peserta (BSC-26xxx)'"></span>
+                            </button>
+                        </template>
 
-                        <!-- Reject -->
-                        <button
-                            @click="updateStatus('rejected')"
-                            :disabled="updating"
-                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition shadow"
-                        >
-                            <i data-lucide="x-circle" class="w-4 h-4"></i>
-                            <span x-text="updating === 'rejected' ? 'Memproses...' : 'Tolak'"></span>
-                        </button>
-
-                        <!-- WhatsApp -->
+                        <!-- Action 2: Kirim E-Ticket ke WA (Prominent after verified) -->
                         <button
                             @click="sendWhatsApp()"
-                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition shadow"
+                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 font-bold rounded-lg transition shadow-lg text-white"
+                            :class="selectedReg.status === 'verified' ? 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/30 ring-2 ring-emerald-400/50' : 'bg-gray-600 hover:bg-gray-700'"
                         >
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            WhatsApp
+                            <span x-text="selectedReg.status === 'verified' ? 'Kirim E-Ticket ke WA' : 'Kirim WA'"></span>
                         </button>
 
-                        <!-- Close -->
+                        <!-- Action 3: Tolak (if not rejected) -->
+                        <template x-if="selectedReg.status !== 'rejected'">
+                            <button
+                                @click="updateStatus('rejected')"
+                                :disabled="updating"
+                                class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold rounded-lg transition shadow"
+                            >
+                                <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                <span x-text="updating === 'rejected' ? 'Memproses...' : 'Tolak'"></span>
+                            </button>
+                        </template>
+
+                        <!-- Action 4: Tutup -->
                         <button
                             @click="closeModal()"
-                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-lg transition"
+                            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-xs font-semibold rounded-lg transition"
                         >
                             <i data-lucide="x" class="w-4 h-4"></i>
                             Tutup
@@ -702,18 +753,24 @@ function adminDashboard() {
             document.body.style.overflow = '';
         },
 
+        normalizePhone(phone) {
+            if (!phone) return '';
+            let cleaned = String(phone).replace(/[^\d+]/g, '').replace(/^\+/, '');
+            if (cleaned.startsWith('0')) {
+                cleaned = '62' + cleaned.substring(1);
+            } else if (cleaned.startsWith('8')) {
+                cleaned = '62' + cleaned;
+            } else if (!cleaned.startsWith('62')) {
+                cleaned = '62' + cleaned;
+            }
+            return cleaned;
+        },
+
         async updateStatus(newStatus) {
             if (!this.selectedReg) return;
 
-            // Validate no_peserta for verification
-            if (newStatus === 'verified' && !this.noPeserta.trim()) {
-                this.statusMessage = 'No. Peserta wajib diisi untuk verifikasi.';
-                this.statusMessageType = 'error';
-                return;
-            }
-
             // Confirm action
-            const actionLabel = newStatus === 'verified' ? 'memverifikasi' : 'menolak';
+            const actionLabel = newStatus === 'verified' ? 'mengkonfirmasi dan menetapkan nomor peserta' : 'menolak';
             if (!confirm('Apakah Anda yakin ingin ' + actionLabel + ' pendaftaran ' + this.selectedReg.nama + '?')) {
                 return;
             }
@@ -726,11 +783,8 @@ function adminDashboard() {
                     registration_id: this.selectedReg.registration_id,
                     status: newStatus,
                     admin_notes: this.adminNotes.trim(),
+                    no_peserta: this.noPeserta.trim()
                 };
-
-                if (newStatus === 'verified') {
-                    payload.no_peserta = this.noPeserta.trim();
-                }
 
                 const response = await fetch('/api/status.php', {
                     method: 'POST',
@@ -744,33 +798,43 @@ function adminDashboard() {
                 const data = await response.json();
 
                 if (!response.ok || data.error) {
-                    throw new Error(data.error || 'Gagal memperbarui status');
+                    throw new Error(data.error || data.message || 'Gagal memperbarui status');
                 }
 
-                // Update local data
+                const assignedNo = (data.data && data.data.no_peserta) ? data.data.no_peserta : this.noPeserta;
+                if (assignedNo) {
+                    this.noPeserta = assignedNo;
+                }
+
+                // Update local data array
                 const idx = this.registrations.findIndex(r => r.registration_id === this.selectedReg.registration_id);
                 if (idx !== -1) {
                     this.registrations[idx].status = newStatus;
                     this.registrations[idx].admin_notes = this.adminNotes.trim();
-                    if (newStatus === 'verified') {
-                        this.registrations[idx].no_peserta = this.noPeserta.trim();
+                    if (newStatus === 'verified' && assignedNo) {
+                        this.registrations[idx].no_peserta = assignedNo;
                     }
                 }
 
                 // Update selectedReg
                 this.selectedReg.status = newStatus;
-                if (newStatus === 'verified') {
-                    this.selectedReg.no_peserta = this.noPeserta.trim();
+                if (newStatus === 'verified' && assignedNo) {
+                    this.selectedReg.no_peserta = assignedNo;
                 }
                 this.selectedReg.admin_notes = this.adminNotes.trim();
 
                 this.filterRegistrations();
                 this.calculateStats();
 
-                const successLabel = newStatus === 'verified' ? 'diverifikasi' : 'ditolak';
-                this.statusMessage = 'Status berhasil diubah menjadi ' + successLabel + '.';
-                this.statusMessageType = 'success';
-                this.showToast('Status ' + this.selectedReg.nama + ' berhasil ' + successLabel, 'success');
+                if (newStatus === 'verified') {
+                    this.statusMessage = 'Pendaftaran berhasil dikonfirmasi! No. Peserta: ' + assignedNo + '. Silakan kirim E-Ticket ke WA peserta.';
+                    this.statusMessageType = 'success';
+                    this.showToast('Terkonfirmasi: ' + this.selectedReg.nama + ' (' + assignedNo + ')', 'success');
+                } else {
+                    this.statusMessage = 'Pendaftaran telah ditolak.';
+                    this.statusMessageType = 'error';
+                    this.showToast('Pendaftaran ' + this.selectedReg.nama + ' ditolak', 'info');
+                }
 
             } catch (err) {
                 this.statusMessage = 'Error: ' + err.message;
@@ -788,43 +852,56 @@ function adminDashboard() {
             if (!this.selectedReg) return;
 
             const reg = this.selectedReg;
+            const phone = this.normalizePhone(reg.telepon);
 
-            // Normalize phone: replace leading 0 with 62
-            let phone = (reg.telepon || '').replace(/[\s\-()]/g, '');
-            if (phone.startsWith('0')) {
-                phone = '62' + phone.substring(1);
-            } else if (!phone.startsWith('62') && !phone.startsWith('+62')) {
-                phone = '62' + phone;
+            if (!phone) {
+                this.showToast('Nomor telepon peserta tidak valid.', 'error');
+                return;
             }
-            phone = phone.replace(/^\+/, '');
 
-            const kategoriLabel = reg.kategori === 'presisi' ? 'Presisi 20M' : 'Dueling Plat';
             const noPeserta = reg.no_peserta || '-';
+            const kategoriLabel = reg.kategori || '-';
             const eTicketUrl = this.siteUrl + '/e-ticket.php?id=' + encodeURIComponent(reg.registration_id);
+            const isVerified = (reg.status || '').toLowerCase() === 'verified';
+            const statusLabel = isVerified ? '✅ LUNAS / TERKONFIRMASI RESMI' : '⏳ PENDING (Menunggu Konfirmasi)';
 
             const message = `🎯 *BDA SHOOTING CHAMPIONSHIP 2026*
+*RESIMEN I PASUKAN PELOPOR KORPS BRIMOB POLRI*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*PENGESAHAN PENDAFTARAN & E-TICKET*
+*PENGESAHAN PENDAFTARAN & E-TICKET RESMI*
 
-Yth. *${reg.nama}* (${reg.pangkat}),
-Pembayaran Anda telah *DIVERIFIKASI*.
+Halo Bapak/Ibu/Sdr *${reg.nama}*,
+Pendaftaran Anda pada BDA Shooting Championship 2026 telah *DIKONFIRMASI & TERVERIFIKASI*.
 
-📋 *Data Peserta:*
+📋 *RINCIAN PENDAFTAR:*
 • No. Peserta: *${noPeserta}*
-• NRP: ${reg.nrp}
-• Satuan: ${reg.satuan}
-• Kategori: ${kategoriLabel}
-• Status: ✅ LUNAS
+• ID Registrasi: ${reg.registration_id}
+• Nama Lengkap: ${reg.nama}
+• Pangkat: ${reg.pangkat || '-'}
+• NRP / NIK: ${reg.nrp}
+• Satuan / Club: ${reg.satuan}
+• Kategori Lomba: *${kategoriLabel}*
+• Status Pembayaran: *${statusLabel}*
 
-🎫 *E-Ticket:*
+🎫 *LINK E-TICKET & QR CODE RESMI:*
 ${eTicketUrl}
+*(Tautan unik di atas memuat QR Code resmi dan tanda pengenal peserta)*
 
-Simpan E-Ticket ini.
-*17-18 Oktober 2026*`;
+⚠️ *CATATAN PENTING PESERTA (WAJIB DIBACA):*
+1. *Simpan pesan ini, link E-Ticket, dan QR Code* agar tidak hilang.
+2. Tunjukkan E-Ticket & QR Code ini (pada layar HP atau cetak) saat *Daftar Ulang* di lokasi kejuaraan.
+3. *Wajib membawa fisik KTA & KTP Asli* untuk verifikasi data keabsahan peserta di meja panitia.
+4. Seluruh peserta *Wajib Hadir saat Technical Meeting (TM)* sebelum rangkaian pertandingan dimulai.
+
+📍 *Lokasi:* Lapangan Tembak Shooting House, Resimen I Pasukan Pelopor, Kedung Halang, Bogor
+📅 *Pelaksanaan:* 17 — 18 Oktober 2026
+
+Salam Hormat,
+*Panitia Pelaksana BDA Shooting Championship 2026*`;
 
             const waUrl = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
             window.open(waUrl, '_blank');
-            this.showToast('Membuka WhatsApp untuk ' + reg.nama, 'info');
+            this.showToast('Membuka WhatsApp untuk ' + reg.nama, 'success');
         },
 
         exportCSV() {

@@ -4,96 +4,101 @@ $currentPage = 'home';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Section with Hero Image Showcase -->
+<!-- Hero Section with Requested Flow & White Canvas Logo -->
 <section class="relative hero-gradient text-white overflow-hidden">
     <div class="absolute inset-0 target-pattern opacity-25"></div>
-    <!-- Ambient Glow behind hero image -->
-    <div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-copper-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Ambient Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-copper-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            <!-- Left Column: Content & CTA (7 cols) -->
-            <div class="lg:col-span-7 text-center lg:text-left space-y-4">
-                
-                <!-- Organizer Badge with Transparent BDA Logo -->
-                <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-copper-300">
-                    <img src="/assets/logo-bda.png" alt="Logo BDA" class="h-6 w-6 object-contain" onerror="this.style.display='none'">
-                    <span class="tracking-wide uppercase text-[11px]">Brigade Diraya Adikara (BDA) 750</span>
-                </div>
-
-                <!-- Main Headline -->
-                <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white">
-                    BDA SHOOTING<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">
-                        CHAMPIONSHIP 2026
-                    </span>
-                </h1>
-
-                <!-- Subtitle -->
-                <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                    Kejuaraan Menembak Pistol Presisi 20 Meter & Dueling Plat Speed dalam rangka memperingati Anniversary Letting BDA 750 ke-7.
-                </p>
-
-                <!-- Key Meta Badges -->
-                <div class="flex flex-wrap justify-center lg:justify-start gap-3 pt-1 text-xs text-gray-200">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <i data-lucide="calendar" class="w-4 h-4 text-copper-400"></i>
-                        <strong>17 — 18 Oktober 2026</strong>
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-copper-400"></i>
-                        Lap. Tembak Shooting House, Bogor
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-copper-500/20 border border-copper-400/30 text-copper-300 font-semibold">
-                        <i data-lucide="trophy" class="w-4 h-4 text-copper-400"></i>
-                        Total Hadiah Jutaan Rupiah
-                    </span>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap justify-center lg:justify-start gap-3.5 pt-2">
-                    <a href="/daftar.php" class="px-7 py-3 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-700 hover:to-copper-600 text-white font-bold rounded-xl transition shadow-lg shadow-copper-600/30 flex items-center gap-2 text-sm hover:-translate-y-0.5">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        Daftar Sekarang
-                    </a>
-                    <a href="/live-score.php" class="px-6 py-3 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl transition backdrop-blur-sm flex items-center gap-2 text-sm hover:-translate-y-0.5">
-                        <i data-lucide="crosshair" class="w-4 h-4 text-copper-400"></i>
-                        Papan Live Score
-                    </a>
-                    <a href="#juknis" class="px-4 py-3 text-gray-300 hover:text-white font-medium text-sm flex items-center gap-1.5 transition">
-                        <span>Petunjuk Teknis</span>
-                        <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Right Column: Prominent Hero Image (5 cols) -->
-            <div class="lg:col-span-5 flex justify-center items-center">
-                <div class="relative group">
-                    <!-- Ambient Glow Behind Logo -->
-                    <div class="absolute -inset-4 bg-gradient-to-r from-copper-600/40 via-amber-500/30 to-copper-700/40 rounded-full blur-2xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                    
-                    <!-- Circular Target Ring Ornament -->
-                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full p-4 flex items-center justify-center">
-                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-copper-400/30 animate-[spin_60s_linear_infinite]"></div>
-                        <div class="absolute inset-4 rounded-full border border-copper-400/20"></div>
-                        
-                        <!-- Main Hero Image: Transparent BDA Shooting Championship Logo -->
-                        <img src="/assets/logo-championship.png" 
-                             alt="Logo BDA Shooting Championship 2026" 
-                             class="relative z-10 w-full h-full object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)] transform group-hover:scale-105 transition-transform duration-500">
-                    </div>
-
-                    <!-- Floating Quality Badge -->
-                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gray-950/80 backdrop-blur-md rounded-full border border-copper-400/40 text-[11px] font-bold text-copper-300 whitespace-nowrap shadow-xl flex items-center gap-1.5">
-                        <i data-lucide="award" class="w-3.5 h-3.5 text-copper-400"></i>
-                        <span>Resimen I Pasukan Pelopor</span>
-                    </div>
-                </div>
-            </div>
-
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 text-center">
+        <!-- 1. Organizer Badge with Transparent BDA Logo -->
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-copper-300 mb-3">
+            <img src="/assets/logo-bda.png" alt="Logo BDA" class="h-6 w-6 object-contain" onerror="this.style.display='none'">
+            <span class="tracking-wide uppercase text-[11px]">Brigade Diraya Adikara (BDA) 750</span>
         </div>
+
+        <!-- 2. Main Headline -->
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-3">
+            BDA SHOOTING<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">
+                CHAMPIONSHIP 2026
+            </span>
+        </h1>
+
+        <!-- 3. Deskripsi Kejuaraan Menembak Pistol -->
+        <p class="text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-6">
+            Kejuaraan Menembak Pistol Presisi 20 Meter &amp; Dueling Plat Speed dalam rangka memperingati Anniversary Letting BDA 750 ke-7.
+        </p>
+
+        <!-- 4. Logo BDA Shooting dengan Latar Belakang Warna Putih -->
+        <div class="flex justify-center items-center mb-6">
+            <div class="relative group">
+                <!-- Soft Glow Behind White Canvas -->
+                <div class="absolute -inset-2 bg-gradient-to-r from-copper-400/40 via-amber-300/30 to-copper-500/40 rounded-full blur-xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                
+                <!-- White Canvas Container for Logo (Enlarged) -->
+                <div class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-white shadow-2xl p-5 sm:p-7 md:p-8 flex items-center justify-center border-4 sm:border-8 border-copper-400/60 ring-4 sm:ring-8 ring-white/20 transition-transform duration-300 group-hover:scale-105">
+                    <img src="/assets/logo-championship.png" 
+                         alt="Logo BDA Shooting Championship 2026" 
+                         class="w-full h-full object-contain drop-shadow-xl">
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Tombol Daftar dan Live Skor Sejajar -->
+        <div class="flex flex-row justify-center items-center gap-3 sm:gap-4 mb-3">
+            <a href="/daftar.php" class="px-6 sm:px-8 py-3 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-700 hover:to-copper-600 text-white font-bold rounded-xl transition shadow-lg shadow-copper-600/30 flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Daftar</span>
+            </a>
+            <a href="/live-score.php" class="px-5 sm:px-7 py-3 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl transition backdrop-blur-sm flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5">
+                <i data-lucide="crosshair" class="w-4 h-4 text-copper-400"></i>
+                <span>Live Skor</span>
+            </a>
+        </div>
+
+        <!-- 6. Klik Petunjuk Teknis -->
+        <div class="mb-6">
+            <a href="#juknis" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm text-copper-300 hover:text-white transition font-medium group">
+                <i data-lucide="file-text" class="w-4 h-4 text-copper-400 group-hover:scale-110 transition"></i>
+                <span>Klik Petunjuk Teknis</span>
+                <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-copper-400 group-hover:translate-y-0.5 transition"></i>
+            </a>
+        </div>
+
+        <!-- 7. Keterangan Lainnya: Waktu, Tempat, Hadiah -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto pt-2 text-left">
+            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Waktu Pelaksanaan</p>
+                    <p class="text-xs sm:text-sm font-bold text-white">17 — 18 Oktober 2026</p>
+                </div>
+            </div>
+
+            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Tempat</p>
+                    <p class="text-xs sm:text-sm font-bold text-white">Lap. Tembak Shooting House Bogor</p>
+                </div>
+            </div>
+
+            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-copper-400/30 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
+                    <i data-lucide="trophy" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-copper-300 uppercase tracking-wider font-semibold">Total Hadiah</p>
+                    <p class="text-xs sm:text-sm font-bold text-white">Jutaan Rupiah + Trophy</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Decorative bottom divider -->

@@ -19,13 +19,25 @@ if (!empty($missing)) {
     jsonResponse(['success' => false, 'message' => 'Field wajib tidak lengkap: ' . implode(', ', $missing)], 400);
 }
 
-// Sanitize input
 $nama = trim($_POST['nama']);
 $email = trim($_POST['email']);
-$telepon = trim($_POST['telepon']);
+$teleponRaw = trim($_POST['telepon']);
 $pangkat = trim($_POST['pangkat']);
 $nrp = trim($_POST['nrp']);
 $satuan = trim($_POST['satuan']);
+
+// Normalisasi nomor telepon (08x, +628x, 628x, spasi, strip)
+$cleanedPhone = preg_replace('/[^\d+]/', '', $teleponRaw);
+$cleanedPhone = ltrim($cleanedPhone, '+');
+if (strpos($cleanedPhone, '0') === 0) {
+    $telepon = '0' . substr($cleanedPhone, 1);
+} elseif (strpos($cleanedPhone, '62') === 0) {
+    $telepon = '0' . substr($cleanedPhone, 2);
+} elseif (strpos($cleanedPhone, '8') === 0) {
+    $telepon = '0' . $cleanedPhone;
+} else {
+    $telepon = $cleanedPhone;
+}
 
 // Handle kategori (can be array or string)
 $kategori = $_POST['kategori'];
