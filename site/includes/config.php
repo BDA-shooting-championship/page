@@ -1,0 +1,31 @@
+<?php
+/**
+ * BDA Shooting Championship 2026 — Configuration
+ */
+
+// Database
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'bda_shooting');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+// Admin
+define('ADMIN_USER', 'admin');
+define('ADMIN_PASS', 'bsc2026admin');
+define('ADMIN_TOKEN', 'bsc2026-secret-token');
+
+// Site
+define('SITE_URL', 'https://bda-shooting-championship.sbs');
+define('UPLOAD_DIR', __DIR__ . '/../uploads/');
+define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
+
+// Event
+define('EVENT_NAME', 'BDA Shooting Championship 2026');
+define('EVENT_DATE', '17-18 Oktober 2026');
+define('EVENT_LOCATION', 'Lap. Tembak Shooting House, Resimen I Pasukan Pelopor, Kedung Halang, Bogor');
+define('REGISTRATION_FEE', 200000);
+
+// Bank
+define('BANK_NAME', 'BRI');
+define('BANK_ACCOUNT', '053801071906503');
+define('BANK_HOLDER', 'Ahyandi Hi Karim');
