@@ -9,6 +9,9 @@ export const CONFIG = {
   EVENT_DATE_END: "2026-10-18T17:00:00+07:00",
   LOCATION: "Lapangan Tembak Shooting House Resimen I Pasukan Pelopor, Kedung Halang, Bogor",
   
+  // Domain Utama
+  SITE_URL: "https://bda-shooting-championship.sbs",
+
   // Biaya Pendaftaran
   REGISTRATION_FEE_PER_CATEGORY: 200000, // Rp 200.000 per kategori
   
@@ -48,7 +51,7 @@ export const CONFIG = {
   ],
 
   // URL API Backend (Hostinger)
-  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || "",
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || "https://bda-shooting-championship.sbs",
   
   // Token Akses Admin untuk API
   ADMIN_TOKEN: process.env.NEXT_PUBLIC_ADMIN_TOKEN || "bda_secret_token_2026_supersecure",
