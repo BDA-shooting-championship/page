@@ -75,8 +75,8 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="flex justify-between items-start">
                         <div class="flex items-center gap-3 sm:gap-4">
                             <div class="flex items-center gap-2 shrink-0">
-                                <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-11 w-11 sm:h-12 sm:w-12 rounded-xl object-cover border border-white/30 shadow-md">
-                                <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-11 w-11 sm:h-12 sm:w-12 rounded-xl object-cover border border-white/30 shadow-md">
+                                <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-11 w-11 sm:h-12 sm:w-12 object-contain drop-shadow-md">
+                                <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-11 w-11 sm:h-12 sm:w-12 object-contain drop-shadow-md">
                             </div>
                             <div>
                                 <span class="px-3 py-0.5 bg-white/20 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-copper-200">

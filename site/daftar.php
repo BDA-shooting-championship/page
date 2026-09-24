@@ -66,9 +66,9 @@ require_once __DIR__ . '/includes/header.php';
             <div>
                 <!-- Header Banner -->
                 <div class="text-center mb-8">
-                    <div class="flex justify-center items-center gap-3 mb-4">
-                        <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
-                        <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-16 w-16 object-contain drop-shadow-md">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-16 w-16 object-contain drop-shadow-md">
                     </div>
                     <span class="px-3.5 py-1 text-xs font-semibold bg-copper-100 dark:bg-copper-900/30 text-copper-700 dark:text-copper-400 rounded-full uppercase tracking-wider">
                         Formulir Registrasi

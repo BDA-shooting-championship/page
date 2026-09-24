@@ -5,8 +5,8 @@
             <!-- Brand -->
             <div class="md:col-span-1">
                 <div class="flex items-center gap-2.5 mb-4">
-                    <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-10 w-10 rounded-full object-cover border border-copper-400/40">
-                    <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-10 w-10 rounded-full object-cover border border-copper-400/40">
+                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-10 w-10 object-contain">
+                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-10 w-10 object-contain">
                     <span class="font-display font-bold text-lg text-copper-400">BSC 2026</span>
                 </div>
                 <p class="text-sm text-gray-400">Kejuaraan Menembak Pistol Presisi 20M & Dueling Plat</p>

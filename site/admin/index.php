@@ -39,9 +39,9 @@ include __DIR__ . '/../includes/header.php';
         <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 p-8">
             <!-- Logo & Title -->
             <div class="text-center mb-8">
-                <div class="flex justify-center items-center gap-3 mb-4">
-                    <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
-                    <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
+                <div class="flex justify-center items-center gap-4 mb-4">
+                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-16 w-16 object-contain drop-shadow-md">
+                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-16 w-16 object-contain drop-shadow-md">
                 </div>
                 <h1 class="font-display text-2xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1"><?= EVENT_NAME ?></p>
