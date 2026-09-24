@@ -30,30 +30,76 @@ require_once __DIR__ . '/includes/header.php';
             Kejuaraan Menembak Pistol Presisi 20 Meter &amp; Dueling Plat Speed dalam rangka memperingati Anniversary Letting BDA 750 ke-7.
         </p>
 
-        <!-- 4. Logo BDA Shooting dengan Latar Belakang Warna Putih -->
-        <div class="flex justify-center items-center mb-6">
+        <!-- 4. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
+        <div class="flex justify-center items-center mb-6" x-data="heroLogoTilt()" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
             <div class="relative group">
+                <!-- Outer Reticle Ring (Clockwise Rotation 50s) with Degree Ticks -->
+                <div class="absolute -inset-8 sm:-inset-11 md:-inset-14 pointer-events-none flex items-center justify-center">
+                    <svg class="w-full h-full text-copper-400/35 animate-[spin_50s_linear_infinite]" viewBox="0 0 200 200" fill="none">
+                        <circle cx="100" cy="100" r="94" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 8" />
+                        <circle cx="100" cy="100" r="88" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 10" opacity="0.6" />
+                        <!-- Degree ticks -->
+                        <line x1="100" y1="2" x2="100" y2="10" stroke="currentColor" stroke-width="2" />
+                        <line x1="100" y1="190" x2="100" y2="198" stroke="currentColor" stroke-width="2" />
+                        <line x1="2" y1="100" x2="10" y2="100" stroke="currentColor" stroke-width="2" />
+                        <line x1="190" y1="100" x2="198" y2="100" stroke="currentColor" stroke-width="2" />
+                        <!-- Degree coordinate labels -->
+                        <text x="100" y="16" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">000°</text>
+                        <text x="186" y="101.5" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">090°</text>
+                        <text x="100" y="188" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">180°</text>
+                        <text x="14" y="101.5" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">270°</text>
+                    </svg>
+                </div>
+
+                <!-- Inner Crosshair Reticle Ring (Counter-Clockwise Rotation 30s) -->
+                <div class="absolute -inset-4 sm:-inset-6 md:-inset-8 pointer-events-none flex items-center justify-center">
+                    <svg class="w-full h-full text-amber-400/30 animate-[spin_30s_linear_infinite_reverse]" viewBox="0 0 200 200" fill="none">
+                        <circle cx="100" cy="100" r="82" stroke="currentColor" stroke-width="1" stroke-dasharray="24 16" />
+                        <line x1="100" y1="14" x2="100" y2="28" stroke="currentColor" stroke-width="1.5" />
+                        <line x1="100" y1="172" x2="100" y2="186" stroke="currentColor" stroke-width="1.5" />
+                        <line x1="14" y1="100" x2="28" y2="100" stroke="currentColor" stroke-width="1.5" />
+                        <line x1="172" y1="100" x2="186" y2="100" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                </div>
+
                 <!-- Soft Glow Behind White Canvas -->
-                <div class="absolute -inset-2 bg-gradient-to-r from-copper-400/40 via-amber-300/30 to-copper-500/40 rounded-full blur-xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
-                
-                <!-- White Canvas Container for Logo (Enlarged) -->
-                <div class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-white shadow-2xl p-5 sm:p-7 md:p-8 flex items-center justify-center border-4 sm:border-8 border-copper-400/60 ring-4 sm:ring-8 ring-white/20 transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute -inset-4 bg-gradient-to-r from-copper-500/40 via-amber-400/30 to-copper-600/40 rounded-full blur-2xl opacity-75 group-hover:opacity-100 transition duration-700 pointer-events-none"></div>
+
+                <!-- White Canvas Container for Logo with 3D Parallax Tilt -->
+                <div class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-white shadow-2xl p-5 sm:p-7 md:p-8 flex items-center justify-center border-4 sm:border-8 border-copper-400/60 ring-4 sm:ring-8 ring-white/20 transition-transform duration-200 will-change-transform cursor-pointer"
+                     :style="'transform: perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(' + (isHovered ? '1.04, 1.04, 1.04' : '1, 1, 1') + ')'"
+                     @mouseenter="isHovered = true"
+                     @mouseleave="isHovered = false">
                     <img src="/assets/logo-championship.png" 
                          alt="Logo BDA Shooting Championship 2026" 
-                         class="w-full h-full object-contain drop-shadow-xl">
+                         class="w-full h-full object-contain drop-shadow-xl select-none pointer-events-none">
                 </div>
             </div>
         </div>
 
-        <!-- 5. Tombol Daftar dan Live Skor Sejajar -->
+        <!-- 5. Tombol Daftar dan Live Skor Sejajar dengan Tactical HUD Micro-Interactions -->
         <div class="flex flex-row justify-center items-center gap-3 sm:gap-4 mb-3">
-            <a href="/daftar.php" class="px-6 sm:px-8 py-3 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-700 hover:to-copper-600 text-white font-bold rounded-xl transition shadow-lg shadow-copper-600/30 flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5">
-                <i data-lucide="send" class="w-4 h-4"></i>
-                <span>Daftar</span>
+            <!-- Tombol Daftar dengan HUD Corner Brackets -->
+            <a href="/daftar.php" class="relative group px-6 sm:px-8 py-3 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-700 hover:to-copper-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-copper-600/30 flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5 overflow-hidden">
+                <!-- Tactical Corner Locks -->
+                <span class="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
+                <span class="absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
+                <span class="absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
+                <span class="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
+                
+                <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                <span class="tracking-wide">Daftar</span>
             </a>
-            <a href="/live-score.php" class="px-5 sm:px-7 py-3 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold rounded-xl transition backdrop-blur-sm flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5">
-                <i data-lucide="crosshair" class="w-4 h-4 text-copper-400"></i>
-                <span>Live Skor</span>
+
+            <!-- Tombol Live Skor dengan Real-time Radar Beacon -->
+            <a href="/live-score.php" class="relative group px-5 sm:px-7 py-3 bg-white/10 hover:bg-white/15 border border-white/20 hover:border-copper-400/50 text-white font-semibold rounded-xl transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5 shadow-sm">
+                <!-- Radar Beacon Indicator -->
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-copper-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-copper-500"></span>
+                </span>
+                <i data-lucide="crosshair" class="w-4 h-4 text-copper-400 group-hover:rotate-45 transition-transform duration-300"></i>
+                <span class="tracking-wide">Live Skor</span>
             </a>
         </div>
 
@@ -105,9 +151,14 @@ require_once __DIR__ . '/includes/header.php';
     <div class="h-4 bg-gradient-to-b from-transparent to-white dark:to-gray-950"></div>
 </section>
 
-<!-- Countdown Section (Tight Padding) -->
-<section class="py-6 md:py-8 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800" x-data="countdown()" x-init="start()">
-    <div class="max-w-4xl mx-auto px-4 text-center">
+<!-- Countdown Section (Tight Padding with Ambient Radar Sweep) -->
+<section class="py-6 md:py-8 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 relative overflow-hidden" x-data="countdown()" x-init="start()">
+    <!-- Ambient Radar Sweep -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 pointer-events-none opacity-10 dark:opacity-15">
+        <div class="w-full h-full rounded-full border border-copper-500/40 animate-radar-sweep bg-gradient-to-tr from-copper-500/15 via-transparent to-transparent"></div>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-4 text-center">
         <div class="flex items-center justify-center gap-2 mb-2">
             <i data-lucide="timer" class="w-4 h-4 text-copper-600 dark:text-copper-400"></i>
             <h2 class="font-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-gray-900 dark:text-white">Hitung Mundur Menuju Hari-H</h2>
@@ -190,46 +241,127 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Presisi 20M -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 transition bg-gray-50/50 dark:bg-gray-900/40">
+            <div class="group relative border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl hover:shadow-copper-500/10 transition-all duration-300 transform hover:-translate-y-1 bg-gray-50/50 dark:bg-gray-900/40">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                        <i data-lucide="crosshair" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="crosshair" class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:rotate-45 transition-transform duration-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-display text-xl font-bold">Pistol Presisi 20M</h3>
+                        <h3 class="font-display text-xl font-bold group-hover:text-copper-600 dark:group-hover:text-copper-400 transition-colors">Pistol Presisi 20M</h3>
                         <p class="text-[11px] text-gray-500">Kelas Individu (Lesan Ring Target)</p>
                     </div>
                 </div>
                 <ul class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Jarak Tembak:</strong> 20 meter</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Sikap Tembak:</strong> Berdiri, 2 tangan</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Sasaran:</strong> Lesan Ring (Nilai 1 - 10 + Inner X)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Amunisi:</strong> 13 butir (3 percobaan + 10 penilaian)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Batas Waktu:</strong> 3 Menit</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Jarak Tembak:</strong> 20 meter</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sikap Tembak:</strong> Berdiri, 2 tangan</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sasaran:</strong> Lesan Ring (Nilai 1 - 10 + Inner X)</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Amunisi:</strong> 13 butir (3 percobaan + 10 penilaian)</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Batas Waktu:</strong> 3 Menit</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
                 </ul>
             </div>
             
             <!-- Dueling Plat -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 transition bg-gray-50/50 dark:bg-gray-900/40">
+            <div class="group relative border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl hover:shadow-copper-500/10 transition-all duration-300 transform hover:-translate-y-1 bg-gray-50/50 dark:bg-gray-900/40">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                        <i data-lucide="swords" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+                    <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="swords" class="w-5 h-5 text-red-600 dark:text-red-400 group-hover:rotate-12 transition-transform duration-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-display text-xl font-bold">Dueling Plat Speed</h3>
+                        <h3 class="font-display text-xl font-bold group-hover:text-copper-600 dark:group-hover:text-copper-400 transition-colors">Dueling Plat Speed</h3>
                         <p class="text-[11px] text-gray-500">Kelas Individu (Eliminasi Head-to-Head)</p>
                     </div>
                 </div>
                 <ul class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Jarak Tembak:</strong> 15 meter</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Sikap Tembak:</strong> Berdiri (lari 10 meter menuju meja senjata)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Sasaran:</strong> 5 plat bulat + 1 stop popper</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Amunisi:</strong> 10 butir per putaran match</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Sistem:</strong> Catatan waktu tercepat melaju ke babak berikutnya</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Jarak Tembak:</strong> 15 meter</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sikap Tembak:</strong> Berdiri (lari 10 meter menuju meja senjata)</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sasaran:</strong> 5 plat bulat + 1 stop popper</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Amunisi:</strong> 10 butir per putaran match</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sistem:</strong> Catatan waktu tercepat melaju ke babak berikutnya</li>
+                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
                 </ul>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Target Simulator Widget (Simulasi Tembak Lesan 20M) -->
+<section id="simulasi" class="py-8 md:py-10 bg-gray-100/70 dark:bg-gray-900/80 border-t border-gray-200 dark:border-gray-800" x-data="targetSimulator()">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100 dark:bg-copper-900/40 text-copper-700 dark:text-copper-300 text-xs font-bold uppercase tracking-wider mb-2">
+            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+            Simulasi Tembak Interaktif
+        </div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Uji Akurasi Lesan 20 Meter</h2>
+        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-xl mx-auto mt-1 mb-6">
+            Klik pada lesan sasaran di bawah untuk mensimulasikan perolehan nilai tembakan kelas Pistol Presisi 20M (Nilai 1 hingga 10 dan Inner X).
+        </p>
+
+        <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700 shadow-xl max-w-xl mx-auto">
+            <!-- Target Canvas Area -->
+            <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto select-none cursor-crosshair group rounded-full overflow-hidden shadow-2xl border-4 border-gray-300 dark:border-gray-600 bg-white" @click="shoot($event)">
+                <!-- SVG Target Rings (1-10 + Inner X) -->
+                <svg viewBox="0 0 300 300" class="w-full h-full">
+                    <!-- Outer White Rings (1 - 6) -->
+                    <circle cx="150" cy="150" r="148" fill="#fafafa" stroke="#333" stroke-width="1.5" />
+                    <circle cx="150" cy="150" r="130" fill="#fafafa" stroke="#555" stroke-width="1" />
+                    <circle cx="150" cy="150" r="112" fill="#fafafa" stroke="#555" stroke-width="1" />
+                    <circle cx="150" cy="150" r="94" fill="#fafafa" stroke="#555" stroke-width="1" />
+                    <circle cx="150" cy="150" r="76" fill="#fafafa" stroke="#555" stroke-width="1" />
+
+                    <!-- Inner Black Rings (7 - 10) -->
+                    <circle cx="150" cy="150" r="58" fill="#18181b" stroke="#777" stroke-width="1" />
+                    <circle cx="150" cy="150" r="42" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+                    <circle cx="150" cy="150" r="28" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+                    <circle cx="150" cy="150" r="14" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+
+                    <!-- Inner X Center Cross -->
+                    <line x1="145" y1="150" x2="155" y2="150" stroke="#f59e0b" stroke-width="1.5" />
+                    <line x1="150" y1="145" x2="150" y2="155" stroke="#f59e0b" stroke-width="1.5" />
+
+                    <!-- Ring Numbers -->
+                    <text x="150" y="24" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">1</text>
+                    <text x="150" y="44" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">2</text>
+                    <text x="150" y="62" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">3</text>
+                    <text x="150" y="80" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">4</text>
+                    <text x="150" y="98" font-size="8" fill="#71717a" text-anchor="middle" font-family="monospace">5</text>
+                    <text x="150" y="116" font-size="8" fill="#a1a1aa" text-anchor="middle" font-family="monospace">6</text>
+                    <text x="150" y="132" font-size="8" fill="#d4d4d8" text-anchor="middle" font-family="monospace">7</text>
+                    <text x="150" y="144" font-size="7" fill="#e4e4e7" text-anchor="middle" font-family="monospace">8</text>
+                </svg>
+
+                <!-- Bullet Holes Decals on Target -->
+                <template x-for="(hit, i) in hits" :key="i">
+                    <div class="absolute w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-zinc-950 border-2 border-amber-400 shadow-lg pointer-events-none flex items-center justify-center"
+                         :style="'left: ' + hit.x + '%; top: ' + hit.y + '%;'">
+                        <span class="w-1 h-1 rounded-full bg-amber-300"></span>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Score Dashboard -->
+            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap items-center justify-between gap-4">
+                <div class="text-left">
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Total Tembakan: <span class="font-bold text-gray-900 dark:text-white" x-text="hits.length + ' / 10'"></span></p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Inner X: <span class="font-bold text-amber-500" x-text="innerXCount"></span></p>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <span class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold block">Total Skor</span>
+                        <span class="font-display text-3xl font-extrabold text-copper-600 dark:text-copper-400" x-text="totalScore">0</span>
+                    </div>
+
+                    <button @click="resetTarget()" type="button" class="px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-xs font-semibold text-gray-700 dark:text-gray-200 transition flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <template x-if="lastScoreText">
+                <div class="mt-3 text-xs font-bold text-copper-600 dark:text-copper-400" x-text="lastScoreText"></div>
+            </template>
         </div>
     </div>
 </section>
@@ -254,17 +386,20 @@ require_once __DIR__ . '/includes/header.php';
                 <p class="text-xs text-gray-500">+ Trophy + Piagam Resmi</p>
             </div>
             
-            <!-- Juara 1 (Featured) -->
-            <div class="order-1 md:order-2 text-center bg-gradient-to-b from-copper-50 via-white to-copper-50/30 dark:from-gray-800 dark:to-gray-850 rounded-2xl p-7 border-2 border-copper-500 shadow-xl relative">
-                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-copper-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md">
+            <!-- Juara 1 (Featured with Radiant Metallic Shimmer) -->
+            <div class="order-1 md:order-2 text-center bg-gradient-to-b from-copper-50 via-white to-copper-50/30 dark:from-gray-800 dark:to-gray-850 rounded-2xl p-7 border-2 border-copper-500 shadow-xl relative overflow-hidden group">
+                <!-- Metallic Gold Shimmer Beam -->
+                <div class="absolute -inset-full w-[300%] h-[300%] pointer-events-none animate-gold-shimmer bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-copper-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md z-10">
                     Utama
                 </span>
-                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-copper-100 dark:bg-copper-900/40 flex items-center justify-center text-copper-600 dark:text-copper-400">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-copper-100 dark:bg-copper-900/40 flex items-center justify-center text-copper-600 dark:text-copper-400 relative z-10 group-hover:scale-110 transition-transform">
                     <i data-lucide="crown" class="w-7 h-7"></i>
                 </div>
-                <h3 class="font-display text-xl font-bold text-copper-700 dark:text-copper-300 mb-1">Juara I</h3>
-                <p class="font-display text-3xl font-extrabold text-copper-600 dark:text-copper-400 mb-1">Rp 3.000.000</p>
-                <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold">+ Trophy Bergilir + Piagam Resmi</p>
+                <h3 class="font-display text-xl font-bold text-copper-700 dark:text-copper-300 mb-1 relative z-10">Juara I</h3>
+                <p class="font-display text-3xl font-extrabold text-copper-600 dark:text-copper-400 mb-1 relative z-10">Rp 3.000.000</p>
+                <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold relative z-10">+ Trophy Bergilir + Piagam Resmi</p>
             </div>
             
             <!-- Juara 3 (UPDATED TO 1 JUTA) -->
@@ -451,7 +586,51 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<style>
+@keyframes goldShimmer {
+    0% { transform: translateX(-120%) rotate(25deg); }
+    30%, 100% { transform: translateX(180%) rotate(25deg); }
+}
+.animate-gold-shimmer {
+    animation: goldShimmer 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes radarSweep {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.animate-radar-sweep {
+    animation: radarSweep 14s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+
 <script>
+function heroLogoTilt() {
+    return {
+        tiltX: 0,
+        tiltY: 0,
+        isHovered: false,
+        handleMouseMove(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            this.tiltX = (-y / (rect.height / 2) * 7).toFixed(2);
+            this.tiltY = (x / (rect.width / 2) * 7).toFixed(2);
+        },
+        handleMouseLeave() {
+            this.tiltX = 0;
+            this.tiltY = 0;
+            this.isHovered = false;
+        }
+    }
+}
+
 function countdown() {
     return {
         days: 0, hours: 0, minutes: 0, seconds: 0,
@@ -467,6 +646,86 @@ function countdown() {
             this.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             this.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             this.seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        }
+    }
+}
+
+function targetSimulator() {
+    return {
+        hits: [],
+        totalScore: 0,
+        innerXCount: 0,
+        lastScoreText: '',
+        shoot(e) {
+            if (this.hits.length >= 10) {
+                this.lastScoreText = 'Seri 10 tembakan selesai! Total Skor: ' + this.totalScore + ' (' + this.innerXCount + 'x X). Klik Reset untuk mengulang.';
+                return;
+            }
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const dx = clickX - centerX;
+            const dy = clickY - centerY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const normDist = (dist / (rect.width / 2)) * 150;
+
+            const pctX = ((clickX / rect.width) * 100).toFixed(1);
+            const pctY = ((clickY / rect.height) * 100).toFixed(1);
+
+            let score = 0;
+            let label = '';
+
+            if (normDist <= 8) {
+                score = 10;
+                this.innerXCount++;
+                label = 'Bullseye! Inner X (10 Poin)';
+            } else if (normDist <= 14) {
+                score = 10;
+                label = 'Sempurna! Nilai 10';
+            } else if (normDist <= 28) {
+                score = 9;
+                label = 'Hebat! Nilai 9';
+            } else if (normDist <= 42) {
+                score = 8;
+                label = 'Bagus! Nilai 8';
+            } else if (normDist <= 58) {
+                score = 7;
+                label = 'Ring Hitam! Nilai 7';
+            } else if (normDist <= 76) {
+                score = 6;
+                label = 'Nilai 6';
+            } else if (normDist <= 94) {
+                score = 5;
+                label = 'Nilai 5';
+            } else if (normDist <= 112) {
+                score = 4;
+                label = 'Nilai 4';
+            } else if (normDist <= 130) {
+                score = 3;
+                label = 'Nilai 3';
+            } else if (normDist <= 140) {
+                score = 2;
+                label = 'Nilai 2';
+            } else if (normDist <= 148) {
+                score = 1;
+                label = 'Nilai 1';
+            } else {
+                score = 0;
+                label = 'Keluar Lesan (Miss / 0 Poin)';
+            }
+
+            this.hits.push({ x: pctX, y: pctY, score });
+            this.totalScore += score;
+            this.lastScoreText = 'Tembakan ke-' + this.hits.length + ': ' + label;
+        },
+        resetTarget() {
+            this.hits = [];
+            this.totalScore = 0;
+            this.innerXCount = 0;
+            this.lastScoreText = 'Lesan di-reset. Silakan bidik dan klik kembali!';
         }
     }
 }
