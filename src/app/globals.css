@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#f8f6f3] text-[#1a2332] dark:bg-[#0f1419] dark:text-[#f1f0ee] antialiased selection:bg-brand-500 selection:text-white transition-colors duration-200;
+  }
+}
+
+/* Custom background target ring pattern */
+.bg-target-pattern {
+  background-image: radial-gradient(circle at 85% 20%, rgba(193, 127, 78, 0.08) 0, rgba(193, 127, 78, 0.08) 70px, transparent 71px),
+                    radial-gradient(circle at 85% 20%, rgba(193, 127, 78, 0.06) 0, rgba(193, 127, 78, 0.06) 140px, transparent 141px),
+                    radial-gradient(circle at 85% 20%, rgba(193, 127, 78, 0.04) 0, rgba(193, 127, 78, 0.04) 220px, transparent 221px),
+                    radial-gradient(circle at 85% 20%, rgba(193, 127, 78, 0.02) 0, rgba(193, 127, 78, 0.02) 320px, transparent 321px);
+}
+
+.dark .bg-target-pattern {
+  background-image: radial-gradient(circle at 85% 20%, rgba(209, 148, 94, 0.12) 0, rgba(209, 148, 94, 0.12) 70px, transparent 71px),
+                    radial-gradient(circle at 85% 20%, rgba(209, 148, 94, 0.09) 0, rgba(209, 148, 94, 0.09) 140px, transparent 141px),
+                    radial-gradient(circle at 85% 20%, rgba(209, 148, 94, 0.06) 0, rgba(209, 148, 94, 0.06) 220px, transparent 221px),
+                    radial-gradient(circle at 85% 20%, rgba(209, 148, 94, 0.03) 0, rgba(209, 148, 94, 0.03) 320px, transparent 321px);
+}

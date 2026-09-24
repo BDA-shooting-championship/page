@@ -1,0 +1,19 @@
+# Hostinger Apache / LiteSpeed Configuration
+RewriteEngine On
+
+# Allow CORS Options preflight
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=204,L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Security: Deny execution of PHP scripts in uploads folder
+<IfModule mod_rewrite.c>
+    RewriteRule ^uploads/.*\.php$ - [F,L]
+</IfModule>
+
+# Protect config files from direct browser access
+<FilesMatch "^(config|db|cors)\.php$">
+    Require all denied
+</FilesMatch>
