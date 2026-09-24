@@ -35,6 +35,19 @@ if ($method === 'GET') {
         jsonResponse(['success' => false, 'message' => 'Invalid JSON body'], 400);
     }
 
+    $db = getDB();
+
+    if (isset($input['action']) && $input['action'] === 'delete') {
+        $delId = (int)($input['id'] ?? 0);
+        if ($delId > 0) {
+            $stmt = $db->prepare('DELETE FROM dueling_matches WHERE id = ?');
+            $stmt->execute([$delId]);
+            jsonResponse(['success' => true, 'message' => 'Match berhasil dihapus']);
+        } else {
+            jsonResponse(['success' => false, 'message' => 'ID match tidak valid'], 400);
+        }
+    }
+
     // Validate required fields
     $requiredFields = ['round_name', 'round_order', 'match_number'];
     $missing = [];

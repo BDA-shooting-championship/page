@@ -329,87 +329,6 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- Interactive Target Simulator Widget (Simulasi Tembak Lesan 20M) -->
-<section id="simulasi" class="py-8 md:py-10 bg-gray-50 border-t border-gray-200" x-data="targetSimulator()">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100 text-copper-700 text-xs font-bold uppercase tracking-wider mb-2">
-            <i data-lucide="target" class="w-3.5 h-3.5"></i>
-            Simulasi Tembak Interaktif
-        </div>
-        <h2 class="font-display text-2xl sm:text-3xl font-bold text-gray-900">Uji Akurasi Lesan 20 Meter</h2>
-        <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1 mb-6">
-            Klik pada lesan sasaran di bawah untuk mensimulasikan perolehan nilai tembakan kelas Pistol Presisi 20M (Nilai 1 hingga 10 dan Inner X).
-        </p>
-
-        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-xl max-w-xl mx-auto">
-            <!-- Target Canvas Area -->
-            <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto select-none cursor-crosshair group rounded-full overflow-hidden shadow-2xl border-4 border-gray-300 bg-white" @click="shoot($event)">
-                <!-- SVG Target Rings (1-10 + Inner X) -->
-                <svg viewBox="0 0 300 300" class="w-full h-full">
-                    <!-- Outer White Rings (1 - 6) -->
-                    <circle cx="150" cy="150" r="148" fill="#fafafa" stroke="#333" stroke-width="1.5" />
-                    <circle cx="150" cy="150" r="130" fill="#fafafa" stroke="#555" stroke-width="1" />
-                    <circle cx="150" cy="150" r="112" fill="#fafafa" stroke="#555" stroke-width="1" />
-                    <circle cx="150" cy="150" r="94" fill="#fafafa" stroke="#555" stroke-width="1" />
-                    <circle cx="150" cy="150" r="76" fill="#fafafa" stroke="#555" stroke-width="1" />
-
-                    <!-- Inner Black Rings (7 - 10) -->
-                    <circle cx="150" cy="150" r="58" fill="#18181b" stroke="#777" stroke-width="1" />
-                    <circle cx="150" cy="150" r="42" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
-                    <circle cx="150" cy="150" r="28" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
-                    <circle cx="150" cy="150" r="14" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
-
-                    <!-- Inner X Center Cross -->
-                    <line x1="145" y1="150" x2="155" y2="150" stroke="#f59e0b" stroke-width="1.5" />
-                    <line x1="150" y1="145" x2="150" y2="155" stroke="#f59e0b" stroke-width="1.5" />
-
-                    <!-- Ring Numbers -->
-                    <text x="150" y="24" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">1</text>
-                    <text x="150" y="44" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">2</text>
-                    <text x="150" y="62" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">3</text>
-                    <text x="150" y="80" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">4</text>
-                    <text x="150" y="98" font-size="8" fill="#71717a" text-anchor="middle" font-family="monospace">5</text>
-                    <text x="150" y="116" font-size="8" fill="#a1a1aa" text-anchor="middle" font-family="monospace">6</text>
-                    <text x="150" y="132" font-size="8" fill="#d4d4d8" text-anchor="middle" font-family="monospace">7</text>
-                    <text x="150" y="144" font-size="7" fill="#e4e4e7" text-anchor="middle" font-family="monospace">8</text>
-                </svg>
-
-                <!-- Bullet Holes Decals on Target -->
-                <template x-for="(hit, i) in hits" :key="i">
-                    <div class="absolute w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-zinc-950 border-2 border-amber-400 shadow-lg pointer-events-none flex items-center justify-center"
-                         :style="'left: ' + hit.x + '%; top: ' + hit.y + '%;'">
-                        <span class="w-1 h-1 rounded-full bg-amber-300"></span>
-                    </div>
-                </template>
-            </div>
-
-            <!-- Score Dashboard -->
-            <div class="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
-                <div class="text-left">
-                    <p class="text-xs text-gray-500">Total Tembakan: <span class="font-bold text-gray-900" x-text="hits.length + ' / 10'"></span></p>
-                    <p class="text-xs text-gray-500 mt-0.5">Inner X: <span class="font-bold text-amber-500" x-text="innerXCount"></span></p>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <div class="text-right">
-                        <span class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold block">Total Skor</span>
-                        <span class="font-display text-3xl font-extrabold text-copper-600" x-text="totalScore">0</span>
-                    </div>
-
-                    <button @click="resetTarget()" type="button" class="px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
-                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                        <span>Reset</span>
-                    </button>
-                </div>
-            </div>
-
-            <template x-if="lastScoreText">
-                <div class="mt-3 text-xs font-bold text-copper-600" x-text="lastScoreText"></div>
-            </template>
-        </div>
-    </div>
-</section>
-
 <!-- Prizes Section (Updated: Juara 3 = Rp 1.000.000) -->
 <section id="hadiah" class="py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -564,6 +483,87 @@ require_once __DIR__ . '/includes/header.php';
                     <p>&bull; Transfer ke rekening: <strong>Bank BRI 053801071906503</strong> a.n. <strong>Ahyandi Hi Karim</strong>.</p>
                     <p>&bull; Lampirkan bukti transfer saat pengisian formulir pendaftaran.</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Interactive Target Simulator Widget (Simulasi Tembak Berada di Petunjuk Teknis) -->
+        <div id="simulasi" class="mt-10 pt-8 border-t border-gray-200" x-data="targetSimulator()">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100 text-copper-700 text-xs font-bold uppercase tracking-wider mb-2">
+                    <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                    Simulasi Tembak Interaktif
+                </div>
+                <h3 class="font-display text-2xl sm:text-3xl font-bold text-gray-900">Uji Akurasi Lesan 20 Meter</h3>
+                <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1 mb-6">
+                    Klik pada lesan sasaran di bawah untuk mensimulasikan perolehan nilai tembakan kelas Pistol Presisi 20M (Nilai 1 hingga 10 dan Inner X).
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-xl max-w-xl mx-auto">
+                <!-- Target Canvas Area -->
+                <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto select-none cursor-crosshair group rounded-full overflow-hidden shadow-2xl border-4 border-gray-300 bg-white" @click="shoot($event)">
+                    <!-- SVG Target Rings (1-10 + Inner X) -->
+                    <svg viewBox="0 0 300 300" class="w-full h-full">
+                        <!-- Outer White Rings (1 - 6) -->
+                        <circle cx="150" cy="150" r="148" fill="#fafafa" stroke="#333" stroke-width="1.5" />
+                        <circle cx="150" cy="150" r="130" fill="#fafafa" stroke="#555" stroke-width="1" />
+                        <circle cx="150" cy="150" r="112" fill="#fafafa" stroke="#555" stroke-width="1" />
+                        <circle cx="150" cy="150" r="94" fill="#fafafa" stroke="#555" stroke-width="1" />
+                        <circle cx="150" cy="150" r="76" fill="#fafafa" stroke="#555" stroke-width="1" />
+
+                        <!-- Inner Black Rings (7 - 10) -->
+                        <circle cx="150" cy="150" r="58" fill="#18181b" stroke="#777" stroke-width="1" />
+                        <circle cx="150" cy="150" r="42" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+                        <circle cx="150" cy="150" r="28" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+                        <circle cx="150" cy="150" r="14" fill="#18181b" stroke="#e4e4e7" stroke-width="0.8" />
+
+                        <!-- Inner X Center Cross -->
+                        <line x1="145" y1="150" x2="155" y2="150" stroke="#f59e0b" stroke-width="1.5" />
+                        <line x1="150" y1="145" x2="150" y2="155" stroke="#f59e0b" stroke-width="1.5" />
+
+                        <!-- Ring Numbers -->
+                        <text x="150" y="24" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">1</text>
+                        <text x="150" y="44" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">2</text>
+                        <text x="150" y="62" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">3</text>
+                        <text x="150" y="80" font-size="9" fill="#71717a" text-anchor="middle" font-family="monospace">4</text>
+                        <text x="150" y="98" font-size="8" fill="#71717a" text-anchor="middle" font-family="monospace">5</text>
+                        <text x="150" y="116" font-size="8" fill="#a1a1aa" text-anchor="middle" font-family="monospace">6</text>
+                        <text x="150" y="132" font-size="8" fill="#d4d4d8" text-anchor="middle" font-family="monospace">7</text>
+                        <text x="150" y="144" font-size="7" fill="#e4e4e7" text-anchor="middle" font-family="monospace">8</text>
+                    </svg>
+
+                    <!-- Bullet Holes Decals on Target -->
+                    <template x-for="(hit, i) in hits" :key="i">
+                        <div class="absolute w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-zinc-950 border-2 border-amber-400 shadow-lg pointer-events-none flex items-center justify-center"
+                             :style="'left: ' + hit.x + '%; top: ' + hit.y + '%;'">
+                            <span class="w-1 h-1 rounded-full bg-amber-300"></span>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Score Dashboard -->
+                <div class="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                    <div class="text-left">
+                        <p class="text-xs text-gray-500">Total Tembakan: <span class="font-bold text-gray-900" x-text="hits.length + ' / 10'"></span></p>
+                        <p class="text-xs text-gray-500 mt-0.5">Inner X: <span class="font-bold text-amber-500" x-text="innerXCount"></span></p>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <span class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold block">Total Skor</span>
+                            <span class="font-display text-3xl font-extrabold text-copper-600" x-text="totalScore">0</span>
+                        </div>
+
+                        <button @click="resetTarget()" type="button" class="px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </div>
+
+                <template x-if="lastScoreText">
+                    <div class="mt-3 text-xs font-bold text-copper-600 text-center" x-text="lastScoreText"></div>
+                </template>
             </div>
         </div>
     </div>
