@@ -4,8 +4,9 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Brand -->
             <div class="md:col-span-1">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="/assets/logo-championship.jpeg" alt="Logo" class="h-10 w-10 rounded-full object-cover" onerror="this.style.display='none'">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-10 w-10 rounded-full object-cover border border-copper-400/40">
+                    <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-10 w-10 rounded-full object-cover border border-copper-400/40">
                     <span class="font-display font-bold text-lg text-copper-400">BSC 2026</span>
                 </div>
                 <p class="text-sm text-gray-400">Kejuaraan Menembak Pistol Presisi 20M & Dueling Plat</p>

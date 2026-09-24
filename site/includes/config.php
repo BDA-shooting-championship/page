@@ -5,9 +5,9 @@
 
 // Database
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'bda_shooting');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_NAME', 'u741010203_bda');
+define('DB_USER', 'u741010203_bda');
+define('DB_PASS', '@Sigsauer750');
 
 // Admin
 define('ADMIN_USER', 'admin');

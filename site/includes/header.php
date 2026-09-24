@@ -10,6 +10,7 @@ $currentPage = $currentPage ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
     <meta name="description" content="<?= EVENT_NAME ?> — <?= EVENT_DATE ?> di <?= EVENT_LOCATION ?>">
+    <link rel="icon" type="image/jpeg" href="/assets/logo-bda-clean.jpg">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -71,9 +72,13 @@ $currentPage = $currentPage ?? '';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
-            <a href="/" class="flex items-center gap-3">
-                <img src="/assets/logo-championship.jpeg" alt="Logo" class="h-10 w-10 rounded-full object-cover" onerror="this.style.display='none'">
-                <span class="font-display font-bold text-lg text-copper-600 dark:text-copper-400">BSC 2026</span>
+            <a href="/" class="flex items-center gap-2.5">
+                <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-9 w-9 rounded-full object-cover border border-copper-400/50 shadow-sm">
+                <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-9 w-9 rounded-full object-cover border border-copper-400/50 shadow-sm">
+                <div class="flex flex-col">
+                    <span class="font-display font-bold text-base leading-tight text-copper-600 dark:text-copper-400">BSC 2026</span>
+                    <span class="text-[9px] uppercase tracking-wider text-gray-500 font-semibold leading-none">Shooting Championship</span>
+                </div>
             </a>
             
             <!-- Desktop Menu -->

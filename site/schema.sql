@@ -1,8 +1,5 @@
 -- BDA Shooting Championship 2026 — Database Schema
--- Run this in phpMyAdmin on Hostinger
-
-CREATE DATABASE IF NOT EXISTS bda_shooting CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE bda_shooting;
+-- Ready to import directly into target database
 
 -- Registrations table
 CREATE TABLE IF NOT EXISTS registrations (

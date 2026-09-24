@@ -73,16 +73,22 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Ticket Header -->
                 <div class="hero-gradient p-6 sm:p-8 text-white relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-wider text-copper-200">
-                                Official E-Ticket
-                            </span>
-                            <h1 class="font-display text-2xl sm:text-3xl font-bold mt-2">BDA SHOOTING CHAMPIONSHIP 2026</h1>
-                            <p class="text-xs text-copper-200 mt-1">Resimen I Pasukan Pelopor — Kedung Halang, Bogor</p>
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <div class="flex items-center gap-2 shrink-0">
+                                <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-11 w-11 sm:h-12 sm:w-12 rounded-xl object-cover border border-white/30 shadow-md">
+                                <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-11 w-11 sm:h-12 sm:w-12 rounded-xl object-cover border border-white/30 shadow-md">
+                            </div>
+                            <div>
+                                <span class="px-3 py-0.5 bg-white/20 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-copper-200">
+                                    Official E-Ticket
+                                </span>
+                                <h1 class="font-display text-lg sm:text-2xl font-bold mt-1">BDA SHOOTING CHAMPIONSHIP 2026</h1>
+                                <p class="text-[11px] sm:text-xs text-copper-200">Resimen I Pasukan Pelopor — Kedung Halang, Bogor</p>
+                            </div>
                         </div>
-                        <div class="text-right">
+                        <div class="text-right shrink-0">
                             <span class="text-[10px] uppercase tracking-wider text-gray-300 block">Nomor Peserta</span>
-                            <span class="font-display text-3xl font-bold text-copper-400 tracking-wider">
+                            <span class="font-display text-2xl sm:text-3xl font-bold text-copper-400 tracking-wider">
                                 <?= htmlspecialchars($ticket['no_peserta'] ?: 'BSC-000') ?>
                             </span>
                         </div>

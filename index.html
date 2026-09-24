@@ -4,43 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>BDA Shooting Championship 2026 | Resimen I Pasukan Pelopor</title>
-  <meta name="description" content="Informasi Resmi Kejuaraan Menembak BDA Shooting Championship 2026. Presisi 20M & Dueling Plat Speed di Lapangan Tembak Shooting House Resimen I Pasukan Pelopor Bogor.">
+  <meta name="description" content="Portal Resmi BDA Shooting Championship 2026. Kejuaraan Menembak Pistol Presisi 20M & Dueling Plat Speed. Lapangan Tembak Shooting House Resimen I Pasukan Pelopor Kedung Halang, Bogor.">
   <link rel="icon" type="image/jpeg" href="assets/logo-bda-clean.jpg">
 
   <style>
     /* ==========================================================================
-       CLEAN LIGHT THEME — MODERN SPORTS FEDERATION STYLE
+       ENTERPRISE DESIGN SYSTEM — CLEAN EDITORIAL SPORTS FEDERATION AESTHETIC
        ========================================================================== */
     :root {
-      --bg-body: #ffffff;
-      --bg-subtle: #f8fafc;
+      --bg-canvas: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-surface-alt: #f1f5f9;
       --bg-card: #ffffff;
-      --bg-card-alt: #f1f5f9;
       
-      --border: #e2e8f0;
-      --border-dark: #cbd5e1;
-      --border-accent: #b45309;
+      --border-light: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --border-dark: #94a3b8;
       
-      --text-main: #0f172a;
-      --text-sub: #334155;
+      --navy-900: #0a192f;
+      --navy-800: #0f2b48;
+      --navy-700: #1e3a8a;
+      --navy-100: #e0f2fe;
+      
+      --gold-700: #92400e;
+      --gold-600: #b45309;
+      --gold-500: #d97706;
+      --gold-100: #fef3c7;
+      
+      --crimson-700: #991b1b;
+      --crimson-600: #dc2626;
+      --crimson-100: #fee2e2;
+      
+      --emerald-700: #15803d;
+      --emerald-600: #16a34a;
+      --emerald-100: #dcfce7;
+      
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
       --text-muted: #64748b;
-      --text-light: #94a3b8;
+      --text-subtle: #94a3b8;
       
-      --navy: #0f2b48;
-      --navy-light: #1e3a8a;
-      --gold: #b45309;
-      --gold-bg: #fef3c7;
-      --gold-border: #fde68a;
-      --red: #b91c1c;
-      --red-bg: #fee2e2;
-      --green: #15803d;
-      --green-bg: #dcfce7;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --radius: 8px;
       --radius-sm: 4px;
-      --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * {
@@ -52,18 +67,17 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      font-family: var(--font);
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
       font-size: 15px;
       line-height: 1.5;
     }
 
     body {
       min-height: 100vh;
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background: var(--bg-canvas);
     }
 
     a {
@@ -95,57 +109,129 @@
       padding: 0 20px;
     }
 
-    /* Section layout */
+    /* Architectural Section Spacing */
     section {
-      padding: 60px 0;
-      border-bottom: 1px solid var(--border);
+      padding: 68px 0;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
     }
 
-    .section-header {
-      margin-bottom: 32px;
-    }
-
-    .eyebrow {
-      display: inline-block;
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 0.72rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--navy);
-      margin-bottom: 6px;
+      letter-spacing: 1.5px;
+      color: var(--navy-800);
+      margin-bottom: 8px;
     }
 
-    .section-title {
-      font-size: 1.75rem;
+    .section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 2px;
+      background: var(--gold-600);
+    }
+
+    .section-heading {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 800;
-      color: var(--text-main);
+      color: var(--navy-900);
       letter-spacing: -0.5px;
       text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .section-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-navy {
+      background: var(--navy-900);
+      color: #ffffff;
+      border: 1px solid var(--navy-900);
+    }
+
+    .btn-navy:hover {
+      background: var(--navy-800);
+      border-color: var(--navy-800);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--text-primary);
+      border: 1px solid var(--border-medium);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-surface);
+      border-color: var(--navy-800);
+      transform: translateY(-1px);
+    }
+
+    .btn-emerald {
+      background: var(--emerald-600);
+      color: #ffffff;
+      border: 1px solid var(--emerald-600);
+    }
+
+    .btn-emerald:hover {
+      background: var(--emerald-700);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     /* ==========================================================================
-       TOP NAVBAR
+       TOP NAVIGATION BAR
        ========================================================================== */
-    .top-nav {
+    .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-subtle);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
     }
 
-    .nav-inner {
+    .nav-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 68px;
     }
 
-    .brand-link {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .brand-logos {
@@ -155,115 +241,115 @@
     }
 
     .brand-logo-img {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
-      border-radius: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
       background: #fff;
     }
 
-    .brand-text h1 {
-      font-size: 0.88rem;
+    .brand-info h1 {
+      font-size: 0.95rem;
       font-weight: 800;
-      color: var(--navy);
+      color: var(--navy-900);
       letter-spacing: 0.5px;
       line-height: 1.1;
     }
 
-    .brand-text span {
+    .brand-info span {
       font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      letter-spacing: 0.3px;
+      font-weight: 700;
+      color: var(--gold-600);
       display: block;
+      letter-spacing: 0.4px;
     }
 
-    .nav-menu {
+    .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
-    .nav-item {
-      font-size: 0.82rem;
+    .nav-link {
+      font-size: 0.8rem;
       font-weight: 700;
-      color: var(--text-sub);
+      color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       padding: 6px 0;
+      position: relative;
       transition: color 0.15s ease;
     }
 
-    .nav-item:hover {
-      color: var(--navy);
+    .nav-link:hover, .nav-link.active {
+      color: var(--navy-900);
     }
 
-    .btn-nav-wa {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      background: var(--navy);
-      color: #ffffff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-radius: var(--radius-sm);
-      transition: background 0.15s ease;
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--navy-900);
+      transition: width 0.2s ease;
     }
 
-    .btn-nav-wa:hover {
-      background: var(--navy-light);
+    .nav-link:hover::after {
+      width: 100%;
     }
 
     .menu-toggle {
       display: none;
-      padding: 8px;
       flex-direction: column;
       gap: 5px;
+      padding: 8px;
     }
 
     .menu-bar {
       width: 22px;
       height: 2px;
-      background: var(--text-main);
+      background: var(--navy-900);
       border-radius: 2px;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .menu-toggle {
         display: flex;
       }
-      .nav-menu {
+      .nav-links {
         position: absolute;
-        top: 64px;
+        top: 68px;
         left: 0;
         right: 0;
         background: #ffffff;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--border-light);
         flex-direction: column;
         align-items: flex-start;
         padding: 16px 20px 24px;
         gap: 12px;
         display: none;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-lg);
       }
-      .nav-menu.open {
+      .nav-links.open {
         display: flex;
       }
-      .nav-item {
+      .nav-link {
         font-size: 0.9rem;
-        padding: 6px 0;
         width: 100%;
-        border-bottom: 1px solid var(--bg-subtle);
+        padding: 8px 0;
+        border-bottom: 1px solid var(--bg-surface);
       }
-      .btn-nav-wa {
+      .nav-link::after {
+        display: none;
+      }
+      .nav-cta {
         width: 100%;
         justify-content: center;
-        margin-top: 6px;
-        padding: 10px;
+        margin-top: 8px;
       }
       .menu-toggle.open .menu-bar:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
@@ -277,818 +363,192 @@
     }
 
     /* ==========================================================================
-       HERO / INTRO SECTION
+       HERO SHOWCASE SECTION (LOGO BDA SHOOTING FOCUS)
        ========================================================================== */
-    .hero {
-      background: var(--bg-subtle);
-      padding: 48px 0;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 36px;
-      align-items: center;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .tag {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 4px 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-    }
-
-    .tag-navy {
-      background: #e0f2fe;
-      color: #0369a1;
-      border-color: #bae6fd;
-    }
-
-    .tag-gold {
-      background: var(--gold-bg);
-      color: var(--gold);
-      border-color: var(--gold-border);
-    }
-
-    .hero-heading {
-      font-size: 2.3rem;
-      font-weight: 900;
-      line-height: 1.12;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      margin-bottom: 14px;
-    }
-
-    .hero-subtitle {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 20px;
-    }
-
-    /* Key specs summary list */
-    .key-specs-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .spec-chip {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-    }
-
-    .spec-chip-label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .spec-chip-value {
-      font-size: 0.92rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 11px 20px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-radius: var(--radius-sm);
-      transition: all 0.15s ease;
-    }
-
-    .btn-primary {
-      background: var(--navy);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background: var(--navy-light);
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--text-main);
-      border: 1px solid var(--border-dark);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-card-alt);
-      border-color: var(--text-sub);
-    }
-
-    /* Hero Logo Showcase */
-    .hero-visual {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-      box-shadow: var(--shadow-card);
-    }
-
-    .hero-main-logo {
-      width: 100%;
-      max-width: 280px;
-      margin: 0 auto 16px auto;
-      object-fit: contain;
-    }
-
-    .visual-caption {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--navy);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .visual-subcaption {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    @media (max-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-      .hero-heading {
-        font-size: 1.85rem;
-      }
-      .key-specs-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ==========================================================================
-       COUNTDOWN SECTION (COMPACT & CLEAN)
-       ========================================================================== */
-    .countdown-bar {
-      background: #ffffff;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .countdown-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .countdown-label-group h3 {
-      font-size: 1rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-main);
-    }
-
-    .countdown-label-group p {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .countdown-grid {
-      display: flex;
-      gap: 10px;
-    }
-
-    .count-unit {
-      min-width: 68px;
-      padding: 10px 8px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      text-align: center;
-    }
-
-    .count-val {
-      display: block;
-      font-size: 1.55rem;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-      color: var(--navy);
-      line-height: 1;
-    }
-
-    .count-txt {
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      display: block;
-    }
-
-    @media (max-width: 640px) {
-      .countdown-wrap {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .countdown-grid {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .count-unit {
-        min-width: 0;
-      }
-    }
-
-    /* ==========================================================================
-       CATEGORIES / SPECIFICATIONS (CLEAN COMPARISON TABLE & CARDS)
-       ========================================================================== */
-    .cats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .cat-box {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow-subtle);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .cat-box.featured {
-      border-top: 4px solid var(--navy);
-    }
-
-    .cat-box.speed {
-      border-top: 4px solid var(--red);
-    }
-
-    .cat-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-    }
-
-    .cat-name {
-      font-size: 1.25rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-main);
-    }
-
-    .cat-badge {
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-    }
-
-    .cat-badge.blue {
-      background: #e0f2fe;
-      color: #0369a1;
-    }
-
-    .cat-badge.red {
-      background: #fee2e2;
-      color: #b91c1c;
-    }
-
-    /* Specs rows */
-    .spec-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 18px;
-    }
-
-    .spec-table tr {
-      border-bottom: 1px solid var(--bg-subtle);
-    }
-
-    .spec-table tr:last-child {
-      border-bottom: none;
-    }
-
-    .spec-table td {
-      padding: 8px 0;
-      font-size: 0.82rem;
-      vertical-align: top;
-    }
-
-    .spec-table td.label {
-      color: var(--text-muted);
-      font-weight: 600;
-      width: 38%;
-    }
-
-    .spec-table td.value {
-      color: var(--text-main);
-      font-weight: 700;
-      text-align: right;
-    }
-
-    .callout-rule {
-      background: var(--bg-subtle);
-      border-left: 3px solid var(--border-dark);
-      padding: 10px 12px;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin-bottom: 18px;
-    }
-
-    .callout-rule.warning {
-      background: var(--red-bg);
-      border-left-color: var(--red);
-      color: var(--red);
-      font-weight: 600;
-    }
-
-    .cat-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-    }
-
-    .fee-text {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .fee-amount {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--navy);
-    }
-
-    @media (max-width: 860px) {
-      .cats-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ==========================================================================
-       SCHEDULE (CLEAN COMPACT TIMELINE)
-       ========================================================================== */
-    .schedule-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .schedule-col {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-    }
-
-    .schedule-day-header {
-      border-bottom: 2px solid var(--navy);
-      padding-bottom: 10px;
-      margin-bottom: 14px;
-    }
-
-    .sch-date {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .sch-day {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--text-main);
-      text-transform: uppercase;
-    }
-
-    .event-item {
-      padding: 10px 0;
-      border-bottom: 1px solid var(--bg-subtle);
-    }
-
-    .event-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .event-time {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-
-    .event-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 2px;
-    }
-
-    .event-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    @media (max-width: 860px) {
-      .schedule-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ==========================================================================
-       PRIZES (CLEAN PODIUM LIST)
-       ========================================================================== */
-    .prizes-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .prize-card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 18px;
-      text-align: center;
-    }
-
-    .prize-card.top {
-      border-color: var(--gold);
-      background: #fffdfa;
-      box-shadow: var(--shadow-card);
-    }
-
-    .prize-rank {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 3px 10px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 10px;
-    }
-
-    .prize-rank.gold {
-      background: var(--gold-bg);
-      color: var(--gold);
-    }
-
-    .prize-rank.silver {
-      background: var(--bg-card-alt);
-      color: var(--text-sub);
-    }
-
-    .prize-rank.bronze {
-      background: #ffedd5;
-      color: #c2410c;
-    }
-
-    .prize-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-main);
-      margin-bottom: 2px;
-    }
-
-    .prize-amount {
-      font-size: 1.55rem;
-      font-weight: 900;
-      color: var(--navy);
-      margin: 12px 0;
-      padding: 8px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .prize-items {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .prize-items li {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .prize-items li::before {
-      content: '✓';
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    .prizes-foot {
-      margin-top: 18px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    @media (max-width: 860px) {
-      .prizes-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ==========================================================================
-       RULES & SAFETY (CLEAN ACCORDION)
-       ========================================================================== */
-    .rules-list {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .rule-item {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 10px;
-      background: #ffffff;
+    .hero-section {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
+      padding: 56px 0 64px 0;
       overflow: hidden;
     }
 
-    .rule-trigger {
-      width: 100%;
-      padding: 16px 18px;
-      display: flex;
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
       align-items: center;
-      justify-content: space-between;
-      text-align: left;
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--text-main);
-      text-transform: uppercase;
-      background: #ffffff;
     }
 
-    .rule-trigger:hover {
-      background: var(--bg-subtle);
-    }
-
-    .rule-indicator {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      transition: transform 0.2s ease;
-    }
-
-    .rule-item.active .rule-indicator {
-      transform: rotate(180deg);
-    }
-
-    .rule-body {
-      display: none;
-      padding: 0 18px 18px 18px;
-      font-size: 0.82rem;
-      color: var(--text-sub);
-      line-height: 1.6;
-      border-top: 1px solid var(--bg-subtle);
-      padding-top: 14px;
-    }
-
-    .rule-item.active .rule-body {
-      display: block;
-    }
-
-    .bullets {
+    .hero-credentials {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 20px;
     }
 
-    .bullets li {
-      position: relative;
-      padding-left: 16px;
-    }
-
-    .bullets li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--navy);
-      font-weight: bold;
-    }
-
-    .alert-penalty {
-      margin-top: 12px;
-      padding: 10px 14px;
-      background: var(--red-bg);
-      border-radius: var(--radius-sm);
-      border: 1px solid #fecaca;
-      font-size: 0.78rem;
-      color: #991b1b;
-    }
-
-    /* ==========================================================================
-       PAYMENT & OFFICIAL CONTACTS
-       ========================================================================== */
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 24px;
-      align-items: flex-start;
-    }
-
-    .bank-box {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-    }
-
-    .bank-title {
-      font-size: 0.72rem;
+    .badge-chip {
+      font-size: 0.7rem;
       font-weight: 800;
       text-transform: uppercase;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-
-    .bank-header {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 14px;
-    }
-
-    .acc-container {
-      background: #ffffff;
-      border: 1px solid var(--border-dark);
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
       border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-bottom: 14px;
     }
 
-    .acc-num-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+    .badge-chip.resimen {
+      background: var(--navy-100);
+      color: var(--navy-800);
+      border: 1px solid #bae6fd;
     }
 
-    .acc-digits {
-      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
-      font-size: 1.35rem;
+    .badge-chip.anniversary {
+      background: var(--gold-100);
+      color: var(--gold-700);
+      border: 1px solid #fde68a;
+    }
+
+    .badge-chip.motto {
+      background: var(--emerald-100);
+      color: var(--emerald-700);
+      border: 1px solid #bbf7d0;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4.2vw, 3.4rem);
       font-weight: 900;
-      color: var(--text-main);
-      letter-spacing: 1px;
-    }
-
-    .btn-copy {
-      padding: 6px 12px;
-      background: var(--navy);
-      color: #ffffff;
-      border-radius: var(--radius-sm);
-      font-size: 0.72rem;
-      font-weight: 800;
+      color: var(--navy-900);
+      line-height: 1.08;
       text-transform: uppercase;
-      transition: background 0.15s ease;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
     }
 
-    .btn-copy:hover {
-      background: var(--navy-light);
+    .hero-subtitle-bar {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-light);
     }
 
-    .acc-owner {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-top: 8px;
+    /* Key event parameters table in hero */
+    .hero-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 28px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
-    .bank-notes {
-      font-size: 0.75rem;
+    .hero-meta-table tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .hero-meta-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .hero-meta-table td {
+      padding: 10px 14px;
+      font-size: 0.82rem;
+    }
+
+    .hero-meta-table .k-label {
       color: var(--text-muted);
-      line-height: 1.5;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      width: 32%;
+      background: var(--bg-surface);
     }
 
-    .contacts-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    .hero-meta-table .k-value {
+      color: var(--navy-900);
+      font-weight: 800;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
-    .contact-card {
+    /* Hero Logo Showcase Frame */
+    .hero-logo-frame {
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
     }
 
-    .cp-role {
-      font-size: 0.68rem;
-      font-weight: 800;
+    .hero-logo-frame::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy-900), var(--gold-600), var(--crimson-600));
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .hero-insignia-img {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto 18px auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+      transition: transform 0.3s ease;
+    }
+
+    .hero-insignia-img:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-frame-caption {
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--navy-900);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--navy);
-      margin-bottom: 2px;
+      letter-spacing: 0.6px;
     }
 
-    .cp-name {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .cp-phone {
-      font-family: ui-monospace, monospace;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .btn-wa-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px;
-      background: var(--green-bg);
-      color: var(--green);
-      border: 1px solid #bbf7d0;
-      border-radius: var(--radius-sm);
+    .hero-frame-sub {
       font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      transition: all 0.15s ease;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
 
-    .btn-wa-link:hover {
-      background: var(--green);
-      color: #ffffff;
-    }
-
-    @media (max-width: 860px) {
-      .contact-layout {
+    @media (max-width: 900px) {
+      .hero-layout {
         grid-template-columns: 1fr;
+        gap: 32px;
       }
-      .contacts-grid {
-        grid-template-columns: 1fr;
+      .hero-logo-frame {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 24px 20px;
       }
     }
 
     /* ==========================================================================
-       VENUE / LOCATION & FOOTER
+       COUNTDOWN SECTION WITH TIME-SYNC BAR
        ========================================================================== */
-    .venue-strip {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
+    .countdown-section {
+      background: #ffffff;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .countdown-bar-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1096,28 +556,998 @@
       flex-wrap: wrap;
     }
 
-    .venue-info h4 {
-      font-size: 1.05rem;
+    .countdown-status-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--emerald-600);
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+
+    .countdown-title-text h3 {
+      font-size: 0.95rem;
       font-weight: 800;
       text-transform: uppercase;
-      color: var(--text-main);
+      color: var(--navy-900);
+    }
+
+    .countdown-title-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .countdown-digits {
+      display: flex;
+      gap: 8px;
+    }
+
+    .time-card {
+      min-width: 72px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .time-num {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--navy-900);
+      line-height: 1;
+    }
+
+    .time-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .countdown-bar-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .countdown-digits {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .time-card {
+        min-width: 0;
+      }
+      .time-num {
+        font-size: 1.35rem;
+      }
+    }
+
+    /* ==========================================================================
+       INTERACTIVE LAB 1: PRECISION 20M DRILL TARGET SIMULATOR
+       ========================================================================== */
+    .interactive-section {
+      background: var(--bg-surface);
+      padding: 64px 0;
+    }
+
+    .simulator-container {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .sim-view-col {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-right: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    /* Interactive Target SVG */
+    .target-canvas {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      cursor: crosshair;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .target-canvas svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .target-tip {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sim-data-col {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-surface);
+    }
+
+    .sim-score-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-metric {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-metric-val {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      line-height: 1;
+    }
+
+    .stat-metric-lbl {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .shot-log-list {
+      max-height: 150px;
+      overflow-y: auto;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .shot-log-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--bg-surface-alt);
+    }
+
+    .shot-log-item:last-child {
+      border-bottom: none;
+    }
+
+    .sim-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    @media (max-width: 860px) {
+      .simulator-container {
+        grid-template-columns: 1fr;
+      }
+      .sim-view-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        padding: 24px;
+      }
+      .sim-data-col {
+        padding: 24px;
+      }
+    }
+
+    /* ==========================================================================
+       INTERACTIVE LAB 2: DUELING PLAT SPEED DRILL SIMULATOR
+       ========================================================================== */
+    .dueling-drill-box {
+      margin-top: 36px;
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .drill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .drill-timer-display {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      background: var(--bg-surface);
+      padding: 4px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-medium);
+    }
+
+    .plates-rack {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 18px;
+      padding: 40px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+      user-select: none;
+      min-height: 180px;
+      position: relative;
+    }
+
+    /* Steel Plates */
+    .plate-target {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #0284c7;
+      border: 3px solid #0369a1;
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 6px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #ffffff;
+      font-size: 0.85rem;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, background 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .plate-target.knocked {
+      transform: translateY(28px) rotate(-45deg);
+      opacity: 0.25;
+      background: #64748b;
+      border-color: #475569;
+      pointer-events: none;
+    }
+
+    /* Red Center Popper */
+    .popper-target {
+      width: 48px;
+      height: 90px;
+      background: var(--crimson-600);
+      border: 3px solid var(--crimson-700);
+      border-radius: 24px 24px 4px 4px;
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 6px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 10px;
+      font-weight: 900;
+      color: #ffffff;
+      font-size: 0.75rem;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .popper-target.knocked {
+      transform: translateY(35px) rotate(85deg);
+      opacity: 0.25;
+      background: #64748b;
+      border-color: #475569;
+      pointer-events: none;
+    }
+
+    .drill-status-banner {
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+
+    .drill-status-banner.show {
+      display: block;
+    }
+
+    .drill-status-banner.dq {
+      background: var(--crimson-100);
+      color: var(--crimson-700);
+      border: 1px solid #fecaca;
+    }
+
+    .drill-status-banner.win {
+      background: var(--emerald-100);
+      color: var(--emerald-700);
+      border: 1px solid #bbf7d0;
+    }
+
+    @media (max-width: 600px) {
+      .plates-rack {
+        gap: 8px;
+        padding: 30px 6px;
+      }
+      .plate-target {
+        width: 44px;
+        height: 44px;
+        font-size: 0.72rem;
+      }
+      .popper-target {
+        width: 38px;
+        height: 70px;
+      }
+    }
+
+    /* ==========================================================================
+       TECHNICAL SPECIFICATIONS & CATEGORY COMPARISON
+       ========================================================================== */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .spec-card {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .spec-card.presisi-card {
+      border-top: 4px solid var(--navy-800);
+    }
+
+    .spec-card.dueling-card {
+      border-top: 4px solid var(--crimson-600);
+    }
+
+    .spec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 18px;
+    }
+
+    .spec-header h3 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      text-transform: uppercase;
+    }
+
+    .badge-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .badge-tag.blue {
+      background: var(--navy-100);
+      color: var(--navy-800);
+    }
+
+    .badge-tag.red {
+      background: var(--crimson-100);
+      color: var(--crimson-700);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .data-table tr {
+      border-bottom: 1px solid var(--bg-surface);
+    }
+
+    .data-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .data-table td {
+      padding: 9px 0;
+      font-size: 0.82rem;
+      vertical-align: top;
+    }
+
+    .data-table .label {
+      color: var(--text-muted);
+      font-weight: 700;
+      width: 36%;
+    }
+
+    .data-table .val {
+      color: var(--text-primary);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .rule-callout {
+      padding: 12px 14px;
+      background: var(--bg-surface);
+      border-left: 3px solid var(--navy-800);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .rule-callout.danger {
+      background: var(--crimson-100);
+      border-left-color: var(--crimson-600);
+      color: var(--crimson-700);
+      font-weight: 600;
+    }
+
+    .spec-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .fee-desc {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .fee-num {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--navy-900);
+    }
+
+    @media (max-width: 860px) {
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       SCHEDULE TIMELINE
+       ========================================================================== */
+    .timeline-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-tab-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #ffffff;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .timeline-tab-btn.active, .timeline-tab-btn:hover {
+      background: var(--navy-900);
+      color: #ffffff;
+      border-color: var(--navy-900);
+    }
+
+    .timeline-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .timeline-card {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-card.highlight {
+      border-color: var(--navy-800);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tl-header {
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--navy-900);
+      margin-bottom: 16px;
+    }
+
+    .tl-date {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--gold-600);
+      text-transform: uppercase;
+    }
+
+    .tl-day {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      text-transform: uppercase;
+    }
+
+    .tl-events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tl-item {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--navy-800);
+    }
+
+    .tl-time {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--navy-800);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .tl-event-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .tl-event-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 860px) {
+      .timeline-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       PRIZES & HONORS
+       ========================================================================== */
+    .prizes-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .podium-box {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .podium-box.champion {
+      border: 2px solid var(--gold-600);
+      background: #fffdf9;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .podium-chip {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    .podium-chip.gold {
+      background: var(--gold-100);
+      color: var(--gold-700);
+    }
+
+    .podium-chip.silver {
+      background: var(--bg-surface-alt);
+      color: var(--text-secondary);
+    }
+
+    .podium-chip.bronze {
+      background: #ffedd5;
+      color: #c2410c;
+    }
+
+    .podium-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--navy-900);
       margin-bottom: 4px;
     }
 
-    .venue-info p {
-      font-size: 0.8rem;
+    .podium-amount {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      margin: 14px 0;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .podium-perks {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .podium-perks li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .podium-perks li::before {
+      content: '✔';
+      color: var(--emerald-600);
+      font-weight: bold;
+    }
+
+    @media (max-width: 860px) {
+      .prizes-container {
+        grid-template-columns: 1fr;
+      }
+      .podium-box.champion {
+        transform: none;
+        order: -1;
+      }
+    }
+
+    /* ==========================================================================
+       INTERACTIVE FEE CALCULATOR & OFFICIAL PAYMENT
+       ========================================================================== */
+    .admin-payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .calc-card {
+      background: #ffffff;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calc-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--navy-900);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .option-select-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .option-select-box:hover {
+      border-color: var(--navy-800);
+    }
+
+    .option-select-box.checked {
+      background: #ffffff;
+      border-color: var(--navy-800);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .check-custom {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      transition: var(--transition);
+    }
+
+    .option-select-box.checked .check-custom {
+      background: var(--navy-900);
+      border-color: var(--navy-900);
+      color: #ffffff;
+    }
+
+    .option-info strong {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--navy-900);
+    }
+
+    .option-info span {
+      font-size: 0.72rem;
       color: var(--text-muted);
     }
 
-    .site-footer {
+    .calc-total-bar {
+      margin-top: 20px;
+      padding: 16px;
+      background: var(--bg-surface-alt);
+      border-radius: var(--radius-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .calc-total-bar span {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .calc-total-bar strong {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--navy-900);
+    }
+
+    /* Bank Account Card */
+    .bank-account-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+
+    .bank-acc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .bank-badge-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--navy-900);
+    }
+
+    .acc-number-frame {
       background: #ffffff;
-      padding: 36px 0 24px;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .acc-digits-large {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--navy-900);
+      letter-spacing: 1px;
+    }
+
+    .contacts-table-compact {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    .contacts-table-compact tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .contacts-table-compact td {
+      padding: 8px 0;
+      font-size: 0.78rem;
+    }
+
+    .btn-wa-compact {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--emerald-100);
+      color: var(--emerald-700);
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .btn-wa-compact:hover {
+      background: var(--emerald-600);
+      color: #ffffff;
+    }
+
+    @media (max-width: 860px) {
+      .admin-payment-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       RULES & SAFETY (JUKNIS)
+       ========================================================================== */
+    .juknis-box {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .juknis-row {
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .juknis-row-trigger {
+      width: 100%;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      text-transform: uppercase;
+      background: #ffffff;
+    }
+
+    .juknis-row-trigger:hover {
+      background: var(--bg-surface);
+    }
+
+    .juknis-arrow {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    .juknis-row.active .juknis-arrow {
+      transform: rotate(180deg);
+    }
+
+    .juknis-row-content {
+      display: none;
+      padding: 0 20px 20px 20px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border-top: 1px solid var(--bg-surface-alt);
+      padding-top: 14px;
+    }
+
+    .juknis-row.active .juknis-row-content {
+      display: block;
+    }
+
+    .juknis-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .juknis-bullets li {
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .juknis-bullets li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--navy-800);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--bg-surface);
+      padding: 40px 0 24px 0;
       font-size: 0.78rem;
       color: var(--text-muted);
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border-light);
     }
 
-    .footer-content {
+    .footer-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1125,38 +1555,32 @@
       gap: 16px;
     }
 
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .footer-brand-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--navy-900);
     }
 
-    .footer-logo {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
-
-    /* Toast Notification */
-    .toast {
+    /* Toast */
+    .toast-popup {
       position: fixed;
       bottom: 24px;
       left: 50%;
-      transform: translateX(-50%) translateY(40px);
-      background: var(--navy);
+      transform: translateX(-50%) translateY(50px);
+      background: var(--navy-900);
       color: #ffffff;
-      padding: 10px 20px;
-      border-radius: var(--radius);
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
       font-size: 0.8rem;
       font-weight: 700;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-lg);
       opacity: 0;
       visibility: hidden;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1000;
     }
 
-    .toast.show {
+    .toast-popup.show {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
       visibility: visible;
@@ -1166,127 +1590,136 @@
 <body>
 
   <!-- ==========================================================================
-       TOP NAVIGATION
+       TOP NAVIGATION BAR
        ========================================================================== -->
-  <header class="top-nav">
-    <div class="container">
-      <div class="nav-inner">
-        <a href="#beranda" class="brand-link" aria-label="BDA Shooting Championship 2026">
-          <div class="brand-logos">
-            <img src="assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="brand-logo-img" onerror="this.onerror=null; this.src='public/logo-bda-clean.jpg';">
-            <img src="assets/logo-championship-clean.jpg" alt="Logo Championship" class="brand-logo-img" onerror="this.onerror=null; this.src='public/logo-championship-clean.jpg';">
-          </div>
-          <div class="brand-text">
-            <h1>BDA SHOOTING 2026</h1>
-            <span>RESIMEN I PASUKAN PELOPOR</span>
-          </div>
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#beranda" class="brand" aria-label="BDA Shooting Championship 2026">
+        <div class="brand-logos">
+          <img src="assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="brand-logo-img" onerror="this.onerror=null; this.src='public/logo-bda-clean.jpg';">
+          <img src="assets/logo-hero.jpg" alt="Logo Championship" class="brand-logo-img" onerror="this.onerror=null; this.src='public/logo-hero.jpg';">
+        </div>
+        <div class="brand-info">
+          <h1>BDA SHOOTING 2026</h1>
+          <span>RESIMEN I PASUKAN PELOPOR</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#beranda" class="nav-link">Beranda</a>
+        <a href="#simulasi" class="nav-link">Simulasi Target</a>
+        <a href="#kategori" class="nav-link">Materi Lomba</a>
+        <a href="#jadwal" class="nav-link">Jadwal</a>
+        <a href="#hadiah" class="nav-link">Hadiah</a>
+        <a href="#juknis" class="nav-link">Juknis</a>
+        <a href="#registrasi" class="nav-link">Biaya &amp; Kontak</a>
+        <a href="#registrasi" class="btn btn-navy nav-cta" style="padding: 7px 16px; font-size: 0.72rem;">
+          Daftar Sekarang
         </a>
+      </nav>
 
-        <nav class="nav-menu" id="navMenu">
-          <a href="#beranda" class="nav-item">Beranda</a>
-          <a href="#kategori" class="nav-item">Kategori</a>
-          <a href="#jadwal" class="nav-item">Jadwal</a>
-          <a href="#hadiah" class="nav-item">Hadiah</a>
-          <a href="#juknis" class="nav-item">Juknis &amp; Aturan</a>
-          <a href="#rekening" class="nav-item">Rekening &amp; Kontak</a>
-          <a href="https://wa.me/6285272377704?text=Halo%20Panitia%20BDA%20Shooting%20Championship%202026,%20saya%20ingin%20mendaftar" target="_blank" rel="noopener noreferrer" class="btn-nav-wa">
-            Daftar WhatsApp
-          </a>
-        </nav>
-
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </button>
-      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka Menu Navigasi">
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+      </button>
     </div>
   </header>
 
   <!-- ==========================================================================
-       HERO / INTRO SECTION
+       HERO SHOWCASE SECTION (FEATURING BDA SHOOTING HERO LOGO)
        ========================================================================== -->
-  <section class="hero" id="beranda">
+  <section class="hero-section" id="beranda">
     <div class="container">
-      <div class="hero-grid">
+      <div class="hero-layout">
         <div>
-          <div class="hero-tags">
-            <span class="tag tag-navy">Resimen I Pasukan Pelopor</span>
-            <span class="tag tag-gold">Anniversary 7th BDA 750</span>
-            <span class="tag tag-navy">Semboyan: MAJU</span>
+          <div class="hero-credentials">
+            <span class="badge-chip resimen">Resimen I Pasukan Pelopor</span>
+            <span class="badge-chip anniversary">7th Anniversary BDA 750</span>
+            <span class="badge-chip motto">Semboyan: MAJU</span>
           </div>
 
-          <h1 class="hero-heading">
+          <h1 class="hero-title">
             BDA SHOOTING<br>CHAMPIONSHIP 2026
           </h1>
 
-          <p class="hero-subtitle">
-            Kejuaraan Menembak Pistol Presisi 20 Meter &amp; Dueling Plat Speed
-          </p>
-
-          <!-- Key specifications chips -->
-          <div class="key-specs-grid">
-            <div class="spec-chip">
-              <div class="spec-chip-label">Tanggal Kegiatan</div>
-              <div class="spec-chip-value">16 — 18 Oktober 2026</div>
-            </div>
-            <div class="spec-chip">
-              <div class="spec-chip-label">Lokasi Lapangan</div>
-              <div class="spec-chip-value">Shooting House Resimen I, Bogor</div>
-            </div>
-            <div class="spec-chip">
-              <div class="spec-chip-label">Materi Lomba</div>
-              <div class="spec-chip-value">Presisi 20M &amp; Dueling Plat</div>
-            </div>
-            <div class="spec-chip">
-              <div class="spec-chip-label">Senjata &amp; Amunisi</div>
-              <div class="spec-chip-value">Pistol Dinas Organik 9x19mm</div>
-            </div>
+          <div class="hero-subtitle-bar">
+            Kejuaraan Menembak Presisi 20 Meter &amp; Dueling Plat Speed
           </div>
 
-          <div class="hero-actions">
-            <a href="#kategori" class="btn btn-primary">Lihat Kategori Lomba</a>
-            <a href="#juknis" class="btn btn-secondary">Petunjuk Teknis (Juknis)</a>
-            <a href="#rekening" class="btn btn-secondary">Rekening Pendaftaran</a>
+          <!-- Key Event Credentials Table -->
+          <table class="hero-meta-table">
+            <tr>
+              <td class="k-label">Waktu Pelaksanaan</td>
+              <td class="k-value">16 — 18 Oktober 2026 (Jum'at — Minggu)</td>
+            </tr>
+            <tr>
+              <td class="k-label">Lokasi Lapangan</td>
+              <td class="k-value">Shooting House Resimen I Pasukan Pelopor, Kedung Halang, Bogor</td>
+            </tr>
+            <tr>
+              <td class="k-label">Materi Perlombaan</td>
+              <td class="k-value">Pistol Presisi 20M &amp; Dueling Plat Speed (Kelas Individu)</td>
+            </tr>
+            <tr>
+              <td class="k-label">Senjata &amp; Amunisi</td>
+              <td class="k-value">Pistol Dinas Organik Satuan Kaliber 9x19mm (Pejera Besi Non-Optik)</td>
+            </tr>
+          </table>
+
+          <div class="hero-cta-group">
+            <a href="#simulasi" class="btn btn-navy">
+              <span>🎯 Coba Simulasi Lapangan</span>
+            </a>
+            <a href="#kategori" class="btn btn-outline">
+              <span>Spesifikasi Kategori</span>
+            </a>
+            <a href="#registrasi" class="btn btn-outline">
+              <span>Kalkulator Biaya</span>
+            </a>
           </div>
         </div>
 
-        <div class="hero-visual">
-          <img src="assets/logo-championship-clean.jpg" alt="Logo Resmi BDA Shooting Championship 2026" class="hero-main-logo" onerror="this.onerror=null; this.src='public/logo-championship-clean.jpg';">
-          <div class="visual-caption">Penyelenggara Resmi</div>
-          <div class="visual-subcaption">Letting Brigade Diraya Adikara (BDA) 750 Kedung Halang Bogor</div>
+        <!-- Hero Insignia Display -->
+        <div class="hero-logo-frame">
+          <img src="assets/logo-hero.jpg" alt="Logo Resmi BDA Shooting Championship 2026" class="hero-insignia-img" onerror="this.onerror=null; this.src='public/logo-hero.jpg';">
+          <div class="hero-frame-caption">Insignia Resmi Kejuaraan 2026</div>
+          <div class="hero-frame-sub">Paguyuban Letting Brigade Diraya Adikara 750</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ==========================================================================
-       COUNTDOWN SECTION
+       COUNTDOWN BAR WITH EVENT STATUS
        ========================================================================== -->
-  <div class="countdown-bar" id="countdown">
+  <div class="countdown-section">
     <div class="container">
-      <div class="countdown-wrap">
-        <div class="countdown-label-group">
-          <h3>Hitung Mundur Kejuaraan</h3>
-          <p>Menuju Hari Pertandingan: Sabtu, 17 Oktober 2026 • 08:00 WIB</p>
+      <div class="countdown-bar-wrap">
+        <div class="countdown-status-box">
+          <div class="status-pulse"></div>
+          <div class="countdown-title-text">
+            <h3>Waktu Menuju Pertandingan</h3>
+            <p>Sabtu, 17 Oktober 2026 • 08:00 WIB di Shooting House</p>
+          </div>
         </div>
 
-        <div class="countdown-grid">
-          <div class="count-unit">
-            <span class="count-val" id="daysVal">00</span>
-            <span class="count-txt">Hari</span>
+        <div class="countdown-digits">
+          <div class="time-card">
+            <span class="time-num" id="dBox">00</span>
+            <span class="time-label">Hari</span>
           </div>
-          <div class="count-unit">
-            <span class="count-val" id="hoursVal">00</span>
-            <span class="count-txt">Jam</span>
+          <div class="time-card">
+            <span class="time-num" id="hBox">00</span>
+            <span class="time-label">Jam</span>
           </div>
-          <div class="count-unit">
-            <span class="count-val" id="minVal">00</span>
-            <span class="count-txt">Menit</span>
+          <div class="time-card">
+            <span class="time-num" id="mBox">00</span>
+            <span class="time-label">Menit</span>
           </div>
-          <div class="count-unit">
-            <span class="count-val" id="secVal">00</span>
-            <span class="count-txt">Detik</span>
+          <div class="time-card">
+            <span class="time-num" id="sBox">00</span>
+            <span class="time-label">Detik</span>
           </div>
         </div>
       </div>
@@ -1294,134 +1727,290 @@
   </div>
 
   <!-- ==========================================================================
-       MATERI & KATEGORI PERTANDINGAN
+       INTERACTIVE LAB 1 & 2: TARGET SIMULATOR & DUELING PLAT DRILL
+       ========================================================================== -->
+  <section class="interactive-section" id="simulasi">
+    <div class="container">
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Simulasi Interaktif Lapangan</span>
+          <h2 class="section-heading">Latihan &amp; Uji Akurasi Menembak</h2>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); max-width: 460px;">
+          Uji presisi lesan 20 meter dan latih reaksi kecepatan dueling plat secara langsung pada simulasi berikut sesuai standar juknis resmi.
+        </p>
+      </div>
+
+      <!-- Simulator 1: Presisi 20M Target -->
+      <div class="simulator-container">
+        <!-- Target Left Column -->
+        <div class="sim-view-col">
+          <div class="target-canvas" id="targetCanvas">
+            <svg viewBox="0 0 400 400" id="targetSvg" xmlns="http://www.w3.org/2000/svg">
+              <!-- Ring 1 (White) -->
+              <circle cx="200" cy="200" r="195" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+              <text x="200" y="24" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">1</text>
+              
+              <!-- Ring 2 -->
+              <circle cx="200" cy="200" r="175" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+              <text x="200" y="44" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">2</text>
+              
+              <!-- Ring 3 -->
+              <circle cx="200" cy="200" r="155" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+              <text x="200" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">3</text>
+              
+              <!-- Ring 4 -->
+              <circle cx="200" cy="200" r="135" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+              <text x="200" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">4</text>
+              
+              <!-- Ring 5 -->
+              <circle cx="200" cy="200" r="115" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+              <text x="200" y="104" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">5</text>
+              
+              <!-- Black Bullseye Rings 6 to 10 -->
+              <!-- Ring 6 -->
+              <circle cx="200" cy="200" r="95" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+              <text x="200" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#64748b">6</text>
+              
+              <!-- Ring 7 -->
+              <circle cx="200" cy="200" r="75" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+              <text x="200" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">7</text>
+              
+              <!-- Ring 8 -->
+              <circle cx="200" cy="200" r="55" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+              <text x="200" y="162" text-anchor="middle" font-size="12" font-weight="bold" fill="#94a3b8">8</text>
+              
+              <!-- Ring 9 -->
+              <circle cx="200" cy="200" r="35" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+              <text x="200" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#e2e8f0">9</text>
+              
+              <!-- Ring 10 -->
+              <circle cx="200" cy="200" r="18" fill="#0f172a" stroke="#cbd5e1" stroke-width="1"/>
+              <text x="200" y="196" text-anchor="middle" font-size="10" font-weight="bold" fill="#e2e8f0">10</text>
+              
+              <!-- Center X Ring -->
+              <circle cx="200" cy="200" r="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+              <text x="200" y="203" text-anchor="middle" font-size="9" font-weight="900" fill="#f59e0b">X</text>
+
+              <!-- Group for dynamic shot markers -->
+              <g id="shotHolesGroup"></g>
+            </svg>
+          </div>
+          <span class="target-tip">👆 Klik / Sentuh target untuk menembak (10 butir)</span>
+        </div>
+
+        <!-- Data Right Column -->
+        <div class="sim-data-col">
+          <div>
+            <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: var(--navy-800); margin-bottom: 6px;">
+              Papan Skor Presisi 20 Meter
+            </div>
+            <div class="sim-score-board">
+              <div class="stat-metric">
+                <div class="stat-metric-val" id="shotCountDisplay">0/10</div>
+                <div class="stat-metric-lbl">Tembakan</div>
+              </div>
+              <div class="stat-metric">
+                <div class="stat-metric-val" id="totalScoreDisplay">0</div>
+                <div class="stat-metric-lbl">Total Skor</div>
+              </div>
+              <div class="stat-metric">
+                <div class="stat-metric-val" id="xCountDisplay" style="color: var(--gold-600);">0</div>
+                <div class="stat-metric-lbl">Jumlah X</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">
+              Riwayat Perkenaan Peluru:
+            </div>
+            <div class="shot-log-list" id="shotLogList">
+              <div style="color: var(--text-subtle); text-align: center; padding: 16px 0;">Belum ada tembakan. Klik lesan di samping!</div>
+            </div>
+          </div>
+
+          <div class="sim-controls">
+            <button class="btn btn-outline" style="flex: 1;" onclick="resetTargetDrill()">
+              🔄 Reset Target
+            </button>
+            <button class="btn btn-navy" style="flex: 1;" onclick="autoFillDrill()">
+              ⚡ Coba 10 Tembakan Acak
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulator 2: Dueling Plat Speed Drill -->
+      <div class="dueling-drill-box">
+        <div class="drill-header">
+          <div>
+            <div class="section-eyebrow">Simulasi Kategori 2</div>
+            <h3 style="font-size: 1.15rem; font-weight: 900; color: var(--navy-900); text-transform: uppercase;">
+              Dueling Plat Speed Drill (5 Plat Bulat + 1 Popper)
+            </h3>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+              Aturan Juknis: Wajib jatuhkan ke-5 plat bulat biru sebelum menembak Popper merah penentu!
+            </p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="drill-timer-display" id="drillTimer">0.00s</div>
+            <button class="btn btn-navy" id="btnStartDrill" onclick="toggleDrill()">
+              Mulai Timer
+            </button>
+          </div>
+        </div>
+
+        <!-- The Target Rack -->
+        <div class="plates-rack" id="platesRack">
+          <div class="plate-target" onclick="hitPlate(1)" id="p1">1</div>
+          <div class="plate-target" onclick="hitPlate(2)" id="p2">2</div>
+          <div class="plate-target" onclick="hitPlate(3)" id="p3">3</div>
+          <div class="plate-target" onclick="hitPlate(4)" id="p4">4</div>
+          <div class="plate-target" onclick="hitPlate(5)" id="p5">5</div>
+          <div class="popper-target" onclick="hitPopper()" id="popper">
+            <span>POP</span>
+          </div>
+        </div>
+
+        <div class="drill-status-banner" id="drillStatus"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TECHNICAL SPECIFICATIONS OF 2 MAIN CATEGORIES
        ========================================================================== -->
   <section id="kategori">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Materi Lomba</span>
-        <h2 class="section-title">2 Kategori Pertandingan</h2>
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Spesifikasi Regulasi</span>
+          <h2 class="section-heading">2 Materi Utama Perlombaan</h2>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); max-width: 440px;">
+          Peserta diperkenankan mendaftar pada salah satu nomor pertandingan atau mengikuti kedua nomor sekaligus.
+        </p>
       </div>
 
-      <div class="cats-grid">
-        <!-- Kategori 1: Presisi 20M -->
-        <div class="cat-box featured">
+      <div class="specs-grid">
+        <!-- Card 1: Presisi 20 Meter -->
+        <div class="spec-card presisi-card">
           <div>
-            <div class="cat-top">
+            <div class="spec-header">
               <div>
-                <span class="cat-badge blue">Kelas Individu</span>
-                <h3 class="cat-name">Pistol Presisi 20 Meter</h3>
+                <span class="badge-tag blue">Akurasi &amp; Konsentrasi</span>
+                <h3>Pistol Presisi 20 Meter</h3>
               </div>
             </div>
 
-            <table class="spec-table">
+            <table class="data-table">
               <tr>
                 <td class="label">Jarak Tembak</td>
-                <td class="value">20 Meter</td>
+                <td class="val">20 Meter</td>
               </tr>
               <tr>
-                <td class="label">Sikap Menembak</td>
-                <td class="value">Berdiri, 2 Tangan</td>
+                <td class="label">Sikap Tembak</td>
+                <td class="val">Berdiri, Dua Tangan</td>
               </tr>
               <tr>
-                <td class="label">Tinggi Target</td>
-                <td class="value">Center lesan 140 cm</td>
+                <td class="label">Tinggi Lesan</td>
+                <td class="val">Center target 140 cm dari tanah</td>
               </tr>
               <tr>
                 <td class="label">Sasaran Target</td>
-                <td class="value">1 Lesan Ring Pistol (Nilai 1–10 + X)</td>
+                <td class="val">1 Lesan Ring Pistol (Nilai 1 - 10 + X)</td>
               </tr>
               <tr>
-                <td class="label">Amunisi</td>
-                <td class="value">13 Butir (3 Percobaan + 10 Slow Fire)</td>
+                <td class="label">Amunisi Peserta</td>
+                <td class="val">13 Butir (3 Percobaan + 10 Slow Fire)</td>
               </tr>
               <tr>
-                <td class="label">Batas Waktu</td>
-                <td class="value">Percobaan 1 Menit, Slow Fire 3 Menit</td>
+                <td class="label">Alokasi Waktu</td>
+                <td class="val">Percobaan 1 Menit, Slow Fire 3 Menit</td>
               </tr>
               <tr>
-                <td class="label">Total Nilai Maks</td>
-                <td class="value">100.10 Poin</td>
+                <td class="label">Nilai Maksimum</td>
+                <td class="val">100.10 Poin</td>
               </tr>
               <tr>
-                <td class="label">Senjata</td>
-                <td class="value">Pistol Organik 9x19mm (Pejera Besi Non-Optik)</td>
+                <td class="label">Senjata &amp; Pisir</td>
+                <td class="val">Pistol Organik 9x19mm (Pejera Besi Non-Optik)</td>
               </tr>
             </table>
 
-            <div class="callout-rule">
-              <strong>Penentuan Seri:</strong> Jumlah X terbanyak &rarr; Poin 9 &rarr; Tanding Ulang.
+            <div class="rule-callout">
+              <strong>Penentuan Seri (Tie-Breaker):</strong> Jumlah X terbanyak &rarr; Jumlah poin 9 terbanyak &rarr; Tanding Ulang.
             </div>
           </div>
 
-          <div class="cat-bottom">
+          <div class="spec-footer-row">
             <div>
-              <span class="fee-text">Biaya Registrasi</span>
-              <div class="fee-amount">Rp 200.000</div>
+              <div class="fee-desc">Biaya Registrasi</div>
+              <div class="fee-num">Rp 200.000</div>
             </div>
-            <a href="https://wa.me/6285775015786?text=Halo%20Panitia,%20saya%20ingin%20mendaftar%20Kategori%20Presisi%2020M%20BDA%202026" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              Daftar Presisi
+            <a href="https://wa.me/6285775015786?text=Halo%20Briptu%20Rully,%20saya%20ingin%20mendaftar%20Kategori%20Presisi%2020M%20BDA%202026" target="_blank" rel="noopener noreferrer" class="btn btn-navy">
+              Pilih Kategori Ini
             </a>
           </div>
         </div>
 
-        <!-- Kategori 2: Dueling Plat -->
-        <div class="cat-box speed">
+        <!-- Card 2: Dueling Plat Speed -->
+        <div class="spec-card dueling-card">
           <div>
-            <div class="cat-top">
+            <div class="spec-header">
               <div>
-                <span class="cat-badge red">Kelas Individu • Head to Head</span>
-                <h3 class="cat-name">Dueling Plat Speed</h3>
+                <span class="badge-tag red">Kecepatan &amp; Ketangkasan</span>
+                <h3>Dueling Plat Speed</h3>
               </div>
             </div>
 
-            <table class="spec-table">
+            <table class="data-table">
               <tr>
                 <td class="label">Jarak Tembak</td>
-                <td class="value">15 Meter</td>
+                <td class="val">15 Meter</td>
               </tr>
               <tr>
-                <td class="label">Sikap Menembak</td>
-                <td class="value">Berdiri (Start lari 10m ke meja)</td>
+                <td class="label">Sikap Tembak</td>
+                <td class="val">Berdiri (Start lari 10m di belakang meja)</td>
               </tr>
               <tr>
                 <td class="label">Sasaran Target</td>
-                <td class="value">5 Plat Bulat (Biru) + 1 Popper (Merah)</td>
+                <td class="val">5 Plat Bulat (Biru) + 1 Popper Penentu (Merah)</td>
               </tr>
               <tr>
-                <td class="label">Amunisi</td>
-                <td class="value">10 Butir per pertandingan</td>
+                <td class="label">Amunisi Peserta</td>
+                <td class="val">10 Butir per pertandingan duel</td>
               </tr>
               <tr>
                 <td class="label">Batas Waktu</td>
-                <td class="value">Tidak Terbatas (Kecepatan Waktu Gugur)</td>
+                <td class="val">Tidak Terbatas (Kecepatan Waktu Gugur)</td>
               </tr>
               <tr>
                 <td class="label">Sistem Lomba</td>
-                <td class="value">Sistem Gugur (Head to Head)</td>
+                <td class="val">Sistem Gugur (Head to Head 2 Petembak)</td>
               </tr>
               <tr>
-                <td class="label">Kondisi Senjata</td>
-                <td class="value">Kondisi 2 di atas meja penembakan</td>
+                <td class="label">Posisi Senjata</td>
+                <td class="val">Kondisi 2 di atas meja penembakan</td>
               </tr>
               <tr>
-                <td class="label">Senjata</td>
-                <td class="value">Pistol Organik 9x19mm (Laras maks 5")</td>
+                <td class="label">Spesifikasi Laras</td>
+                <td class="val">Pistol Organik 9x19mm (Maksimal Laras 5")</td>
               </tr>
             </table>
 
-            <div class="callout-rule warning">
-              <strong>Aturan Mutlak:</strong> Wajib jatuhkan 5 plat bulat terlebih dahulu sebelum menembak Popper Penentu (menembak Popper sebelum plat bulat habis = DQ).
+            <div class="rule-callout danger">
+              <strong>Aturan Mutlak DQ:</strong> Wajib menjatuhkan 5 plat bulat terlebih dahulu sebelum menembak Popper Penentu (menembak Popper sebelum plat bulat habis langsung dikenakan Diskualifikasi).
             </div>
           </div>
 
-          <div class="cat-bottom">
+          <div class="spec-footer-row">
             <div>
-              <span class="fee-text">Biaya Registrasi</span>
-              <div class="fee-amount">Rp 200.000</div>
+              <div class="fee-desc">Biaya Registrasi</div>
+              <div class="fee-num">Rp 200.000</div>
             </div>
-            <a href="https://wa.me/6282134651503?text=Halo%20Panitia,%20saya%20ingin%20mendaftar%20Kategori%20Dueling%20Plat%20BDA%202026" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              Daftar Dueling
+            <a href="https://wa.me/6282134651503?text=Halo%20Briptu%20Zyaldi,%20saya%20ingin%20mendaftar%20Kategori%20Dueling%20Plat%20BDA%202026" target="_blank" rel="noopener noreferrer" class="btn btn-navy">
+              Pilih Kategori Ini
             </a>
           </div>
         </div>
@@ -1430,67 +2019,82 @@
   </section>
 
   <!-- ==========================================================================
-       JADWAL KEGIATAN
+       SCHEDULE TIMELINE
        ========================================================================== -->
-  <section id="jadwal" style="background: var(--bg-subtle);">
+  <section id="jadwal" style="background: var(--bg-surface);">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Rangkaian Pelaksanaan</span>
-        <h2 class="section-title">Jadwal Pertandingan</h2>
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Rangkaian Pelaksanaan</span>
+          <h2 class="section-heading">Jadwal 3 Hari Kejuaraan</h2>
+        </div>
+
+        <div class="timeline-tabs">
+          <button class="timeline-tab-btn active" onclick="filterTimeline('all', this)">Semua Hari</button>
+          <button class="timeline-tab-btn" onclick="filterTimeline('d1', this)">16 Okt (Jumat)</button>
+          <button class="timeline-tab-btn" onclick="filterTimeline('d2', this)">17 Okt (Sabtu)</button>
+          <button class="timeline-tab-btn" onclick="filterTimeline('d3', this)">18 Okt (Minggu)</button>
+        </div>
       </div>
 
-      <div class="schedule-grid">
-        <!-- Jumat -->
-        <div class="schedule-col">
-          <div class="schedule-day-header">
-            <span class="sch-date">16 Oktober 2026</span>
-            <div class="sch-day">Jum'at</div>
+      <div class="timeline-cards-grid">
+        <!-- Day 1 -->
+        <div class="timeline-card" data-day="d1">
+          <div class="tl-header">
+            <span class="tl-date">16 Oktober 2026</span>
+            <div class="tl-day">Jum'at</div>
           </div>
-          <div class="event-item">
-            <div class="event-time">08:00 — 10:00 WIB</div>
-            <div class="event-title">Technical Meeting (TM)</div>
-            <div class="event-desc">Penjelasan juknis, undian gelombang (heat), dan inspeksi senjata.</div>
-          </div>
-          <div class="event-item">
-            <div class="event-time">10:30 — 16:00 WIB</div>
-            <div class="event-title">Official Practice</div>
-            <div class="event-desc">Latihan resmi penyesuaian lintasan presisi 20M &amp; dueling plat.</div>
-          </div>
-        </div>
-
-        <!-- Sabtu -->
-        <div class="schedule-col" style="border-color: var(--navy);">
-          <div class="schedule-day-header" style="border-bottom-color: var(--gold);">
-            <span class="sch-date">17 Oktober 2026</span>
-            <div class="sch-day" style="color: var(--navy);">Sabtu</div>
-          </div>
-          <div class="event-item">
-            <div class="event-time">07:30 — 08:30 WIB</div>
-            <div class="event-title">Upacara Pembukaan</div>
-            <div class="event-desc">Apel kesiapan petembak oleh Komandan Resimen I Pasukan Pelopor.</div>
-          </div>
-          <div class="event-item">
-            <div class="event-time">08:30 — 16:30 WIB</div>
-            <div class="event-title">Pertandingan Presisi 20M</div>
-            <div class="event-desc">Pelaksanaan seluruh gelombang presisi, rekap nilai &amp; penentuan juara.</div>
+          <div class="tl-events-list">
+            <div class="tl-item">
+              <div class="tl-time">08:00 — 10:00 WIB</div>
+              <div class="tl-event-title">Technical Meeting (TM)</div>
+              <div class="tl-event-desc">Pengundian nomor gelombang (heat), penjelasan juknis, dan inspeksi kelayakan senjata.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">10:30 — 16:00 WIB</div>
+              <div class="tl-event-title">Official Practice</div>
+              <div class="tl-event-desc">Latihan resmi penyesuaian lintasan presisi 20 meter dan jalur dueling plat bagi peserta.</div>
+            </div>
           </div>
         </div>
 
-        <!-- Minggu -->
-        <div class="schedule-col">
-          <div class="schedule-day-header">
-            <span class="sch-date">18 Oktober 2026</span>
-            <div class="sch-day">Minggu</div>
+        <!-- Day 2 -->
+        <div class="timeline-card highlight" data-day="d2">
+          <div class="tl-header">
+            <span class="tl-date" style="color: var(--navy-800);">17 Oktober 2026</span>
+            <div class="tl-day" style="color: var(--navy-900);">Sabtu</div>
           </div>
-          <div class="event-item">
-            <div class="event-time">08:00 — 14:00 WIB</div>
-            <div class="event-title">Pertandingan Dueling Plat</div>
-            <div class="event-desc">Babak penyisihan head to head hingga perempat final &amp; semifinal.</div>
+          <div class="tl-events-list">
+            <div class="tl-item">
+              <div class="tl-time">07:30 — 08:30 WIB</div>
+              <div class="tl-event-title">Upacara Pembukaan &amp; Apel</div>
+              <div class="tl-event-desc">Pengarahan kesiapan oleh Komandan Resimen I Pasukan Pelopor selaku Pelindung Kegiatan.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">08:30 — 16:30 WIB</div>
+              <div class="tl-event-title">Pertandingan Pistol Presisi 20M</div>
+              <div class="tl-event-desc">Pelaksanaan seluruh gelombang presisi (3 percobaan + 10 slow fire), rekapitulasi poin, dan penentuan juara.</div>
+            </div>
           </div>
-          <div class="event-item">
-            <div class="event-time">14:30 — 16:30 WIB</div>
-            <div class="event-title">Final &amp; Penutupan</div>
-            <div class="event-desc">Perebutan medali juara, pengumuman pemenang &amp; penyerahan hadiah.</div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="timeline-card" data-day="d3">
+          <div class="tl-header">
+            <span class="tl-date">18 Oktober 2026</span>
+            <div class="tl-day">Minggu</div>
+          </div>
+          <div class="tl-events-list">
+            <div class="tl-item">
+              <div class="tl-time">08:00 — 14:00 WIB</div>
+              <div class="tl-event-title">Pertandingan Dueling Plat</div>
+              <div class="tl-event-desc">Duel head to head sistem gugur babak penyisihan hingga perempat final dan semifinal.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">14:30 — 16:30 WIB</div>
+              <div class="tl-event-title">Babak Final &amp; Upacara Penutupan</div>
+              <div class="tl-event-desc">Perebutan medali juara, pengumuman pemenang, penyerahan trophy, piagam, dan uang pembinaan.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1498,94 +2102,201 @@
   </section>
 
   <!-- ==========================================================================
-       HADIAH PEMENANG
+       PRIZES & HONORS
        ========================================================================== -->
   <section id="hadiah">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Apresiasi &amp; Kejuaraan</span>
-        <h2 class="section-title">Hadiah Pemenang</h2>
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Apresiasi &amp; Prestasi</span>
+          <h2 class="section-heading">Hadiah Pemenang</h2>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); max-width: 440px;">
+          Berlaku secara terpisah untuk pemenang kategori Pistol Presisi 20M dan kategori Dueling Plat Speed.
+        </p>
       </div>
 
-      <div class="prizes-grid">
+      <div class="prizes-container">
         <!-- Juara 2 -->
-        <div class="prize-card">
-          <span class="prize-rank silver">Podium II</span>
-          <h3 class="prize-title">Juara 2</h3>
-          <div class="prize-amount">Rp 3.000.000</div>
-          <ul class="prize-items">
-            <li>Trophy Juara 2</li>
-            <li>Sertifikat Penghargaan</li>
-            <li>Piagam &amp; Banner Juara</li>
+        <div class="podium-box">
+          <span class="podium-chip silver">Podium II</span>
+          <h3 class="podium-title">Juara 2</h3>
+          <div class="podium-amount">Rp 3.000.000</div>
+          <ul class="podium-perks">
+            <li>Trophy Juara 2 Bergengsi</li>
+            <li>Sertifikat Penghargaan Resmi</li>
+            <li>Piagam &amp; Banner Pemenang</li>
           </ul>
         </div>
 
         <!-- Juara 1 -->
-        <div class="prize-card top">
-          <span class="prize-rank gold">Podium I • Juara Utama</span>
-          <h3 class="prize-title">Juara 1</h3>
-          <div class="prize-amount" style="color: var(--gold);">Rp 3.000.000</div>
-          <ul class="prize-items">
-            <li>Trophy Juara 1</li>
-            <li>Sertifikat Prestasi Utama</li>
+        <div class="podium-box champion">
+          <span class="podium-chip gold">Podium I • Juara Utama</span>
+          <h3 class="podium-title" style="color: var(--gold-600);">Juara 1</h3>
+          <div class="podium-amount" style="color: var(--gold-600);">Rp 3.000.000</div>
+          <ul class="podium-perks">
+            <li><strong>Trophy Bergilir / Tetap Juara 1</strong></li>
+            <li>Sertifikat Penghargaan Prestasi Utama</li>
             <li>Piagam &amp; Banner Juara 1</li>
-            <li>Prioritas Atlet Satuan</li>
+            <li>Prioritas Atlet Menembak Satuan</li>
           </ul>
         </div>
 
         <!-- Juara 3 -->
-        <div class="prize-card">
-          <span class="prize-rank bronze">Podium III</span>
-          <h3 class="prize-title">Juara 3</h3>
-          <div class="prize-amount">Rp 3.000.000</div>
-          <ul class="prize-items">
+        <div class="podium-box">
+          <span class="podium-chip bronze">Podium III</span>
+          <h3 class="podium-title">Juara 3</h3>
+          <div class="podium-amount">Rp 3.000.000</div>
+          <ul class="podium-perks">
             <li>Trophy Juara 3</li>
-            <li>Sertifikat Penghargaan</li>
-            <li>Piagam &amp; Banner Juara</li>
+            <li>Sertifikat Penghargaan Resmi</li>
+            <li>Piagam &amp; Banner Pemenang</li>
           </ul>
         </div>
       </div>
-
-      <p class="prizes-foot">
-        *Hadiah uang pembinaan, trophy, dan sertifikat berlaku untuk masing-masing kategori (Presisi 20M dan Dueling Plat).
-      </p>
     </div>
   </section>
 
   <!-- ==========================================================================
-       PETUNJUK TEKNIS & ATURAN KEAMANAN (JUKNIS)
+       INTERACTIVE FEE CALCULATOR & PAYMENT / CONTACTS
        ========================================================================== -->
-  <section id="juknis" style="background: var(--bg-subtle);">
+  <section id="registrasi" style="background: var(--bg-surface);">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Regulasi Resmi</span>
-        <h2 class="section-title">Petunjuk Teknis (Juknis)</h2>
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Administrasi &amp; Registrasi</span>
+          <h2 class="section-heading">Kalkulator Biaya &amp; Narahubung</h2>
+        </div>
       </div>
 
-      <div class="rules-list">
-        <!-- Item 1: Seragam -->
-        <div class="rule-item active">
-          <button class="rule-trigger" type="button">
+      <div class="admin-payment-grid">
+        <!-- Interactive Calculator -->
+        <div class="calc-card">
+          <h3>Pilih Nomor Pertandingan:</h3>
+
+          <div class="option-select-box checked" id="optPresisi" onclick="toggleCategory('presisi')">
+            <div class="option-info">
+              <strong>Pistol Presisi 20 Meter</strong>
+              <span>13 Butir Amunisi (3 Percobaan + 10 Slow Fire)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-weight: 800; font-size: 0.88rem; color: var(--navy-900);">Rp 200.000</span>
+              <div class="check-custom" id="chkPresisi">✓</div>
+            </div>
+          </div>
+
+          <div class="option-select-box" id="optDueling" onclick="toggleCategory('dueling')">
+            <div class="option-info">
+              <strong>Dueling Plat Speed</strong>
+              <span>Head to Head Sistem Gugur (5 Plat + 1 Popper)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-weight: 800; font-size: 0.88rem; color: var(--navy-900);">Rp 200.000</span>
+              <div class="check-custom" id="chkDueling"></div>
+            </div>
+          </div>
+
+          <div class="calc-total-bar">
+            <span>Total Biaya Pendaftaran:</span>
+            <strong id="totalFeeDisplay">Rp 200.000</strong>
+          </div>
+
+          <a href="javascript:void(0)" onclick="sendRegistrationWA()" class="btn btn-navy" style="width: 100%; margin-top: 16px;">
+            💬 Lanjut Pendaftaran ke WhatsApp
+          </a>
+        </div>
+
+        <!-- Official Bank Account & Contacts -->
+        <div class="bank-account-card">
+          <div class="bank-acc-header">
+            <div>
+              <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Rekening Kas Resmi Panitia</div>
+              <div class="bank-badge-title">Bank BRI</div>
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 800; color: var(--navy-800); background: var(--navy-100); padding: 4px 8px; border-radius: var(--radius-sm);">Kas Panitia</span>
+          </div>
+
+          <div class="acc-number-frame">
+            <div>
+              <div style="font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px;">Nomor Rekening:</div>
+              <div class="acc-digits-large" id="accNumberDigits">053801071906503</div>
+              <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
+                a.n. <strong>Ahyandi Hi Karim</strong> (Briptu Ahyandi)
+              </div>
+            </div>
+            <button class="btn btn-navy" style="padding: 8px 14px; font-size: 0.72rem;" onclick="copyAccountAction()">
+              Salin
+            </button>
+          </div>
+
+          <!-- Contacts List -->
+          <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: var(--navy-800); margin-top: 20px;">
+            Narahubung Panitia Pelaksana:
+          </div>
+
+          <table class="contacts-table-compact">
+            <tr>
+              <td><strong>Briptu Ady</strong><br><span style="color: var(--text-muted);">Materi &amp; Teknis</span></td>
+              <td style="font-family: var(--font-mono);">0852-8352-5761</td>
+              <td style="text-align: right;"><a href="https://wa.me/6285283525761?text=Halo%20Briptu%20Ady,%20saya%20ingin%20tanya%20materi%20teknis%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-compact">WA</a></td>
+            </tr>
+            <tr>
+              <td><strong>Briptu Huges Yustisio</strong><br><span style="color: var(--text-muted);">Ketua Pelaksana</span></td>
+              <td style="font-family: var(--font-mono);">0852-7237-7704</td>
+              <td style="text-align: right;"><a href="https://wa.me/6285272377704?text=Halo%20Briptu%20Huges,%20saya%20ingin%20konfirmasi%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-compact">WA</a></td>
+            </tr>
+            <tr>
+              <td><strong>Briptu Rully</strong><br><span style="color: var(--text-muted);">Pendaftaran</span></td>
+              <td style="font-family: var(--font-mono);">0857-7501-5786</td>
+              <td style="text-align: right;"><a href="https://wa.me/6285775015786?text=Halo%20Briptu%20Rully,%20saya%20ingin%20mengirim%20bukti%20pendaftaran%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-compact">WA</a></td>
+            </tr>
+            <tr>
+              <td><strong>Briptu Zyaldi</strong><br><span style="color: var(--text-muted);">Pendaftaran</span></td>
+              <td style="font-family: var(--font-mono);">0821-3465-1503</td>
+              <td style="text-align: right;"><a href="https://wa.me/6282134651503?text=Halo%20Briptu%20Zyaldi,%20saya%20ingin%20mengirim%20bukti%20pendaftaran%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-compact">WA</a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       JUKNIS ACCORDION
+       ========================================================================== -->
+  <section id="juknis">
+    <div class="container">
+      <div class="section-header-wrap">
+        <div>
+          <span class="section-eyebrow">Regulasi Resmi</span>
+          <h2 class="section-heading">Petunjuk Teknis (Juknis)</h2>
+        </div>
+      </div>
+
+      <div class="juknis-box">
+        <!-- 1 -->
+        <div class="juknis-row active">
+          <button class="juknis-row-trigger" type="button">
             <span>1. Ketentuan Pakaian Peserta</span>
-            <span class="rule-indicator">▼</span>
+            <span class="juknis-arrow">▼</span>
           </button>
-          <div class="rule-body">
-            <ul class="bullets">
+          <div class="juknis-row-content">
+            <ul class="juknis-bullets">
               <li>Pakaian: Jersey Menembak, Baju Tactical, atau Pakaian Dinas satuan.</li>
-              <li>Alas kaki: <strong>Wajib mengenakan sepatu</strong> (olahraga, tactical, atau dinas). <em>Dilarang menggunakan sandal</em>.</li>
-              <li>Perlengkapan opsional: Topi penutup kepala dan sarung tangan menembak.</li>
+              <li>Alas kaki: <strong>Wajib mengenakan sepatu</strong> (olahraga, tactical, atau dinas). <em>Sangat dilarang menggunakan sandal</em>.</li>
+              <li>Perlengkapan opsional: Topi lapangan dan sarung tangan menembak.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Item 2: Senjata -->
-        <div class="rule-item">
-          <button class="rule-trigger" type="button">
+        <!-- 2 -->
+        <div class="juknis-row">
+          <button class="juknis-row-trigger" type="button">
             <span>2. Spesifikasi Senjata &amp; Amunisi</span>
-            <span class="rule-indicator">▼</span>
+            <span class="juknis-arrow">▼</span>
           </button>
-          <div class="rule-body">
-            <ul class="bullets">
+          <div class="juknis-row-content">
+            <ul class="juknis-bullets">
               <li>Senjata: Pistol dinas organik satuan masing-masing (panjang laras maks 5 inchi).</li>
               <li>Amunisi: Kaliber standar 9 x 19 mm.</li>
               <li>Alat bidik: Standar pejera logam/besi non-optik (dilarang menggunakan red dot / optik).</li>
@@ -1593,15 +2304,15 @@
           </div>
         </div>
 
-        <!-- Item 3: Proteksi -->
-        <div class="rule-item">
-          <button class="rule-trigger" type="button">
+        <!-- 3 -->
+        <div class="juknis-row">
+          <button class="juknis-row-trigger" type="button">
             <span>3. Perlengkapan Proteksi Garis Tembak</span>
-            <span class="rule-indicator">▼</span>
+            <span class="juknis-arrow">▼</span>
           </button>
-          <div class="rule-body">
-            <ul class="bullets">
-              <li><strong>Wajib Kacamata Pelindung:</strong> Bawa sendiri atau yang disiapkan panitia.</li>
+          <div class="juknis-row-content">
+            <ul class="juknis-bullets">
+              <li><strong>Wajib Kacamata Pelindung:</strong> Bawa sendiri atau yang disiapkan panitia di garis tembak.</li>
               <li><strong>Wajib Tutup Telinga:</strong> Ear plug atau ear muff.</li>
               <li>Diperkenankan membawa teropong untuk melihat perkenaan (kategori presisi).</li>
               <li>Diperkenankan menggunakan sabuk &amp; holster penembak.</li>
@@ -1609,35 +2320,35 @@
           </div>
         </div>
 
-        <!-- Item 4: Safety Rules -->
-        <div class="rule-item">
-          <button class="rule-trigger" type="button">
+        <!-- 4 -->
+        <div class="juknis-row">
+          <button class="juknis-row-trigger" type="button">
             <span>4. Aturan Keselamatan Mutlak (Safety Rules)</span>
-            <span class="rule-indicator">▼</span>
+            <span class="juknis-arrow">▼</span>
           </button>
-          <div class="rule-body">
-            <ul class="bullets">
+          <div class="juknis-row-content">
+            <ul class="juknis-bullets">
               <li>Senjata hanya boleh dikeluarkan dan dioperasikan atas perintah langsung <strong>Range Officer (RO)</strong>.</li>
               <li>Dilarang membidik atau mencabut senjata di luar garis tembak (kecuali di Safety Area resmi).</li>
               <li>Senjata wajib berada di dalam box/holster hingga di meja penembakan.</li>
-              <li>Arah laras tidak boleh melanggar sudut 60 derajat ke segala arah dari sasaran tembak.</li>
+              <li>Arah laras tidak boleh melanggar toleransi sudut 60 derajat ke segala arah dari sasaran tembak.</li>
               <li>Wajib mengosongkan senjata dan memperlihatkan kamar amunisi sebelum dan sesudah menembak.</li>
-              <li>Jika senjata mengalami malfungsi: lepas magazen, kosongkan senjata ke arah sasaran tembak yang aman, dan angkat tangan untuk instruksi RO.</li>
+              <li>Jika senjata mengalami malfungsi: lepas magazen, kosongkan senjata ke arah aman, dan angkat tangan untuk bantuan RO.</li>
             </ul>
           </div>
         </div>
 
-        <!-- Item 5: Sanksi Pelanggaran -->
-        <div class="rule-item">
-          <button class="rule-trigger" type="button">
+        <!-- 5 -->
+        <div class="juknis-row">
+          <button class="juknis-row-trigger" type="button">
             <span>5. Sanksi &amp; Pelanggaran (DQ, Penalty, DNS, DNF)</span>
-            <span class="rule-indicator">▼</span>
+            <span class="juknis-arrow">▼</span>
           </button>
-          <div class="rule-body">
-            <div class="alert-penalty">
+          <div class="juknis-row-content">
+            <div style="background: var(--crimson-100); color: var(--crimson-700); padding: 12px; border-radius: var(--radius-sm); border: 1px solid #fecaca; margin-bottom: 12px;">
               <strong>Diskualifikasi (DQ):</strong> Tembakan tidak terarah (&lt;3m dari petembak), menembak sebelum aba-aba RO, tembak silang sasaran lain, membahayakan keselamatan, sudut laras &gt;60°, atau menembak Popper penentu sebelum 5 plat bulat jatuh.
             </div>
-            <ul class="bullets" style="margin-top: 10px;">
+            <ul class="juknis-bullets">
               <li><strong>Penalty:</strong> Tembakan setelah waktu habis dikenakan pemotongan nilai perkenaan terbesar.</li>
               <li><strong>DNS (Did Not Shoot):</strong> Nilai 0, tidak ada kesempatan ulang.</li>
               <li><strong>DNF (Did Not Finish):</strong> Nilai hanya dihitung berdasarkan tembakan/sasaran yang telah sah diselesaikan.</li>
@@ -1650,108 +2361,15 @@
   </section>
 
   <!-- ==========================================================================
-       BIAYA, REKENING & KONTAK PANITIA
-       ========================================================================== -->
-  <section id="rekening">
-    <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Administrasi &amp; Registrasi</span>
-        <h2 class="section-title">Rekening Resmi &amp; Kontak</h2>
-      </div>
-
-      <div class="contact-layout">
-        <!-- Rekening Bank -->
-        <div class="bank-box">
-          <div class="bank-title">Rekening Resmi Panitia</div>
-          <div class="bank-header">Bank BRI</div>
-
-          <div class="acc-container">
-            <div class="acc-num-row">
-              <span class="acc-digits" id="accNumber">053801071906503</span>
-              <button class="btn-copy" onclick="copyAccount()">Salin</button>
-            </div>
-            <div class="acc-owner">
-              a.n. <strong>Ahyandi Hi Karim</strong> (Briptu Ahyandi)
-            </div>
-          </div>
-
-          <ul class="bank-notes bullets">
-            <li>Biaya registrasi: <strong>Rp 200.000 / kategori</strong>.</li>
-            <li>Simpan bukti transfer dan kirimkan ke narahubung pendaftaran di samping.</li>
-          </ul>
-        </div>
-
-        <!-- Narahubung -->
-        <div class="contacts-grid">
-          <div class="contact-card">
-            <div>
-              <div class="cp-role">Materi &amp; Teknis</div>
-              <div class="cp-name">Briptu Ady</div>
-              <div class="cp-phone">0852-8352-5761</div>
-            </div>
-            <a href="https://wa.me/6285283525761?text=Halo%20Briptu%20Ady,%20saya%20ingin%20tanya%20materi%20teknis%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-link">
-              Hubungi via WA
-            </a>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="cp-role">Ketua Pelaksana</div>
-              <div class="cp-name">Briptu Huges Yustisio</div>
-              <div class="cp-phone">0852-7237-7704</div>
-            </div>
-            <a href="https://wa.me/6285272377704?text=Halo%20Briptu%20Huges,%20saya%20ingin%20konfirmasi%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-link">
-              Hubungi via WA
-            </a>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="cp-role">Pendaftaran</div>
-              <div class="cp-name">Briptu Rully</div>
-              <div class="cp-phone">0857-7501-5786</div>
-            </div>
-            <a href="https://wa.me/6285775015786?text=Halo%20Briptu%20Rully,%20saya%20ingin%20mengirim%20bukti%20pendaftaran%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-link">
-              Kirim Pendaftaran
-            </a>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="cp-role">Pendaftaran</div>
-              <div class="cp-name">Briptu Zyaldi</div>
-              <div class="cp-phone">0821-3465-1503</div>
-            </div>
-            <a href="https://wa.me/6282134651503?text=Halo%20Briptu%20Zyaldi,%20saya%20ingin%20mengirim%20bukti%20pendaftaran%20BDA%20Shooting%202026" target="_blank" rel="noopener noreferrer" class="btn-wa-link">
-              Kirim Pendaftaran
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Venue snippet -->
-      <div class="venue-strip" style="margin-top: 24px;">
-        <div class="venue-info">
-          <h4>Lokasi Pertandingan</h4>
-          <p>Lapangan Tembak Shooting House Resimen I Pasukan Pelopor, Kedung Halang, Bogor</p>
-        </div>
-        <a href="https://wa.me/6285272377704?text=Halo%20Panitia,%20mohon%20info%20lokasi%20lapangan%20Shooting%20House" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-          Petunjuk Arah
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
        FOOTER
        ========================================================================== -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <img src="assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="footer-logo" onerror="this.onerror=null; this.src='public/logo-bda-clean.jpg';">
-          <img src="assets/logo-championship-clean.jpg" alt="Logo Championship" class="footer-logo" onerror="this.onerror=null; this.src='public/logo-championship-clean.jpg';">
-          <span style="font-weight: 800; color: var(--navy);">BDA SHOOTING CHAMPIONSHIP 2026</span>
+      <div class="footer-inner">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/logo-bda-clean.jpg" alt="Logo BDA 750" style="width: 32px; height: 32px; object-fit: contain;" onerror="this.onerror=null; this.src='public/logo-bda-clean.jpg';">
+          <img src="assets/logo-hero.jpg" alt="Logo Championship" style="width: 32px; height: 32px; object-fit: contain;" onerror="this.onerror=null; this.src='public/logo-hero.jpg';">
+          <span class="footer-brand-title">BDA SHOOTING CHAMPIONSHIP 2026</span>
         </div>
         <div>
           &copy; 2026 Letting BDA 750 • Resimen I Pasukan Pelopor Korbrimob Polri
@@ -1760,37 +2378,39 @@
     </div>
   </footer>
 
-  <!-- Toast -->
-  <div class="toast" id="toast">Nomor rekening berhasil disalin</div>
+  <!-- Toast Element -->
+  <div class="toast-popup" id="toastBox">Nomor rekening berhasil disalin</div>
 
-  <!-- JavaScript -->
+  <!-- ==========================================================================
+       INTERACTIVE JAVASCRIPT ENGINE
+       ========================================================================== -->
   <script>
     // 1. Mobile Menu Toggle
     const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.getElementById('navLinks');
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('open');
-      navMenu.classList.toggle('open');
+      navLinks.classList.toggle('open');
     });
 
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
         menuToggle.classList.remove('open');
-        navMenu.classList.remove('open');
+        navLinks.classList.remove('open');
       });
     });
 
-    // 2. Countdown Timer Logic (Target: 17 Oktober 2026, 08:00:00 WIB)
-    const targetDate = new Date('2026-10-17T08:00:00+07:00').getTime();
+    // 2. Countdown Timer (Target: 17 Oktober 2026, 08:00 WIB / UTC+7)
+    const eventTime = new Date('2026-10-17T08:00:00+07:00').getTime();
 
-    function updateCountdown() {
+    function refreshCountdown() {
       const now = new Date().getTime();
-      const diff = targetDate - now;
+      const diff = eventTime - now;
 
-      const dEl = document.getElementById('daysVal');
-      const hEl = document.getElementById('hoursVal');
-      const mEl = document.getElementById('minVal');
-      const sEl = document.getElementById('secVal');
+      const dEl = document.getElementById('dBox');
+      const hEl = document.getElementById('hBox');
+      const mEl = document.getElementById('mBox');
+      const sEl = document.getElementById('sBox');
 
       if (diff <= 0) {
         dEl.textContent = '00';
@@ -1800,50 +2420,331 @@
         return;
       }
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-      dEl.textContent = days < 10 ? '0' + days : days;
-      hEl.textContent = hours < 10 ? '0' + hours : hours;
-      mEl.textContent = minutes < 10 ? '0' + minutes : minutes;
-      sEl.textContent = seconds < 10 ? '0' + seconds : seconds;
+      dEl.textContent = d < 10 ? '0' + d : d;
+      hEl.textContent = h < 10 ? '0' + h : h;
+      mEl.textContent = m < 10 ? '0' + m : m;
+      sEl.textContent = s < 10 ? '0' + s : s;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    refreshCountdown();
+    setInterval(refreshCountdown, 1000);
 
-    // 3. Juknis Accordion
-    document.querySelectorAll('.rule-trigger').forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const item = trigger.parentElement;
-        item.classList.toggle('active');
-      });
+    // 3. Interactive Target Simulator (Presisi 20M)
+    const targetSvg = document.getElementById('targetSvg');
+    const shotHolesGroup = document.getElementById('shotHolesGroup');
+    const shotCountDisplay = document.getElementById('shotCountDisplay');
+    const totalScoreDisplay = document.getElementById('totalScoreDisplay');
+    const xCountDisplay = document.getElementById('xCountDisplay');
+    const shotLogList = document.getElementById('shotLogList');
+
+    let drillShots = [];
+    const MAX_SHOTS = 10;
+
+    targetSvg.addEventListener('click', (e) => {
+      if (drillShots.length >= MAX_SHOTS) return;
+
+      const rect = targetSvg.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      // Scale to SVG 400x400 viewBox
+      const svgX = (clickX / rect.width) * 400;
+      const svgY = (clickY / rect.height) * 400;
+
+      registerShot(svgX, svgY);
     });
 
-    // 4. Copy Account Number
-    function copyAccount() {
-      const acc = document.getElementById('accNumber').innerText.trim();
-      navigator.clipboard.writeText(acc).then(() => {
-        showToast('Nomor rekening ' + acc + ' berhasil disalin!');
+    function registerShot(x, y) {
+      if (drillShots.length >= MAX_SHOTS) return;
+
+      // Center is (200, 200)
+      const dx = x - 200;
+      const dy = y - 200;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      let score = 0;
+      let isX = false;
+
+      if (dist <= 8) {
+        score = 10;
+        isX = true;
+      } else if (dist <= 18) {
+        score = 10;
+      } else if (dist <= 35) {
+        score = 9;
+      } else if (dist <= 55) {
+        score = 8;
+      } else if (dist <= 75) {
+        score = 7;
+      } else if (dist <= 95) {
+        score = 6;
+      } else if (dist <= 115) {
+        score = 5;
+      } else if (dist <= 135) {
+        score = 4;
+      } else if (dist <= 155) {
+        score = 3;
+      } else if (dist <= 175) {
+        score = 2;
+      } else if (dist <= 195) {
+        score = 1;
+      } else {
+        score = 0; // Miss
+      }
+
+      drillShots.push({ x, y, score, isX });
+      renderShotHole(x, y, isX);
+      updateDrillUI();
+    }
+
+    function renderShotHole(x, y, isX) {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', x);
+      circle.setAttribute('cy', y);
+      circle.setAttribute('r', '5.5');
+      circle.setAttribute('fill', isX ? '#f59e0b' : '#ef4444');
+      circle.setAttribute('stroke', '#ffffff');
+      circle.setAttribute('stroke-width', '1.5');
+      circle.style.animation = 'pulse 0.3s ease';
+      shotHolesGroup.appendChild(circle);
+    }
+
+    function updateDrillUI() {
+      shotCountDisplay.textContent = `${drillShots.length}/${MAX_SHOTS}`;
+      
+      const totalScore = drillShots.reduce((sum, s) => sum + s.score, 0);
+      const totalX = drillShots.filter(s => s.isX).length;
+
+      totalScoreDisplay.textContent = totalScore;
+      xCountDisplay.textContent = totalX;
+
+      if (drillShots.length === 1) {
+        shotLogList.innerHTML = '';
+      }
+
+      const lastShot = drillShots[drillShots.length - 1];
+      const div = document.createElement('div');
+      div.className = 'shot-log-item';
+      div.innerHTML = `<span>Tembakan #${drillShots.length}</span><strong style="color: ${lastShot.isX ? 'var(--gold-600)' : 'var(--navy-900)'};">${lastShot.isX ? '10 (X)' : lastShot.score + ' Poin'}</strong>`;
+      shotLogList.appendChild(div);
+      shotLogList.scrollTop = shotLogList.scrollHeight;
+
+      if (drillShots.length === MAX_SHOTS) {
+        const summary = document.createElement('div');
+        summary.style.marginTop = '8px';
+        summary.style.padding = '8px';
+        summary.style.background = 'var(--navy-100)';
+        summary.style.borderRadius = '4px';
+        summary.style.fontWeight = 'bold';
+        summary.style.textAlign = 'center';
+        summary.style.color = 'var(--navy-800)';
+        summary.textContent = `Selesai! Skor Akhir: ${totalScore}.${totalX} Poin`;
+        shotLogList.appendChild(summary);
+      }
+    }
+
+    function resetTargetDrill() {
+      drillShots = [];
+      shotHolesGroup.innerHTML = '';
+      shotCountDisplay.textContent = `0/${MAX_SHOTS}`;
+      totalScoreDisplay.textContent = '0';
+      xCountDisplay.textContent = '0';
+      shotLogList.innerHTML = '<div style="color: var(--text-subtle); text-align: center; padding: 16px 0;">Belum ada tembakan. Klik lesan di samping!</div>';
+    }
+
+    function autoFillDrill() {
+      resetTargetDrill();
+      for (let i = 0; i < MAX_SHOTS; i++) {
+        // Generate gaussian-like distribution around center (200, 200)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.abs(Math.random() - Math.random()) * 65; // biased towards bullseye
+        const x = 200 + Math.cos(angle) * radius;
+        const y = 200 + Math.sin(angle) * radius;
+        registerShot(x, y);
+      }
+    }
+
+    // 4. Interactive Dueling Plat Drill
+    let drillRunning = false;
+    let drillStartTime = 0;
+    let drillInterval = null;
+    let knockedPlates = new Set();
+    let popperKnocked = false;
+
+    const btnStartDrill = document.getElementById('btnStartDrill');
+    const drillTimer = document.getElementById('drillTimer');
+    const drillStatus = document.getElementById('drillStatus');
+
+    function toggleDrill() {
+      if (!drillRunning) {
+        startDrill();
+      } else {
+        stopDrill();
+      }
+    }
+
+    function startDrill() {
+      drillRunning = true;
+      btnStartDrill.textContent = 'Reset Drill';
+      btnStartDrill.className = 'btn btn-outline';
+      drillStatus.className = 'drill-status-banner';
+      drillStatus.textContent = '';
+      knockedPlates.clear();
+      popperKnocked = false;
+
+      // Reset all plate elements
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('p' + i);
+        el.classList.remove('knocked');
+      }
+      document.getElementById('popper').classList.remove('knocked');
+
+      drillStartTime = Date.now();
+      drillInterval = setInterval(() => {
+        const elapsed = (Date.now() - drillStartTime) / 1000;
+        drillTimer.textContent = elapsed.toFixed(2) + 's';
+      }, 30);
+    }
+
+    function stopDrill() {
+      drillRunning = false;
+      clearInterval(drillInterval);
+      btnStartDrill.textContent = 'Mulai Timer';
+      btnStartDrill.className = 'btn btn-navy';
+    }
+
+    function hitPlate(num) {
+      if (!drillRunning) startDrill();
+      knockedPlates.add(num);
+      document.getElementById('p' + num).classList.add('knocked');
+    }
+
+    function hitPopper() {
+      if (!drillRunning) return;
+
+      if (knockedPlates.size < 5) {
+        // VIOLATION OF RULE: Hit popper before all 5 plates knocked!
+        stopDrill();
+        document.getElementById('popper').classList.add('knocked');
+        drillStatus.className = 'drill-status-banner show dq';
+        drillStatus.textContent = '⚠️ DISKUALIFIKASI (DQ)! Anda menembak Popper sebelum seluruh 5 plat bulat dijatuhkan!';
+      } else {
+        // VALID COMPLETION!
+        stopDrill();
+        document.getElementById('popper').classList.add('knocked');
+        const elapsed = drillTimer.textContent;
+        drillStatus.className = 'drill-status-banner show win';
+        drillStatus.textContent = `🎯 BERHASIL! Seluruh sasaran jatuh sah dalam waktu ${elapsed}. Lolos babak penyisihan!`;
+      }
+    }
+
+    // 5. Timeline Day Filter
+    function filterTimeline(day, btn) {
+      document.querySelectorAll('.timeline-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.timeline-card').forEach(card => {
+        if (day === 'all' || card.getAttribute('data-day') === day) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 6. Interactive Category Fee Calculator
+    let selectedCategories = {
+      presisi: true,
+      dueling: false
+    };
+
+    function toggleCategory(cat) {
+      selectedCategories[cat] = !selectedCategories[cat];
+      
+      // Ensure at least one is selected
+      if (!selectedCategories.presisi && !selectedCategories.dueling) {
+        selectedCategories[cat] = true;
+      }
+
+      updateCalculatorUI();
+    }
+
+    function updateCalculatorUI() {
+      const optPresisi = document.getElementById('optPresisi');
+      const optDueling = document.getElementById('optDueling');
+      const chkPresisi = document.getElementById('chkPresisi');
+      const chkDueling = document.getElementById('chkDueling');
+      const totalDisplay = document.getElementById('totalFeeDisplay');
+
+      let total = 0;
+
+      if (selectedCategories.presisi) {
+        optPresisi.classList.add('checked');
+        chkPresisi.textContent = '✓';
+        total += 200000;
+      } else {
+        optPresisi.classList.remove('checked');
+        chkPresisi.textContent = '';
+      }
+
+      if (selectedCategories.dueling) {
+        optDueling.classList.add('checked');
+        chkDueling.textContent = '✓';
+        total += 200000;
+      } else {
+        optDueling.classList.remove('checked');
+        chkDueling.textContent = '';
+      }
+
+      totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
+    }
+
+    function sendRegistrationWA() {
+      let cats = [];
+      if (selectedCategories.presisi) cats.push('Pistol Presisi 20M');
+      if (selectedCategories.dueling) cats.push('Dueling Plat Speed');
+      
+      const total = (cats.length * 200000).toLocaleString('id-ID');
+      const msg = `Halo Panitia BDA Shooting Championship 2026, saya ingin mendaftar kejuaraan pada kategori: ${cats.join(' & ')} (Total Biaya: Rp ${total}). Mohon petunjuk konfirmasi registrasi.`;
+      
+      window.open(`https://wa.me/6285775015786?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // 7. Copy Account Number Action
+    function copyAccountAction() {
+      const digits = document.getElementById('accNumberDigits').innerText.trim();
+      navigator.clipboard.writeText(digits).then(() => {
+        showToastNotification('Nomor rekening BRI ' + digits + ' berhasil disalin!');
       }).catch(() => {
         const input = document.createElement('input');
-        input.value = acc;
+        input.value = digits;
         document.body.appendChild(input);
         input.select();
         document.execCommand('copy');
         document.body.removeChild(input);
-        showToast('Nomor rekening ' + acc + ' berhasil disalin!');
+        showToastNotification('Nomor rekening BRI ' + digits + ' berhasil disalin!');
       });
     }
 
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
+    function showToastNotification(msg) {
+      const t = document.getElementById('toastBox');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2400);
     }
+
+    // 8. Juknis Accordion
+    document.querySelectorAll('.juknis-row-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const row = trigger.parentElement;
+        row.classList.toggle('active');
+      });
+    });
   </script>
 </body>
 </html>

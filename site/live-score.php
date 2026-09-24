@@ -9,20 +9,26 @@ require_once __DIR__ . '/includes/header.php';
         
         <!-- Header & Live Indicator -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-            <div>
-                <div class="flex items-center gap-2">
-                    <span class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                    </span>
-                    <span class="text-xs uppercase font-bold tracking-widest text-red-600 dark:text-red-400">Papan Skor Resmi</span>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 shrink-0">
+                    <img src="/assets/logo-bda-clean.jpg" alt="Logo BDA 750" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
+                    <img src="/assets/logo-championship-clean.jpg" alt="Logo BSC 2026" class="h-14 w-14 rounded-xl object-cover border border-copper-400/50 shadow-md">
                 </div>
-                <h1 class="font-display text-3xl sm:text-4xl font-bold mt-1 text-gray-900 dark:text-white">
-                    LIVE SCORE PAPAN PERTANDINGAN
-                </h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                    Hasil dan perolehan poin terkini BDA Shooting Championship 2026
-                </p>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>
+                        <span class="text-xs uppercase font-bold tracking-widest text-red-600 dark:text-red-400">Papan Skor Resmi</span>
+                    </div>
+                    <h1 class="font-display text-2xl sm:text-3xl font-bold mt-0.5 text-gray-900 dark:text-white">
+                        LIVE SCORE PAPAN PERTANDINGAN
+                    </h1>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                        Hasil dan perolehan poin terkini BDA Shooting Championship 2026
+                    </p>
+                </div>
             </div>
 
             <!-- Controls: Auto Refresh & Refresh Button -->

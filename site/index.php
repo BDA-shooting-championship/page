@@ -9,9 +9,13 @@ require_once __DIR__ . '/includes/header.php';
     <div class="absolute inset-0 target-pattern opacity-30"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div class="text-center">
-            <div class="flex justify-center gap-4 mb-8">
-                <img src="/assets/logo-bda.jpeg" alt="Logo BDA" class="h-20 w-20 rounded-full object-cover border-2 border-copper-400/50" onerror="this.style.display='none'">
-                <img src="/assets/logo-championship.jpeg" alt="Logo BSC" class="h-20 w-20 rounded-full object-cover border-2 border-copper-400/50" onerror="this.style.display='none'">
+            <div class="flex justify-center items-center gap-5 sm:gap-8 mb-8">
+                <div class="p-1 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl hover:scale-105 transition-transform duration-300">
+                    <img src="/assets/logo-bda-clean.jpg" alt="Logo Brigade Diraya Adikara 750" class="h-20 w-20 sm:h-28 sm:w-28 rounded-xl object-cover">
+                </div>
+                <div class="p-1 rounded-2xl bg-white/10 backdrop-blur-md border border-copper-400/40 shadow-2xl shadow-copper-500/20 hover:scale-105 transition-transform duration-300">
+                    <img src="/assets/logo-championship-clean.jpg" alt="Logo BDA Shooting Championship 2026" class="h-20 w-20 sm:h-28 sm:w-28 rounded-xl object-cover">
+                </div>
             </div>
             <p class="text-copper-300 font-medium tracking-widest uppercase text-sm mb-4">Brigade Diraya Adikara (BDA) 750 Presents</p>
             <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
