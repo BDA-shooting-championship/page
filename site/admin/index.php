@@ -6,16 +6,80 @@
  */
 session_start();
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_login'])) {
-    if ($_POST['password'] === ADMIN_PASS) {
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_login_time'] = time();
-        header('Location: /admin/');
-        exit;
+    $username = trim($_POST['username'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    if (empty($username) || empty($password)) {
+        $loginError = 'ID Admin dan Password wajib diisi.';
     } else {
-        $loginError = 'Password salah. Silakan coba lagi.';
+        $db = getDB();
+        try {
+            $stmt = $db->prepare('SELECT * FROM admin_users WHERE username = ? LIMIT 1');
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                // Initial fallback for default superadmin
+                if ($username === ADMIN_USER && $password === ADMIN_PASS) {
+                    $hash = password_hash(ADMIN_PASS, PASSWORD_BCRYPT);
+                    $ins = $db->prepare('INSERT INTO admin_users (username, password_hash, display_name, role, permissions, is_active) VALUES (?, ?, ?, ?, ?, 1)');
+                    $ins->execute([ADMIN_USER, $hash, 'Super Administrator', 'superadmin', json_encode(['antrean', 'peserta', 'scores', 'users'])]);
+                    $user = [
+                        'id' => (int)$db->lastInsertId(),
+                        'username' => ADMIN_USER,
+                        'display_name' => 'Super Administrator',
+                        'role' => 'superadmin',
+                        'permissions' => ['antrean', 'peserta', 'scores', 'users'],
+                        'is_active' => 1
+                    ];
+                }
+            }
+
+            if ($user && password_verify($password, $user['password_hash'])) {
+                if ((int)$user['is_active'] !== 1) {
+                    $loginError = 'Akun admin Anda sedang dinonaktifkan oleh Super Admin.';
+                } else {
+                    $db->prepare('UPDATE admin_users SET last_login = NOW() WHERE id = ?')->execute([$user['id']]);
+                    $perms = $user['permissions'];
+                    if (is_string($perms)) {
+                        $perms = json_decode($perms, true) ?: [];
+                    }
+                    $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_user'] = [
+                        'id' => (int)$user['id'],
+                        'username' => $user['username'],
+                        'display_name' => $user['display_name'],
+                        'role' => $user['role'],
+                        'permissions' => $perms
+                    ];
+                    header('Location: /admin/');
+                    exit;
+                }
+            } else if (!isset($loginError)) {
+                $loginError = 'ID Admin atau Password salah. Silakan coba lagi.';
+            }
+        } catch (PDOException $e) {
+            // Emergency fallback if table not yet migrated
+            if ($username === ADMIN_USER && $password === ADMIN_PASS) {
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_user'] = [
+                    'id' => 1,
+                    'username' => ADMIN_USER,
+                    'display_name' => 'Super Administrator',
+                    'role' => 'superadmin',
+                    'permissions' => ['antrean', 'peserta', 'scores', 'users']
+                ];
+                header('Location: /admin/');
+                exit;
+            } else {
+                $loginError = 'Terjadi kesalahan sistem: ' . $e->getMessage();
+            }
+        }
     }
 }
 
@@ -26,7 +90,8 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-$isLoggedIn = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
+$currentUser = getCurrentUser();
+$isLoggedIn = isAdminLoggedIn();
 
 $pageTitle = 'Admin Dashboard — ' . EVENT_NAME;
 $currentPage = 'admin';
@@ -67,6 +132,19 @@ include __DIR__ . '/../includes/header.php';
                 </div>
                 <?php endif; ?>
 
+                <div class="mb-4">
+                    <label for="username" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">ID Admin / Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        required
+                        autofocus
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-copper-500 focus:border-copper-500 text-sm transition"
+                        placeholder="Contoh: superadmin atau nama admin"
+                    >
+                </div>
+
                 <div class="mb-6">
                     <label for="password" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Password Admin</label>
                     <div class="relative" x-data="{ show: false }">
@@ -75,7 +153,6 @@ include __DIR__ . '/../includes/header.php';
                             name="password"
                             id="password"
                             required
-                            autofocus
                             class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-copper-500 focus:border-copper-500 text-sm transition"
                             placeholder="Masukkan password admin"
                         >
@@ -117,11 +194,11 @@ include __DIR__ . '/../includes/header.php';
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-copper-100 text-copper-800 uppercase tracking-wider">
-                            Panitia Pusat
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider <?= ($currentUser['role'] ?? '') === 'superadmin' ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-copper-100 text-copper-800 border border-copper-200' ?>">
+                            <?= htmlspecialchars(($currentUser['role'] ?? '') === 'superadmin' ? 'Super Admin' : 'Admin') ?>
                         </span>
                         <span class="text-xs text-gray-400">•</span>
-                        <span class="text-xs text-gray-500 font-medium"><?= EVENT_NAME ?></span>
+                        <span class="text-xs text-gray-700 font-semibold"><?= htmlspecialchars($currentUser['display_name'] ?? 'Admin') ?> (<?= htmlspecialchars($currentUser['username'] ?? '') ?>)</span>
                     </div>
                     <h1 class="font-display text-2xl sm:text-3xl font-bold text-gray-900 mt-0.5">
                         Admin Dashboard
@@ -194,10 +271,11 @@ include __DIR__ . '/../includes/header.php';
             </div>
         </div>
 
-        <!-- ==================== DESKTOP TOP NAVIGATION TABS (3 Core Menus) ==================== -->
+        <!-- ==================== DESKTOP TOP NAVIGATION TABS (Modular Leveled Access) ==================== -->
         <div class="hidden md:flex items-center space-x-2 bg-white p-1.5 rounded-2xl border border-gray-200 shadow-sm mb-6">
             <!-- Tab 1: Antrean Pendaftar -->
             <button
+                x-show="canAccess('antrean')"
                 @click="setTab('antrean')"
                 type="button"
                 class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2"
@@ -215,6 +293,7 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- Tab 2: Peserta -->
             <button
+                x-show="canAccess('peserta')"
                 @click="setTab('peserta')"
                 type="button"
                 class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2"
@@ -232,6 +311,7 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- Tab 3: Live Skor -->
             <button
+                x-show="canAccess('scores')"
                 @click="setTab('scores')"
                 type="button"
                 class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2"
@@ -240,6 +320,18 @@ include __DIR__ . '/../includes/header.php';
                 <i data-lucide="crosshair" class="w-4 h-4"></i>
                 <span>Live Skor</span>
                 <span class="w-2 h-2 rounded-full" :class="activeTab === 'scores' ? 'bg-white animate-pulse' : 'bg-copper-500'"></span>
+            </button>
+
+            <!-- Tab 4: Kelola Akun (Super Admin / Users Permission) -->
+            <button
+                x-show="canAccess('users')"
+                @click="setTab('users')"
+                type="button"
+                class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2"
+                :class="activeTab === 'users' ? 'bg-copper-600 text-white shadow-md shadow-copper-600/20' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'"
+            >
+                <i data-lucide="users-cog" class="w-4 h-4"></i>
+                <span>Kelola Akun</span>
             </button>
         </div>
 
@@ -300,8 +392,8 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- Search & Filter Bar -->
             <div class="bg-white rounded-2xl border border-gray-200 p-4 mb-6 shadow-sm">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <div class="relative flex-1">
+                <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
+                    <div class="relative flex-1 min-w-[200px]">
                         <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         <input
                             type="text"
@@ -321,6 +413,19 @@ include __DIR__ . '/../includes/header.php';
                         <option value="verified">Khusus Terverifikasi</option>
                         <option value="rejected">Khusus Ditolak</option>
                     </select>
+
+                    <!-- Toggle Sembunyikan / Tampilkan yang Sudah Dikonfirmasi -->
+                    <button
+                        type="button"
+                        @click="showVerifiedInAntrean = !showVerifiedInAntrean; filterRegistrations()"
+                        class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold border transition select-none"
+                        :class="showVerifiedInAntrean ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-sm' : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300'"
+                    >
+                        <i data-lucide="eye" class="w-3.5 h-3.5" x-show="!showVerifiedInAntrean"></i>
+                        <i data-lucide="eye-off" class="w-3.5 h-3.5" x-show="showVerifiedInAntrean"></i>
+                        <span x-text="showVerifiedInAntrean ? 'Sembunyikan Terkonfirmasi' : 'Tampilkan Terkonfirmasi (' + stats.verified + ')'"></span>
+                    </button>
+
                     <button
                         @click="fetchRegistrations()"
                         class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-copper-50 text-copper-700 hover:bg-copper-100 border border-copper-200 text-xs font-bold rounded-xl transition"
@@ -372,9 +477,15 @@ include __DIR__ . '/../includes/header.php';
                                     </td>
                                     <td class="py-3 px-3 hidden lg:table-cell text-gray-700" x-text="reg.satuan"></td>
                                     <td class="py-3 px-3 hidden lg:table-cell">
-                                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                                              :class="reg.kategori === 'presisi' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-purple-50 text-purple-700 border border-purple-200'"
-                                              x-text="reg.kategori"></span>
+                                        <ul class="space-y-1 list-none p-0 m-0">
+                                            <template x-for="item in formatKategoriList(reg.kategori)" :key="item">
+                                                <li class="flex items-center gap-1.5 text-xs font-semibold text-gray-800">
+                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0"
+                                                          :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-gray-400')"></span>
+                                                    <span x-text="item"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
                                     </td>
                                     <td class="py-3 px-3 text-center">
                                         <span
@@ -504,7 +615,7 @@ include __DIR__ . '/../includes/header.php';
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <template x-for="(p, index) in filteredPeserta" :key="p.id">
-                                <tr class="hover:bg-emerald-50/30 transition">
+                                <tr class="hover:bg-emerald-50/40 transition cursor-pointer" @click="openDetail(p)">
                                     <td class="py-3 px-3 text-center font-semibold text-gray-500" x-text="index + 1"></td>
                                     <td class="py-3 px-3">
                                         <span class="inline-block px-2.5 py-1 rounded-lg bg-copper-100 text-copper-800 font-mono font-bold text-xs" x-text="p.no_peserta || '-'"></span>
@@ -518,9 +629,15 @@ include __DIR__ . '/../includes/header.php';
                                         <div class="text-[11px] text-gray-500" x-text="p.satuan"></div>
                                     </td>
                                     <td class="py-3 px-3">
-                                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                                              :class="p.kategori === 'presisi' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-purple-50 text-purple-700 border border-purple-200'"
-                                              x-text="p.kategori"></span>
+                                        <ul class="space-y-1 list-none p-0 m-0">
+                                            <template x-for="item in formatKategoriList(p.kategori)" :key="item">
+                                                <li class="flex items-center gap-1.5 text-xs font-semibold text-gray-800">
+                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0"
+                                                          :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-gray-400')"></span>
+                                                    <span x-text="item"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
                                     </td>
                                     <td class="py-3 px-3 hidden lg:table-cell text-xs">
                                         <div class="font-mono text-gray-800" x-text="p.telepon"></div>
@@ -532,11 +649,11 @@ include __DIR__ . '/../includes/header.php';
                                         </span>
                                     </td>
                                     <td class="py-3 px-3 text-center">
-                                        <div class="flex items-center justify-center gap-1.5">
+                                        <div class="flex items-center justify-center gap-1.5" @click.stop>
                                             <!-- Button Edit Langsung -->
                                             <button
                                                 type="button"
-                                                @click="openEditPeserta(p)"
+                                                @click.stop="openEditPeserta(p)"
                                                 class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-lg transition text-xs inline-flex items-center gap-1 border border-blue-200 shadow-sm"
                                                 title="Edit Langsung Detail Peserta"
                                             >
@@ -548,6 +665,7 @@ include __DIR__ . '/../includes/header.php';
                                             <a
                                                 :href="'/e-ticket.php?id=' + encodeURIComponent(p.registration_id)"
                                                 target="_blank"
+                                                @click.stop
                                                 class="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition text-xs"
                                                 title="Buka E-Ticket"
                                             >
@@ -557,7 +675,7 @@ include __DIR__ . '/../includes/header.php';
                                             <!-- Button Kirim WA -->
                                             <button
                                                 type="button"
-                                                @click="sendWhatsApp(p)"
+                                                @click.stop="sendWhatsApp(p)"
                                                 class="p-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg transition text-xs"
                                                 title="Kirim E-Ticket ke WA"
                                             >
@@ -567,7 +685,7 @@ include __DIR__ . '/../includes/header.php';
                                             <!-- Button Hapus Peserta -->
                                             <button
                                                 type="button"
-                                                @click="deletePeserta(p)"
+                                                @click.stop="deletePeserta(p)"
                                                 class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition text-xs"
                                                 title="Hapus Peserta"
                                             >
@@ -663,8 +781,8 @@ include __DIR__ . '/../includes/header.php';
             <div x-show="scoresSubTab === 'presisi'" x-transition>
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div class="text-xs text-gray-500">
-                        <p class="font-bold text-gray-800">Panduan Input Skor Presisi:</p>
-                        <p>Ketik poin (0–10) pada kolom S1 s/d S10, dan jumlah X pada kolom Jml X. Total poin otomatis dihitung secara real-time. Klik tombol <strong>Simpan</strong> pada baris peserta untuk menyimpan ke server.</p>
+                        <p class="font-bold text-gray-800">Panduan Input Skor Ring Presisi 20M:</p>
+                        <p>Ketik jumlah peluru masuk pada masing-masing ring (10 s/d 1). <strong>Jumlah Masuk</strong> dan <strong>Nilai</strong> otomatis dihitung secara real-time. Nilai <strong>X</strong> tidak masuk dalam Nilai maupun Jumlah Masuk, namun menjadi penentu utama jika terjadi nilai sama. Klik <strong>Simpan</strong> untuk memperbarui skor.</p>
                     </div>
                     <button
                         type="button"
@@ -683,22 +801,23 @@ include __DIR__ . '/../includes/header.php';
                         <table class="w-full text-left text-xs">
                             <thead class="bg-gray-100 uppercase font-bold text-gray-600 border-b border-gray-200">
                                 <tr>
-                                    <th class="py-3 px-3 w-12 text-center">Rank</th>
-                                    <th class="py-3 px-3">No. Peserta</th>
-                                    <th class="py-3 px-3">Nama & Satuan</th>
-                                    <th class="py-3 px-1 text-center w-11">S1</th>
-                                    <th class="py-3 px-1 text-center w-11">S2</th>
-                                    <th class="py-3 px-1 text-center w-11">S3</th>
-                                    <th class="py-3 px-1 text-center w-11">S4</th>
-                                    <th class="py-3 px-1 text-center w-11">S5</th>
-                                    <th class="py-3 px-1 text-center w-11">S6</th>
-                                    <th class="py-3 px-1 text-center w-11">S7</th>
-                                    <th class="py-3 px-1 text-center w-11">S8</th>
-                                    <th class="py-3 px-1 text-center w-11">S9</th>
-                                    <th class="py-3 px-1 text-center w-11">S10</th>
-                                    <th class="py-3 px-2 text-center w-14 font-bold text-copper-700 bg-copper-50/40">Jml X</th>
-                                    <th class="py-3 px-3 text-center w-16 font-extrabold bg-amber-50 text-amber-800">Total</th>
-                                    <th class="py-3 px-3 text-center w-24">Aksi</th>
+                                    <th class="py-3 px-3 w-10 text-center">Rank</th>
+                                    <th class="py-3 px-3 w-20">No. Peserta</th>
+                                    <th class="py-3 px-3">Nama &amp; Satuan</th>
+                                    <th class="py-3 px-1 text-center w-11 bg-amber-50 text-amber-700 font-extrabold" title="Inner X (Penentu seri sama)">X</th>
+                                    <th class="py-3 px-1 text-center w-10">10</th>
+                                    <th class="py-3 px-1 text-center w-10">9</th>
+                                    <th class="py-3 px-1 text-center w-10">8</th>
+                                    <th class="py-3 px-1 text-center w-10">7</th>
+                                    <th class="py-3 px-1 text-center w-10">6</th>
+                                    <th class="py-3 px-1 text-center w-10">5</th>
+                                    <th class="py-3 px-1 text-center w-10">4</th>
+                                    <th class="py-3 px-1 text-center w-10">3</th>
+                                    <th class="py-3 px-1 text-center w-10">2</th>
+                                    <th class="py-3 px-1 text-center w-10">1</th>
+                                    <th class="py-3 px-2 text-center w-14 font-bold bg-gray-50">Jml Masuk</th>
+                                    <th class="py-3 px-3 text-center w-16 font-extrabold text-copper-700 bg-copper-50/50">Nilai</th>
+                                    <th class="py-3 px-3 text-center w-20">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -711,33 +830,66 @@ include __DIR__ . '/../includes/header.php';
                                             <div class="text-[11px] text-gray-500" x-text="item.satuan"></div>
                                         </td>
 
-                                        <!-- 10 Inputs for Seri 1 - 10 -->
-                                        <template x-for="i in 10" :key="i">
-                                            <td class="py-2 px-1 text-center">
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    max="10"
-                                                    x-model.number="item['seri_' + i]"
-                                                    @input="calculateTotal(item)"
-                                                    class="w-10 text-center py-1 rounded-md bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:bg-white focus:ring-1 focus:ring-copper-500 focus:outline-none"
-                                                >
-                                            </td>
-                                        </template>
-
-                                        <!-- X Count Input -->
-                                        <td class="py-2 px-2 text-center bg-copper-50/20">
+                                        <!-- Ring X Input -->
+                                        <td class="py-2 px-1 text-center bg-amber-50/30">
                                             <input
                                                 type="number"
                                                 min="0"
                                                 max="10"
-                                                x-model.number="item.x_count"
-                                                class="w-12 text-center py-1 rounded-md bg-copper-50 border border-copper-300 text-xs font-mono font-bold text-copper-800 focus:ring-1 focus:ring-copper-500 focus:outline-none"
+                                                x-model.number="item.ring_x"
+                                                @input="calculateNilai(item)"
+                                                @keydown.enter="savePresisiScore(item)"
+                                                class="w-9 text-center py-1 rounded bg-amber-50 border border-amber-300 text-xs font-mono font-bold text-amber-800 focus:ring-1 focus:ring-amber-500 focus:outline-none"
                                             >
                                         </td>
 
-                                        <!-- Total Score (Real-time auto calculate) -->
-                                        <td class="py-2 px-3 text-center font-mono font-extrabold text-sm text-gray-900 bg-amber-50" x-text="item.total_score"></td>
+                                        <!-- Ring 10 down to 1 Inputs (Static & Robust) -->
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_10" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_9" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_8" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_7" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_6" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_5" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_4" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_3" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_2" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+                                        <td class="py-2 px-1 text-center">
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_1" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                                   class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                        </td>
+
+                                        <!-- Jumlah Masuk (Auto real-time) -->
+                                        <td class="py-2 px-2 text-center font-mono font-bold text-gray-800 bg-gray-50/50" x-text="item.jumlah_masuk"></td>
+
+                                        <!-- Nilai (Auto real-time) -->
+                                        <td class="py-2 px-3 text-center font-mono font-extrabold text-sm text-copper-700 bg-copper-50/30" x-text="item.nilai"></td>
 
                                         <!-- Direct Save Action -->
                                         <td class="py-2 px-3 text-center">
@@ -745,16 +897,28 @@ include __DIR__ . '/../includes/header.php';
                                                 type="button"
                                                 @click="savePresisiScore(item)"
                                                 :disabled="item._saving"
-                                                class="px-3 py-1.5 bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white rounded-lg font-bold text-xs shadow-sm transition"
+                                                class="px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition flex items-center justify-center gap-1 mx-auto min-w-[70px]"
+                                                :class="item._saved ? 'bg-emerald-600 text-white' : 'bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white'"
                                             >
-                                                <span x-text="item._saving ? '...' : 'Simpan'"></span>
+                                                <template x-if="item._saving">
+                                                    <span class="inline-flex items-center gap-1">
+                                                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                                                        <span>...</span>
+                                                    </span>
+                                                </template>
+                                                <template x-if="!item._saving && item._saved">
+                                                    <span>✓ Tersimpan</span>
+                                                </template>
+                                                <template x-if="!item._saving && !item._saved">
+                                                    <span>Simpan</span>
+                                                </template>
                                             </button>
                                         </td>
                                     </tr>
                                 </template>
                                 <template x-if="presisiList.length === 0">
                                     <tr>
-                                        <td colspan="16" class="py-10 text-center text-gray-400">
+                                        <td colspan="17" class="py-10 text-center text-gray-400">
                                             Belum ada peserta Presisi yang disinkronkan. Klik tombol <strong>Sinkron Peserta Verified</strong> di atas.
                                         </td>
                                     </tr>
@@ -792,16 +956,78 @@ include __DIR__ . '/../includes/header.php';
                                    class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
                         </div>
 
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">Nama Peserta 1</label>
-                            <input type="text" x-model="newMatch.participant_1_name" placeholder="Nama Peserta 1" required
-                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                        <!-- Participant 1 Autocomplete -->
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                            <label class="block font-bold text-gray-700 mb-1">Peserta 1 (Ketik Nama / No. BSC)</label>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    x-model="newMatch.participant_1_name"
+                                    @focus="open = true"
+                                    @input="open = true"
+                                    placeholder="Cari nama atau no peserta..."
+                                    required
+                                    class="w-full px-3 py-2 pr-7 rounded-lg border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
+                                >
+                                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            </div>
+                            <div
+                                x-show="open && getDuelingParticipants(newMatch.participant_1_name).length > 0"
+                                x-transition
+                                class="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto divide-y divide-gray-100"
+                                style="display: none;"
+                            >
+                                <template x-for="p in getDuelingParticipants(newMatch.participant_1_name)" :key="p.registration_id">
+                                    <button
+                                        type="button"
+                                        @click="selectNewMatchParticipant(1, p); open = false"
+                                        class="w-full text-left px-3 py-2 hover:bg-copper-50 text-xs transition flex items-center justify-between gap-2"
+                                    >
+                                        <div class="truncate">
+                                            <span class="font-bold text-gray-900" x-text="p.nama"></span>
+                                            <span class="text-gray-400 text-[10px] ml-1" x-text="'(' + (p.satuan || '-') + ')'"></span>
+                                        </div>
+                                        <span class="px-1.5 py-0.5 rounded bg-copper-100 text-copper-800 font-mono font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
+                                    </button>
+                                </template>
+                            </div>
                         </div>
 
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">Nama Peserta 2</label>
-                            <input type="text" x-model="newMatch.participant_2_name" placeholder="Nama Peserta 2" required
-                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                        <!-- Participant 2 Autocomplete -->
+                        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                            <label class="block font-bold text-gray-700 mb-1">Peserta 2 (Ketik Nama / No. BSC)</label>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    x-model="newMatch.participant_2_name"
+                                    @focus="open = true"
+                                    @input="open = true"
+                                    placeholder="Cari nama atau no peserta..."
+                                    required
+                                    class="w-full px-3 py-2 pr-7 rounded-lg border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
+                                >
+                                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            </div>
+                            <div
+                                x-show="open && getDuelingParticipants(newMatch.participant_2_name).length > 0"
+                                x-transition
+                                class="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto divide-y divide-gray-100"
+                                style="display: none;"
+                            >
+                                <template x-for="p in getDuelingParticipants(newMatch.participant_2_name)" :key="p.registration_id">
+                                    <button
+                                        type="button"
+                                        @click="selectNewMatchParticipant(2, p); open = false"
+                                        class="w-full text-left px-3 py-2 hover:bg-copper-50 text-xs transition flex items-center justify-between gap-2"
+                                    >
+                                        <div class="truncate">
+                                            <span class="font-bold text-gray-900" x-text="p.nama"></span>
+                                            <span class="text-gray-400 text-[10px] ml-1" x-text="'(' + (p.satuan || '-') + ')'"></span>
+                                        </div>
+                                        <span class="px-1.5 py-0.5 rounded bg-copper-100 text-copper-800 font-mono font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
+                                    </button>
+                                </template>
+                            </div>
                         </div>
 
                         <div class="sm:col-span-2 md:col-span-4 flex justify-end">
@@ -836,17 +1062,71 @@ include __DIR__ . '/../includes/header.php';
                                         <td class="py-2.5 px-3 font-semibold text-gray-900" x-text="match.round_name"></td>
                                         <td class="py-2.5 px-2 text-center font-mono font-bold text-copper-700" x-text="match.match_number"></td>
 
-                                        <!-- Participant 1 -->
-                                        <td class="py-2.5 px-3">
-                                            <input type="text" x-model="match.participant_1_name" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
+                                        <!-- Participant 1 Autocomplete -->
+                                        <td class="py-2.5 px-3 relative" x-data="{ open: false }" @click.outside="open = false">
+                                            <div class="relative">
+                                                <input
+                                                    type="text"
+                                                    x-model="match.participant_1_name"
+                                                    @focus="open = true"
+                                                    @input="open = true"
+                                                    placeholder="Nama / No BSC"
+                                                    class="w-full px-2 py-1 pr-5 rounded border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
+                                                >
+                                                <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                                            </div>
+                                            <div
+                                                x-show="open && getDuelingParticipants(match.participant_1_name).length > 0"
+                                                x-transition
+                                                class="absolute z-50 left-2 right-2 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-40 overflow-y-auto divide-y divide-gray-100"
+                                                style="display: none;"
+                                            >
+                                                <template x-for="p in getDuelingParticipants(match.participant_1_name)" :key="p.registration_id">
+                                                    <button
+                                                        type="button"
+                                                        @click="selectMatchParticipant(match, 1, p); open = false"
+                                                        class="w-full text-left px-2 py-1.5 hover:bg-copper-50 text-[11px] flex items-center justify-between gap-1 transition"
+                                                    >
+                                                        <span class="font-bold text-gray-900 truncate" x-text="p.nama"></span>
+                                                        <span class="font-mono text-copper-700 font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
+                                                    </button>
+                                                </template>
+                                            </div>
                                         </td>
                                         <td class="py-2.5 px-2 text-center">
                                             <input type="number" step="0.001" x-model.number="match.time_1" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
                                         </td>
 
-                                        <!-- Participant 2 -->
-                                        <td class="py-2.5 px-3">
-                                            <input type="text" x-model="match.participant_2_name" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
+                                        <!-- Participant 2 Autocomplete -->
+                                        <td class="py-2.5 px-3 relative" x-data="{ open: false }" @click.outside="open = false">
+                                            <div class="relative">
+                                                <input
+                                                    type="text"
+                                                    x-model="match.participant_2_name"
+                                                    @focus="open = true"
+                                                    @input="open = true"
+                                                    placeholder="Nama / No BSC"
+                                                    class="w-full px-2 py-1 pr-5 rounded border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
+                                                >
+                                                <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                                            </div>
+                                            <div
+                                                x-show="open && getDuelingParticipants(match.participant_2_name).length > 0"
+                                                x-transition
+                                                class="absolute z-50 left-2 right-2 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-40 overflow-y-auto divide-y divide-gray-100"
+                                                style="display: none;"
+                                            >
+                                                <template x-for="p in getDuelingParticipants(match.participant_2_name)" :key="p.registration_id">
+                                                    <button
+                                                        type="button"
+                                                        @click="selectMatchParticipant(match, 2, p); open = false"
+                                                        class="w-full text-left px-2 py-1.5 hover:bg-copper-50 text-[11px] flex items-center justify-between gap-1 transition"
+                                                    >
+                                                        <span class="font-bold text-gray-900 truncate" x-text="p.nama"></span>
+                                                        <span class="font-mono text-copper-700 font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
+                                                    </button>
+                                                </template>
+                                            </div>
                                         </td>
                                         <td class="py-2.5 px-2 text-center">
                                             <input type="number" step="0.001" x-model.number="match.time_2" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
@@ -897,13 +1177,161 @@ include __DIR__ . '/../includes/header.php';
             </div>
         </div>
 
+        <!-- ==================== TAB 4: KELOLA AKUN ADMIN (SUPER ADMIN ONLY / USERS PERMISSION) ==================== -->
+        <div x-show="activeTab === 'users'" x-transition>
+            <!-- Control Header -->
+            <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 flex items-center gap-1.5">
+                            <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                            Leveling Access & Multi-User Admin
+                        </span>
+                    </div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-gray-900 mt-1">
+                        Manajemen Akun Admin & Hak Akses
+                    </h2>
+                    <p class="text-xs text-gray-500 mt-0.5">
+                        Kelola akun admin panitia, atur hak akses modular per-menu (Antrean Pendaftar, Data Peserta, Live Skor, Kelola Akun), dan buat akun baru.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button
+                        type="button"
+                        @click="openAddUserModal()"
+                        class="px-4 py-2.5 bg-gradient-to-r from-copper-600 to-amber-600 hover:from-copper-700 hover:to-amber-700 text-white font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md shadow-copper-600/20 shrink-0"
+                    >
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Tambah Akun Admin</span>
+                    </button>
+                    <button
+                        type="button"
+                        @click="fetchAdminUsers()"
+                        :disabled="loadingUsers"
+                        class="p-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-xl transition shadow-sm shrink-0"
+                        title="Muat ulang data akun"
+                    >
+                        <i data-lucide="refresh-cw" class="w-4 h-4" :class="loadingUsers && 'animate-spin'"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table of Admin Accounts -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-gray-100 uppercase font-bold text-gray-600 border-b border-gray-200">
+                            <tr>
+                                <th class="py-3 px-3 w-10 text-center">No</th>
+                                <th class="py-3 px-4">ID Admin / Username</th>
+                                <th class="py-3 px-4">Nama Lengkap</th>
+                                <th class="py-3 px-3">Role</th>
+                                <th class="py-3 px-4">Hak Akses Modular</th>
+                                <th class="py-3 px-3 text-center">Status</th>
+                                <th class="py-3 px-4">Login Terakhir</th>
+                                <th class="py-3 px-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <template x-for="(user, index) in adminUsersList" :key="user.id">
+                                <tr class="hover:bg-gray-50/80 transition">
+                                    <td class="py-3 px-3 text-center font-bold text-gray-500" x-text="index + 1"></td>
+                                    <td class="py-3 px-4 font-mono font-bold text-copper-700" x-text="user.username"></td>
+                                    <td class="py-3 px-4 font-bold text-gray-900" x-text="user.display_name"></td>
+                                    <td class="py-3 px-3">
+                                        <span
+                                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                                            :class="user.role === 'superadmin' ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-blue-100 text-blue-800 border border-blue-200'"
+                                        >
+                                            <i data-lucide="shield" class="w-3 h-3" x-show="user.role === 'superadmin'"></i>
+                                            <span x-text="user.role === 'superadmin' ? 'Super Admin' : 'Admin'"></span>
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex flex-wrap gap-1">
+                                            <template x-if="user.role === 'superadmin'">
+                                                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                                                    Akses Penuh Seluruh Menu
+                                                </span>
+                                            </template>
+                                            <template x-if="user.role !== 'superadmin'">
+                                                <div class="flex flex-wrap gap-1">
+                                                    <span x-show="(user.permissions || []).includes('antrean')" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Antrean</span>
+                                                    <span x-show="(user.permissions || []).includes('peserta')" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Peserta</span>
+                                                    <span x-show="(user.permissions || []).includes('scores')" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-copper-50 text-copper-700 border border-copper-200">Live Skor</span>
+                                                    <span x-show="(user.permissions || []).includes('users')" class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Kelola Akun</span>
+                                                    <span x-show="!(user.permissions || []).length" class="text-gray-400 italic text-[10px]">Tanpa hak akses</span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-3 text-center">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold"
+                                            :class="user.is_active === 1 ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'"
+                                            x-text="user.is_active === 1 ? 'Aktif' : 'Nonaktif'"
+                                        ></span>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-500 font-mono text-[11px]" x-text="user.last_login ? user.last_login : 'Belum pernah'"></td>
+                                    <td class="py-3 px-4 text-center">
+                                        <div class="inline-flex items-center gap-1.5">
+                                            <!-- Edit -->
+                                            <button
+                                                type="button"
+                                                @click="openEditUserModal(user)"
+                                                class="p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition"
+                                                title="Edit Akun & Hak Akses"
+                                            >
+                                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                            </button>
+
+                                            <!-- Toggle Active -->
+                                            <button
+                                                type="button"
+                                                @click="toggleUserStatus(user)"
+                                                class="p-1.5 rounded-lg transition"
+                                                :class="user.is_active === 1 ? 'bg-amber-50 hover:bg-amber-100 text-amber-700' : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700'"
+                                                :title="user.is_active === 1 ? 'Nonaktifkan Akun' : 'Aktifkan Akun'"
+                                            >
+                                                <i data-lucide="power" class="w-4 h-4"></i>
+                                            </button>
+
+                                            <!-- Delete (Only if not self and not primary superadmin) -->
+                                            <template x-if="currentUser && currentUser.id !== user.id && user.username !== 'superadmin'">
+                                                <button
+                                                    type="button"
+                                                    @click="deleteAdminUser(user)"
+                                                    class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition"
+                                                    title="Hapus Akun"
+                                                >
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template x-if="adminUsersList.length === 0">
+                                <tr>
+                                    <td colspan="8" class="py-10 text-center text-gray-400">
+                                        <p>Belum ada data akun admin yang dimuat.</p>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- ==================== MOBILE BOTTOM NAVIGATION BAR (FIXED) ==================== -->
-    <!-- Requirement: "ketika di buka secara mobile, navigasi berada pada bagian bawah HP, dashboard default adalah antrean pendaftar" -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] py-2 px-3 flex items-center justify-around">
         <!-- Menu 1: Antrean Pendaftar (Default) -->
         <button
+            x-show="canAccess('antrean')"
             type="button"
             @click="setTab('antrean')"
             class="flex-1 flex flex-col items-center justify-center py-1 transition relative"
@@ -922,6 +1350,7 @@ include __DIR__ . '/../includes/header.php';
 
         <!-- Menu 2: Peserta -->
         <button
+            x-show="canAccess('peserta')"
             type="button"
             @click="setTab('peserta')"
             class="flex-1 flex flex-col items-center justify-center py-1 transition relative"
@@ -940,6 +1369,7 @@ include __DIR__ . '/../includes/header.php';
 
         <!-- Menu 3: Live Skor -->
         <button
+            x-show="canAccess('scores')"
             type="button"
             @click="setTab('scores')"
             class="flex-1 flex flex-col items-center justify-center py-1 transition relative"
@@ -952,13 +1382,27 @@ include __DIR__ . '/../includes/header.php';
             </div>
             <span class="text-[11px] mt-1 tracking-tight">Live Skor</span>
         </button>
+
+        <!-- Menu 4: Kelola Akun -->
+        <button
+            x-show="canAccess('users')"
+            type="button"
+            @click="setTab('users')"
+            class="flex-1 flex flex-col items-center justify-center py-1 transition relative"
+            :class="activeTab === 'users' ? 'text-copper-600 font-bold' : 'text-gray-400 hover:text-gray-600'"
+        >
+            <div class="relative">
+                <i data-lucide="users-cog" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] mt-1 tracking-tight">Akun</span>
+        </button>
     </nav>
 
 
     <!-- ==================== MODAL 1: RINCIAN PENDAFTAR & VERIFIKASI ==================== -->
     <template x-if="selectedReg">
         <div
-            class="fixed inset-0 z-[100] flex items-start justify-center p-3 sm:p-4 pt-16 sm:pt-20"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6"
             x-show="showDetailModal"
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0"
@@ -971,24 +1415,36 @@ include __DIR__ . '/../includes/header.php';
             <!-- Backdrop -->
             <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="closeDetailModal()"></div>
 
-            <!-- Modal Content -->
+            <!-- Modal Content (Wider, Flex Column, Scrollable Body) -->
             <div
-                class="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10"
+                class="relative w-full max-w-4xl lg:max-w-5xl max-h-[92vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-gray-200 z-10 overflow-hidden"
                 @click.stop
             >
                 <!-- Modal Header -->
-                <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
+                <div class="shrink-0 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                     <div>
-                        <h2 class="font-display text-lg font-bold text-gray-900">Rincian Pendaftar</h2>
+                        <h2 class="font-display text-lg sm:text-xl font-bold text-gray-900" x-text="(selectedReg.status || '').toLowerCase() === 'verified' ? 'Rincian Peserta' : 'Rincian Pendaftar'"></h2>
                         <p class="text-xs text-gray-500 font-mono mt-0.5" x-text="'ID: ' + selectedReg.registration_id"></p>
                     </div>
-                    <button @click="closeDetailModal()" class="p-2 hover:bg-gray-100 rounded-full transition">
-                        <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <!-- Mode Edit Button di Header -->
+                        <button
+                            type="button"
+                            @click="openEditFromDetail()"
+                            class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-xl transition text-xs inline-flex items-center gap-1.5 border border-blue-200 shadow-sm"
+                            title="Buka Mode Edit Peserta"
+                        >
+                            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                            <span>Mode Edit</span>
+                        </button>
+                        <button @click="closeDetailModal()" class="p-2 hover:bg-gray-100 rounded-full transition">
+                            <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Modal Body -->
-                <div class="p-6 space-y-6">
+                <!-- Modal Body (Scrollable) -->
+                <div class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6 overscroll-contain">
                     <!-- Status & Assigned Number Badge -->
                     <div class="flex items-center flex-wrap gap-2.5">
                         <span
@@ -1033,8 +1489,16 @@ include __DIR__ . '/../includes/header.php';
                                 <p class="font-bold text-gray-900 mt-0.5" x-text="selectedReg.satuan"></p>
                             </div>
                             <div>
-                                <span class="text-gray-400 font-semibold block text-[11px] uppercase">Kategori Pertandingan</span>
-                                <p class="font-bold text-copper-700 mt-0.5 capitalize" x-text="selectedReg.kategori"></p>
+                                <span class="text-gray-400 font-semibold block text-[11px] uppercase mb-1">Kategori Pertandingan</span>
+                                <ul class="space-y-1 list-none p-0 m-0">
+                                    <template x-for="item in formatKategoriList(selectedReg.kategori)" :key="item">
+                                        <li class="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-copper-800">
+                                            <span class="w-1.5 h-1.5 rounded-full shrink-0"
+                                                  :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-copper-600')"></span>
+                                            <span x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
                             </div>
                             <div>
                                 <span class="text-gray-400 font-semibold block text-[11px] uppercase">No. WhatsApp / Telepon</span>
@@ -1152,9 +1616,19 @@ include __DIR__ . '/../includes/header.php';
                 </div>
 
                 <!-- Modal Actions Footer -->
-                <div class="sticky bottom-0 z-10 bg-white/95 backdrop-blur-md border-t border-gray-200 px-6 py-4 rounded-b-3xl">
+                <div class="shrink-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-6 py-4">
                     <div class="flex flex-col sm:flex-row gap-2.5">
-                        <!-- Action Konfirmasi -->
+                        <!-- Mode Edit Button -->
+                        <button
+                            type="button"
+                            @click="openEditFromDetail()"
+                            class="px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2"
+                        >
+                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            <span>Mode Edit</span>
+                        </button>
+
+                        <!-- Action Konfirmasi (Hanya jika belum verified) -->
                         <template x-if="(selectedReg.status || '').toLowerCase() !== 'verified'">
                             <button
                                 type="button"
@@ -1167,18 +1641,20 @@ include __DIR__ . '/../includes/header.php';
                             </button>
                         </template>
 
-                        <!-- Action Kirim WA E-Ticket -->
-                        <button
-                            type="button"
-                            @click="sendWhatsApp(selectedReg)"
-                            class="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2"
-                        >
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Kirim E-Ticket ke WA Peserta</span>
-                        </button>
+                        <!-- Action Kirim WA E-Ticket (HANYA MUNCUL SETELAH PESERTA DIKONFIRMASI / VERIFIED) -->
+                        <template x-if="(selectedReg.status || '').toLowerCase() === 'verified'">
+                            <button
+                                type="button"
+                                @click="sendWhatsApp(selectedReg)"
+                                class="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2"
+                            >
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Kirim E-Ticket ke WA Peserta</span>
+                            </button>
+                        </template>
 
-                        <!-- Action Tolak -->
-                        <template x-if="(selectedReg.status || '').toLowerCase() !== 'rejected'">
+                        <!-- Action Tolak (HANYA MUNCUL JIKA BELUM DITOLAK DAN BELUM DIKONFIRMASI) -->
+                        <template x-if="(selectedReg.status || '').toLowerCase() !== 'rejected' && (selectedReg.status || '').toLowerCase() !== 'verified'">
                             <button
                                 type="button"
                                 @click="rejectParticipant()"
@@ -1419,6 +1895,274 @@ include __DIR__ . '/../includes/header.php';
     </template>
 
 
+    <!-- ==================== MODAL 4: TAMBAH AKUN ADMIN ==================== -->
+    <template x-if="showAddUserModal">
+        <div
+            class="fixed inset-0 z-[110] flex items-start justify-center p-3 sm:p-4 pt-14 sm:pt-16"
+            x-show="showAddUserModal"
+            x-transition
+            @keydown.escape.window="showAddUserModal = false"
+        >
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showAddUserModal = false"></div>
+
+            <div class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+                <!-- Header -->
+                <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
+                            <i data-lucide="user-plus" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-bold text-gray-900">Tambah Akun Admin Baru</h3>
+                            <p class="text-xs text-gray-500">Buat ID dan password bebas, tentukan hak akses modular.</p>
+                        </div>
+                    </div>
+                    <button @click="showAddUserModal = false" class="p-2 hover:bg-gray-100 rounded-full transition">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+                    </button>
+                </div>
+
+                <!-- Form Body -->
+                <form @submit.prevent="createAdminUser()" class="p-6 space-y-4 text-xs sm:text-sm">
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">ID Admin / Username *</label>
+                        <input
+                            type="text"
+                            x-model="newUserForm.username"
+                            required
+                            placeholder="Contoh: admin_scoring, bda_panitia, dll (tanpa spasi)"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-mono font-bold text-copper-700 focus:bg-white focus:ring-2 focus:ring-copper-500"
+                        >
+                        <p class="text-[10px] text-gray-400 mt-1">ID digunakan untuk login ke Admin Dashboard.</p>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Nama Lengkap Panitia *</label>
+                        <input
+                            type="text"
+                            x-model="newUserForm.display_name"
+                            required
+                            placeholder="Contoh: Bripda Andi / Tim Panitia Scoring"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white focus:ring-2 focus:ring-copper-500"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Password Admin *</label>
+                        <input
+                            type="text"
+                            x-model="newUserForm.password"
+                            required
+                            placeholder="Tentukan password bebas (minimal 6 karakter)"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-mono focus:bg-white focus:ring-2 focus:ring-copper-500"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Role / Peran</label>
+                        <select x-model="newUserForm.role" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-bold focus:bg-white">
+                            <option value="admin">Admin Biasa (Akses Berdasarkan Pilihan Menu)</option>
+                            <option value="superadmin">Super Administrator (Akses Penuh Seluruh Fitur)</option>
+                        </select>
+                    </div>
+
+                    <!-- Hak Akses Modular Checkboxes -->
+                    <div class="pt-2">
+                        <label class="block font-bold text-gray-700 mb-2">Hak Akses Modular Menu</label>
+                        <div class="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200" :class="newUserForm.role === 'superadmin' ? 'opacity-60' : ''">
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="antrean"
+                                    x-model="newUserForm.permissions"
+                                    :disabled="newUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">1. Antrean Pendaftar (Verifikasi &amp; Konfirmasi, Kirim WA E-Ticket)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="peserta"
+                                    x-model="newUserForm.permissions"
+                                    :disabled="newUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">2. Data Peserta (Edit Detail Peserta &amp; Tambah Peserta Langsung)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="scores"
+                                    x-model="newUserForm.permissions"
+                                    :disabled="newUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">3. Live Skor &amp; Pertandingan (Input Skor Ring Presisi &amp; Bagan Dueling Plat)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="users"
+                                    x-model="newUserForm.permissions"
+                                    :disabled="newUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">4. Kelola Akun Admin (Manajemen Akun Admin Lainnya)</span>
+                            </label>
+                            <p x-show="newUserForm.role === 'superadmin'" class="text-[11px] text-purple-700 font-bold mt-1">
+                                * Super Admin secara otomatis memiliki hak akses penuh ke semua menu di atas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-gray-200">
+                        <button type="button" @click="showAddUserModal = false" class="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition">
+                            Batal
+                        </button>
+                        <button type="submit" :disabled="savingUser" class="px-6 py-2.5 rounded-xl bg-copper-600 hover:bg-copper-700 text-white font-bold transition shadow-md flex items-center gap-1.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span x-text="savingUser ? 'Membuat...' : 'Buat Akun Admin'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
+
+    <!-- ==================== MODAL 5: EDIT AKUN ADMIN ==================== -->
+    <template x-if="showEditUserModal">
+        <div
+            class="fixed inset-0 z-[110] flex items-start justify-center p-3 sm:p-4 pt-14 sm:pt-16"
+            x-show="showEditUserModal"
+            x-transition
+            @keydown.escape.window="showEditUserModal = false"
+        >
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showEditUserModal = false"></div>
+
+            <div class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+                <!-- Header -->
+                <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                            <i data-lucide="edit-3" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-bold text-gray-900">Edit Akun Admin</h3>
+                            <p class="text-xs text-gray-500" x-text="'ID: ' + editUserForm.username"></p>
+                        </div>
+                    </div>
+                    <button @click="showEditUserModal = false" class="p-2 hover:bg-gray-100 rounded-full transition">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+                    </button>
+                </div>
+
+                <!-- Form Body -->
+                <form @submit.prevent="saveEditAdminUser()" class="p-6 space-y-4 text-xs sm:text-sm">
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">ID Admin / Username</label>
+                        <input
+                            type="text"
+                            :value="editUserForm.username"
+                            disabled
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-100 font-mono font-bold text-gray-500 cursor-not-allowed"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Nama Lengkap Panitia *</label>
+                        <input
+                            type="text"
+                            x-model="editUserForm.display_name"
+                            required
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white focus:ring-2 focus:ring-copper-500"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Password Baru (Opsional)</label>
+                        <input
+                            type="text"
+                            x-model="editUserForm.password"
+                            placeholder="Biarkan kosong jika tidak ingin mengubah password"
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-mono focus:bg-white focus:ring-2 focus:ring-copper-500"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Role / Peran</label>
+                        <select x-model="editUserForm.role" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-bold focus:bg-white">
+                            <option value="admin">Admin Biasa</option>
+                            <option value="superadmin">Super Administrator</option>
+                        </select>
+                    </div>
+
+                    <!-- Hak Akses Modular Checkboxes -->
+                    <div class="pt-2">
+                        <label class="block font-bold text-gray-700 mb-2">Hak Akses Modular Menu</label>
+                        <div class="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200" :class="editUserForm.role === 'superadmin' ? 'opacity-60' : ''">
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="antrean"
+                                    x-model="editUserForm.permissions"
+                                    :disabled="editUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">1. Antrean Pendaftar (Verifikasi &amp; Konfirmasi, Kirim WA E-Ticket)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="peserta"
+                                    x-model="editUserForm.permissions"
+                                    :disabled="editUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">2. Data Peserta (Edit Detail Peserta &amp; Tambah Peserta Langsung)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="scores"
+                                    x-model="editUserForm.permissions"
+                                    :disabled="editUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">3. Live Skor &amp; Pertandingan (Input Skor Ring Presisi &amp; Bagan Dueling Plat)</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    value="users"
+                                    x-model="editUserForm.permissions"
+                                    :disabled="editUserForm.role === 'superadmin'"
+                                    class="rounded border-gray-300 text-copper-600 focus:ring-copper-500 w-4 h-4"
+                                >
+                                <span class="font-medium text-gray-800">4. Kelola Akun Admin (Manajemen Akun Admin Lainnya)</span>
+                            </label>
+                            <p x-show="editUserForm.role === 'superadmin'" class="text-[11px] text-purple-700 font-bold mt-1">
+                                * Super Admin secara otomatis memiliki hak akses penuh ke semua menu di atas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-gray-200">
+                        <button type="button" @click="showEditUserModal = false" class="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition">
+                            Batal
+                        </button>
+                        <button type="submit" :disabled="savingUser" class="px-6 py-2.5 rounded-xl bg-copper-600 hover:bg-copper-700 text-white font-bold transition shadow-md flex items-center gap-1.5">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span x-text="savingUser ? 'Menyimpan...' : 'Perbarui Akun'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
+
     <!-- ==================== TOAST NOTIFICATION ==================== -->
     <div
         x-show="toast.show"
@@ -1466,6 +2210,7 @@ function adminDashboard() {
         // Filter & Search states
         searchQuery: '',
         statusFilter: 'all',
+        showVerifiedInAntrean: false,
         pesertaSearch: '',
         pesertaCategoryFilter: 'all',
 
@@ -1516,7 +2261,36 @@ function adminDashboard() {
             round_name: 'Penyisihan',
             match_number: 1,
             participant_1_name: '',
-            participant_2_name: ''
+            participant_1_id: '',
+            participant_1_satuan: '',
+            participant_2_name: '',
+            participant_2_id: '',
+            participant_2_satuan: ''
+        },
+
+        // Current Logged In Admin User & Permissions
+        currentUser: <?= json_encode($currentUser) ?>,
+
+        // Admin Users Management (Super Admin / Leveling Access)
+        adminUsersList: [],
+        loadingUsers: false,
+        showAddUserModal: false,
+        showEditUserModal: false,
+        savingUser: false,
+        newUserForm: {
+            username: '',
+            password: '',
+            display_name: '',
+            role: 'admin',
+            permissions: ['antrean', 'peserta', 'scores']
+        },
+        editUserForm: {
+            id: null,
+            username: '',
+            display_name: '',
+            password: '',
+            role: 'admin',
+            permissions: []
         },
 
         // Toast & Stats
@@ -1527,16 +2301,42 @@ function adminDashboard() {
         adminToken: <?= json_encode(ADMIN_TOKEN) ?>,
         siteUrl: <?= json_encode(SITE_URL) ?>,
 
+        canAccess(perm) {
+            if (!this.currentUser) return false;
+            if (this.currentUser.role === 'superadmin') return true;
+            const perms = this.currentUser.permissions || [];
+            return perms.includes(perm);
+        },
+
         async init() {
-            // Default active tab is 'antrean'
-            this.activeTab = 'antrean';
-            await this.fetchRegistrations();
-            await this.fetchPresisiScores();
-            await this.fetchDuelingMatches();
+            // Select first accessible tab
+            if (this.canAccess('antrean')) {
+                this.activeTab = 'antrean';
+            } else if (this.canAccess('peserta')) {
+                this.activeTab = 'peserta';
+            } else if (this.canAccess('scores')) {
+                this.activeTab = 'scores';
+            } else if (this.canAccess('users')) {
+                this.activeTab = 'users';
+            }
+
+            if (this.canAccess('antrean') || this.canAccess('peserta')) {
+                await this.fetchRegistrations();
+            }
+            if (this.canAccess('scores')) {
+                await this.fetchPresisiScores();
+                await this.fetchDuelingMatches();
+            }
+            if (this.canAccess('users')) {
+                await this.fetchAdminUsers();
+            }
         },
 
         setTab(tab) {
             this.activeTab = tab;
+            if (tab === 'users' && this.adminUsersList.length === 0) {
+                this.fetchAdminUsers();
+            }
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });
@@ -1580,6 +2380,9 @@ function adminDashboard() {
             let res = [...this.registrations];
             if (this.statusFilter !== 'all') {
                 res = res.filter(r => (r.status || '').toLowerCase() === this.statusFilter.toLowerCase());
+            } else if (!this.showVerifiedInAntrean) {
+                // Sembunyikan yang sudah dikonfirmasi (Verified) dari antrean pendaftar secara default
+                res = res.filter(r => (r.status || '').toLowerCase() !== 'verified');
             }
             if (this.searchQuery.trim()) {
                 const q = this.searchQuery.toLowerCase().trim();
@@ -1711,8 +2514,24 @@ function adminDashboard() {
             }
         },
 
+        openEditFromDetail() {
+            if (!this.selectedReg) return;
+            const reg = { ...this.selectedReg };
+            this.closeDetailModal();
+            this.openEditPeserta(reg);
+        },
+
         // Edit Peserta Langsung
         openEditPeserta(p) {
+            let kat = (p.kategori || 'presisi').toLowerCase();
+            if (kat.includes('keduanya') || (kat.includes('presisi') && kat.includes('dueling'))) {
+                kat = 'keduanya';
+            } else if (kat.includes('presisi')) {
+                kat = 'presisi';
+            } else if (kat.includes('dueling')) {
+                kat = 'dueling';
+            }
+
             this.editForm = {
                 id: p.id,
                 registration_id: p.registration_id,
@@ -1722,7 +2541,7 @@ function adminDashboard() {
                 satuan: p.satuan || '',
                 telepon: p.telepon || '',
                 email: p.email || '',
-                kategori: p.kategori || 'presisi',
+                kategori: kat,
                 status: p.status || 'Verified',
                 no_peserta: p.no_peserta || '',
                 admin_notes: p.admin_notes || ''
@@ -1863,41 +2682,54 @@ function adminDashboard() {
             }
 
             const noPeserta = reg.no_peserta || '-';
-            const kategoriLabel = reg.kategori || '-';
             const eTicketUrl = this.siteUrl + '/e-ticket.php?id=' + encodeURIComponent(reg.registration_id);
             const isVerified = (reg.status || '').toLowerCase() === 'verified';
-            const statusLabel = isVerified ? '✅ LUNAS / TERKONFIRMASI RESMI' : '⏳ PENDING (Menunggu Konfirmasi)';
+            const statusLabel = isVerified ? 'VERIFIED (TERKONFIRMASI RESMI)' : 'PENDING (Menunggu Konfirmasi)';
 
-            const message = `🎯 *BDA SHOOTING CHAMPIONSHIP 2026*
+            // Format kategori lomba as bulleted list
+            let katItems = [];
+            if (reg.kategori) {
+                katItems = reg.kategori.split(/[,+]/).map(k => k.trim()).filter(Boolean);
+            }
+            let katText = '';
+            if (katItems.length > 1) {
+                katText = '\n' + katItems.map(k => '  - ' + k).join('\n');
+            } else if (katItems.length === 1) {
+                katText = '*' + katItems[0] + '*';
+            } else {
+                katText = '-';
+            }
+
+            const message = `*BDA SHOOTING CHAMPIONSHIP 2026*
 *RESIMEN I PASUKAN PELOPOR KORPS BRIMOB POLRI*
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+================================
 *PENGESAHAN PENDAFTARAN & E-TICKET RESMI*
 
 Halo Bapak/Ibu/Sdr *${reg.nama}*,
-Pendaftaran Anda pada BDA Shooting Championship 2026 telah *DIKONFIRMASI & TERVERIFIKASI RESMI*.
+Pendaftaran Anda pada BDA Shooting Championship 2026 telah *DIKONFIRMASI & VERIFIED*.
 
-📋 *RINCIAN PESERTA:*
-• No. Peserta: *${noPeserta}*
-• ID Registrasi: ${reg.registration_id}
-• Nama Lengkap: ${reg.nama}
-• Pangkat: ${reg.pangkat || '-'}
-• NRP / NIK: ${reg.nrp}
-• Satuan / Club: ${reg.satuan}
-• Kategori Lomba: *${kategoriLabel}*
-• Status Pembayaran: *${statusLabel}*
+*RINCIAN PESERTA:*
+- No. Peserta: *${noPeserta}*
+- ID Registrasi: ${reg.registration_id}
+- Nama Lengkap: ${reg.nama}
+- Pangkat: ${reg.pangkat || '-'}
+- NRP / NIK: ${reg.nrp}
+- Satuan / Club: ${reg.satuan}
+- Kategori Lomba: ${katText}
+- Status Registrasi: *${statusLabel}*
 
-🎫 *LINK E-TICKET & QR CODE RESMI:*
+*LINK E-TICKET & QR CODE RESMI:*
 ${eTicketUrl}
-*(Tautan unik di atas memuat QR Code resmi dan tanda pengenal peserta)*
+(Tautan unik di atas memuat QR Code resmi dan tanda pengenal peserta)
 
-⚠️ *CATATAN PENTING PESERTA (WAJIB DIBACA):*
+*CATATAN PENTING PESERTA (WAJIB DIBACA):*
 1. *Simpan pesan ini, link E-Ticket, dan QR Code* agar tidak hilang.
 2. Tunjukkan E-Ticket & QR Code ini (pada layar HP atau cetak) saat *Daftar Ulang* di lokasi kejuaraan.
 3. *Wajib membawa fisik KTA & KTP Asli* untuk verifikasi data keabsahan peserta di meja panitia.
-4. Seluruh peserta *Wajib Hadir saat Technical Meeting (TM)* sebelum rangkaian pertandingan dimulai.
+4. Seluruh peserta *Wajib Hadir saat Technical Meeting (TM: Kamis, 15 Oktober 2026)* sebelum rangkaian pertandingan dimulai.
 
-📍 *Lokasi:* Lapangan Tembak Shooting House, Resimen I Pasukan Pelopor, Kedung Halang, Bogor
-📅 *Pelaksanaan:* 17 — 18 Oktober 2026
+- Lokasi: Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor
+- Jadwal: 17 - 18 Oktober 2026 (TM: 15 Oktober 2026)
 
 Salam Hormat,
 *Panitia Pelaksana BDA Shooting Championship 2026*`;
@@ -1907,13 +2739,19 @@ Salam Hormat,
             this.showToast('Membuka WhatsApp untuk ' + reg.nama, 'success');
         },
 
-        // Live Skor Methods
-        calculateTotal(item) {
-            let sum = 0;
-            for (let i = 1; i <= 10; i++) {
-                sum += Number(item['seri_' + i] || 0);
+        // Live Skor Methods (Sequential Ring Scoring)
+        calculateNilai(item) {
+            let jmlMasuk = 0;
+            let totalNilai = 0;
+            for (let r = 1; r <= 10; r++) {
+                const count = parseInt(item['ring_' + r]) || 0;
+                jmlMasuk += count;
+                totalNilai += (r * count);
             }
-            item.total_score = sum;
+            const ringX = parseInt(item.ring_x) || 0;
+            totalNilai += (ringX * 0.1);
+            item.jumlah_masuk = jmlMasuk;
+            item.nilai = Math.round(totalNilai * 10) / 10;
         },
 
         async fetchPresisiScores() {
@@ -1922,7 +2760,7 @@ Salam Hormat,
                 const data = await res.json();
                 if (data.success) {
                     this.presisiList = (data.data || []).map(row => {
-                        this.calculateTotal(row);
+                        this.calculateNilai(row);
                         return row;
                     });
                 }
@@ -1966,9 +2804,11 @@ Salam Hormat,
                                     no_peserta: r.no_peserta,
                                     nama: r.nama,
                                     satuan: r.satuan,
-                                    seri_1: 0, seri_2: 0, seri_3: 0, seri_4: 0, seri_5: 0,
-                                    seri_6: 0, seri_7: 0, seri_8: 0, seri_9: 0, seri_10: 0,
-                                    x_count: 0
+                                    ring_x: 0,
+                                    ring_10: 0, ring_9: 0, ring_8: 0, ring_7: 0, ring_6: 0,
+                                    ring_5: 0, ring_4: 0, ring_3: 0, ring_2: 0, ring_1: 0,
+                                    jumlah_masuk: 0,
+                                    nilai: 0
                                 })
                             });
                             addedCount++;
@@ -1986,24 +2826,207 @@ Salam Hormat,
 
         async savePresisiScore(item) {
             item._saving = true;
-            this.calculateTotal(item);
+            this.calculateNilai(item);
+
+            // Sanitize payload so unfilled rings default safely to 0
+            const payload = {
+                registration_id: item.registration_id,
+                no_peserta: item.no_peserta || '',
+                nama: item.nama || '',
+                satuan: item.satuan || '',
+                ring_x: parseInt(item.ring_x) || 0,
+                jumlah_masuk: parseInt(item.jumlah_masuk) || 0,
+                nilai: Math.round((parseFloat(item.nilai) || 0) * 10) / 10,
+                token: this.adminToken
+            };
+            for (let r = 1; r <= 10; r++) {
+                payload['ring_' + r] = parseInt(item['ring_' + r]) || 0;
+            }
+
             try {
-                const res = await fetch('/api/scores-presisi.php', {
+                const res = await fetch('/api/scores-presisi.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify(item)
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (data.success) {
-                    this.showToast('Skor ' + item.nama + ' berhasil disimpan!', 'success');
+                    item._saved = true;
+                    setTimeout(() => { item._saved = false; }, 2500);
+                    this.showToast('Skor ' + item.nama + ' berhasil disimpan! (Nilai: ' + payload.nilai + ')', 'success');
+                    if (data.data) {
+                        item.nilai = data.data.nilai;
+                        item.jumlah_masuk = data.data.jumlah_masuk;
+                    }
                     await this.fetchPresisiScores();
                 } else {
-                    throw new Error(data.error || 'Gagal menyimpan skor');
+                    throw new Error(data.error || data.message || 'Gagal menyimpan skor');
                 }
             } catch (e) {
-                this.showToast(e.message, 'error');
+                this.showToast(e.message || 'Gagal menyimpan skor', 'error');
             } finally {
                 item._saving = false;
+            }
+        },
+
+        // ==================== ADMIN USERS MANAGEMENT (SUPER ADMIN / USERS PERMISSION) ====================
+        async fetchAdminUsers() {
+            this.loadingUsers = true;
+            try {
+                const res = await fetch('/api/admin-users.php?token=' + encodeURIComponent(this.adminToken));
+                const data = await res.json();
+                if (data.success && Array.isArray(data.data)) {
+                    this.adminUsersList = data.data;
+                }
+            } catch (e) {
+                console.error('Error fetching admin users:', e);
+            } finally {
+                this.loadingUsers = false;
+                this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+            }
+        },
+
+        openAddUserModal() {
+            this.newUserForm = {
+                username: '',
+                password: '',
+                display_name: '',
+                role: 'admin',
+                permissions: ['antrean', 'peserta', 'scores']
+            };
+            this.showAddUserModal = true;
+            this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+        },
+
+        async createAdminUser() {
+            this.savingUser = true;
+            try {
+                const res = await fetch('/api/admin-users.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'create', ...this.newUserForm })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Gagal membuat akun');
+
+                this.showToast(data.message || 'Akun admin berhasil dibuat!', 'success');
+                this.showAddUserModal = false;
+                await this.fetchAdminUsers();
+            } catch (err) {
+                this.showToast(err.message, 'error');
+            } finally {
+                this.savingUser = false;
+            }
+        },
+
+        openEditUserModal(user) {
+            this.editUserForm = {
+                id: user.id,
+                username: user.username,
+                display_name: user.display_name,
+                password: '',
+                role: user.role,
+                permissions: [...(user.permissions || [])]
+            };
+            this.showEditUserModal = true;
+            this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+        },
+
+        async saveEditAdminUser() {
+            this.savingUser = true;
+            try {
+                const res = await fetch('/api/admin-users.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'edit', ...this.editUserForm })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Gagal menyimpan perubahan');
+
+                this.showToast(data.message || 'Akun admin berhasil diperbarui!', 'success');
+                this.showEditUserModal = false;
+                await this.fetchAdminUsers();
+            } catch (err) {
+                this.showToast(err.message, 'error');
+            } finally {
+                this.savingUser = false;
+            }
+        },
+
+        async toggleUserStatus(user) {
+            const actionName = (user.is_active === 1) ? 'menonaktifkan' : 'mengaktifkan';
+            if (!confirm(`Apakah Anda yakin ingin ${actionName} akun "${user.username}"?`)) return;
+
+            try {
+                const res = await fetch('/api/admin-users.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'toggle_active', id: user.id })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Gagal mengubah status');
+
+                this.showToast(data.message, 'success');
+                await this.fetchAdminUsers();
+            } catch (err) {
+                this.showToast(err.message, 'error');
+            }
+        },
+
+        async deleteAdminUser(user) {
+            if (!confirm(`Hapus akun admin "${user.username}" (${user.display_name}) secara permanen? Tindakan ini tidak dapat dibatalkan.`)) return;
+
+            try {
+                const res = await fetch('/api/admin-users.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'delete', id: user.id })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.error || 'Gagal menghapus akun');
+
+                this.showToast(data.message, 'info');
+                await this.fetchAdminUsers();
+            } catch (err) {
+                this.showToast(err.message, 'error');
+            }
+        },
+
+        getDuelingParticipants(query = '') {
+            const list = (this.registrations || []).filter(r =>
+                (r.status || '').toLowerCase() === 'verified'
+            );
+            if (!query || !String(query).trim()) return list.slice(0, 15);
+            const q = String(query).toLowerCase().trim();
+            return list.filter(r =>
+                (r.nama && r.nama.toLowerCase().includes(q)) ||
+                (r.no_peserta && r.no_peserta.toLowerCase().includes(q)) ||
+                (r.satuan && r.satuan.toLowerCase().includes(q)) ||
+                (r.nrp && r.nrp.toLowerCase().includes(q))
+            ).slice(0, 15);
+        },
+
+        selectNewMatchParticipant(slot, p) {
+            if (slot === 1) {
+                this.newMatch.participant_1_name = p.nama;
+                this.newMatch.participant_1_id = p.no_peserta || p.registration_id;
+                this.newMatch.participant_1_satuan = p.satuan || '';
+            } else {
+                this.newMatch.participant_2_name = p.nama;
+                this.newMatch.participant_2_id = p.no_peserta || p.registration_id;
+                this.newMatch.participant_2_satuan = p.satuan || '';
+            }
+        },
+
+        selectMatchParticipant(match, slot, p) {
+            if (slot === 1) {
+                match.participant_1_name = p.nama;
+                match.participant_1_id = p.no_peserta || p.registration_id;
+                match.participant_1_satuan = p.satuan || '';
+            } else {
+                match.participant_2_name = p.nama;
+                match.participant_2_id = p.no_peserta || p.registration_id;
+                match.participant_2_satuan = p.satuan || '';
             }
         },
 
@@ -2019,26 +3042,34 @@ Salam Hormat,
                 round_name: this.newMatch.round_name,
                 round_order: roundOrderMap[this.newMatch.round_name] || 99,
                 match_number: this.newMatch.match_number,
+                participant_1_id: this.newMatch.participant_1_id || '',
                 participant_1_name: this.newMatch.participant_1_name,
+                participant_1_satuan: this.newMatch.participant_1_satuan || '',
+                participant_2_id: this.newMatch.participant_2_id || '',
                 participant_2_name: this.newMatch.participant_2_name,
+                participant_2_satuan: this.newMatch.participant_2_satuan || '',
                 match_status: 'upcoming'
             };
 
             try {
-                const res = await fetch('/api/scores-dueling.php', {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ ...payload, token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
                     this.showToast('Match baru berhasil ditambahkan!', 'success');
                     this.newMatch.match_number++;
                     this.newMatch.participant_1_name = '';
+                    this.newMatch.participant_1_id = '';
+                    this.newMatch.participant_1_satuan = '';
                     this.newMatch.participant_2_name = '';
+                    this.newMatch.participant_2_id = '';
+                    this.newMatch.participant_2_satuan = '';
                     await this.fetchDuelingMatches();
                 } else {
-                    throw new Error(data.error || 'Gagal menambahkan match');
+                    throw new Error(data.error || data.message || 'Gagal menambahkan match');
                 }
             } catch (e) {
                 this.showToast(e.message, 'error');
@@ -2048,16 +3079,16 @@ Salam Hormat,
         async saveDuelingMatch(match) {
             match._saving = true;
             try {
-                const res = await fetch('/api/scores-dueling.php', {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify(match)
+                    body: JSON.stringify({ ...match, token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
                     this.showToast('Data match #' + match.match_number + ' diperbarui!', 'success');
                 } else {
-                    throw new Error(data.error || 'Gagal menyimpan match');
+                    throw new Error(data.error || data.message || 'Gagal menyimpan match');
                 }
             } catch (e) {
                 this.showToast(e.message, 'error');
@@ -2070,21 +3101,49 @@ Salam Hormat,
             if (!confirm(`Hapus pertandingan Match #${match.match_number} (${match.participant_1_name} vs ${match.participant_2_name})?`)) return;
 
             try {
-                const res = await fetch('/api/scores-dueling.php', {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify({ action: 'delete', id: match.id })
+                    body: JSON.stringify({ action: 'delete', id: match.id, token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
                     this.duelingList = this.duelingList.filter(m => m.id !== match.id);
                     this.showToast('Match berhasil dihapus', 'info');
                 } else {
-                    throw new Error(data.error || 'Gagal menghapus match');
+                    throw new Error(data.error || data.message || 'Gagal menghapus match');
                 }
             } catch (e) {
                 this.showToast(e.message, 'error');
             }
+        },
+
+        formatKategoriList(kat) {
+            if (!kat) return ['-'];
+            const s = String(kat).trim();
+            const lower = s.toLowerCase();
+            
+            if (lower === 'keduanya' || lower.includes('keduanya')) {
+                return ['Pistol Presisi 20M', 'Dueling Plat'];
+            }
+            if (lower.includes('presisi') && lower.includes('dueling')) {
+                return ['Pistol Presisi 20M', 'Dueling Plat'];
+            }
+            if (s.includes(',') || s.includes(';') || s.includes('+')) {
+                return s.split(/[,;+]/).map(p => p.trim()).filter(Boolean).map(p => {
+                    const pl = p.toLowerCase();
+                    if (pl.includes('presisi')) return 'Pistol Presisi 20M';
+                    if (pl.includes('dueling')) return 'Dueling Plat';
+                    return p;
+                });
+            }
+            if (lower === 'presisi' || lower.includes('presisi')) {
+                return ['Pistol Presisi 20M'];
+            }
+            if (lower === 'dueling' || lower.includes('dueling')) {
+                return ['Dueling Plat'];
+            }
+            return [s];
         },
 
         formatDate(dateStr) {

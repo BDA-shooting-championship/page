@@ -37,6 +37,11 @@ if ($method === 'GET') {
 
     $db = getDB();
 
+    // Auto-migrate winner_id to VARCHAR(100) if needed
+    try {
+        $db->exec("ALTER TABLE dueling_matches MODIFY COLUMN winner_id VARCHAR(100) NULL");
+    } catch (Exception $e) {}
+
     if (isset($input['action']) && $input['action'] === 'delete') {
         $delId = (int)($input['id'] ?? 0);
         if ($delId > 0) {
@@ -48,33 +53,35 @@ if ($method === 'GET') {
         }
     }
 
-    // Validate required fields
-    $requiredFields = ['round_name', 'round_order', 'match_number'];
-    $missing = [];
-    foreach ($requiredFields as $field) {
-        if (!isset($input[$field]) || $input[$field] === '') {
-            $missing[] = $field;
-        }
-    }
+    // Extract fields with safe defaults
+    $id = isset($input['id']) && (int)$input['id'] > 0 ? (int)$input['id'] : null;
+    $roundName = trim($input['round_name'] ?? 'Penyisihan');
+    if (empty($roundName)) $roundName = 'Penyisihan';
 
-    if (!empty($missing)) {
-        jsonResponse(['success' => false, 'message' => 'Field wajib tidak lengkap: ' . implode(', ', $missing)], 400);
-    }
+    $roundOrderMap = [
+        'Penyisihan' => 1,
+        'Perempat Final' => 2,
+        'Semifinal' => 3,
+        'Perebutan Juara 3' => 4,
+        'Final' => 5
+    ];
+    $roundOrder = isset($input['round_order']) && $input['round_order'] !== '' 
+        ? (int)$input['round_order'] 
+        : ($roundOrderMap[$roundName] ?? 1);
 
-    // Extract fields
-    $id = $input['id'] ?? null;
-    $roundName = trim($input['round_name']);
-    $roundOrder = (int) $input['round_order'];
-    $matchNumber = (int) $input['match_number'];
+    $matchNumber = isset($input['match_number']) && $input['match_number'] !== '' 
+        ? (int)$input['match_number'] 
+        : 1;
+
     $participant1Id = $input['participant_1_id'] ?? null;
-    $participant1Name = $input['participant_1_name'] ?? null;
+    $participant1Name = trim($input['participant_1_name'] ?? '');
     $participant1Satuan = $input['participant_1_satuan'] ?? null;
     $participant2Id = $input['participant_2_id'] ?? null;
-    $participant2Name = $input['participant_2_name'] ?? null;
+    $participant2Name = trim($input['participant_2_name'] ?? '');
     $participant2Satuan = $input['participant_2_satuan'] ?? null;
-    $time1 = isset($input['time_1']) ? (float) $input['time_1'] : null;
-    $time2 = isset($input['time_2']) ? (float) $input['time_2'] : null;
-    $winnerId = $input['winner_id'] ?? null;
+    $time1 = isset($input['time_1']) && $input['time_1'] !== '' ? (float) $input['time_1'] : null;
+    $time2 = isset($input['time_2']) && $input['time_2'] !== '' ? (float) $input['time_2'] : null;
+    $winnerId = !empty($input['winner_id']) ? trim($input['winner_id']) : null;
     $matchStatus = strtolower($input['match_status'] ?? 'upcoming');
     if (!in_array($matchStatus, ['upcoming', 'live', 'finished'])) {
         $matchStatus = 'upcoming';

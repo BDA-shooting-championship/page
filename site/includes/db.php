@@ -30,22 +30,36 @@ function jsonResponse($data, int $code = 200): void {
 }
 
 function requireAdmin(): void {
-    $token = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
-    if ($token !== ADMIN_TOKEN) {
-        jsonResponse(['error' => 'Unauthorized'], 401);
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+    if (!empty($_SESSION['admin_logged_in']) && !empty($_SESSION['admin_user'])) {
+        return;
+    }
+    $token = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? $_POST['token'] ?? '';
+    if ($token === ADMIN_TOKEN) {
+        return;
+    }
+    // Also check token in JSON request body if present
+    $rawInput = file_get_contents('php://input');
+    if ($rawInput) {
+        $json = json_decode($rawInput, true);
+        if (is_array($json) && isset($json['token']) && $json['token'] === ADMIN_TOKEN) {
+            return;
+        }
+    }
+    jsonResponse(['error' => 'Unauthorized'], 401);
 }
 
 function cors(): void {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-    $allowed = [SITE_URL, 'http://localhost:3000', 'http://localhost:8000'];
-    if (in_array($origin, $allowed)) {
+    if (!empty($origin)) {
         header("Access-Control-Allow-Origin: $origin");
     } else {
-        header("Access-Control-Allow-Origin: " . SITE_URL);
+        header("Access-Control-Allow-Origin: *");
     }
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token");
+    header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization");
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         http_response_code(204);
         exit;

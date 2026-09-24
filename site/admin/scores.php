@@ -2,11 +2,16 @@
 session_start();
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 
-// Simple session auth check
-if (empty($_SESSION['admin_logged_in'])) {
+// Auth & Permission check
+if (!isAdminLoggedIn()) {
     header('Location: /admin/index.php');
     exit;
+}
+
+if (!hasPermission('scores')) {
+    die('Akses ditolak: Akun Anda tidak memiliki izin untuk mengakses menu Live Skor.');
 }
 
 $pageTitle = 'Kelola Live Score — Admin BSC 2026';
@@ -28,12 +33,12 @@ require_once __DIR__ . '/../includes/header.php';
                 <h1 class="font-display text-3xl font-bold mt-1 text-gray-900">
                     Manajemen Skor & Pertandingan
                 </h1>
-                <p class="text-xs text-gray-500 mt-0.5">Input poin tembakan Presisi 20M & update bagan eliminasi Dueling Plat</p>
+                <p class="text-xs text-gray-500 mt-0.5">Input perkenaan Ring Presisi 20M (X, 10-1) & update bagan eliminasi Dueling Plat</p>
             </div>
 
             <div class="flex items-center gap-3">
                 <a href="/admin/index.php" class="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs font-semibold hover:bg-gray-50 transition flex items-center gap-1.5 shadow-sm">
-                    <i data-lucide="users" class="w-4 h-4"></i> Data Pendaftar
+                    <i data-lucide="users" class="w-4 h-4"></i> Dashboard Admin
                 </a>
                 <a href="/live-score.php" target="_blank" class="px-4 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-md">
                     <i data-lucide="external-link" class="w-4 h-4"></i> Lihat Live Score Publik
@@ -54,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
                     :class="activeTab === 'presisi' ? 'border-copper-600 text-copper-600 border-b-2 font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'"
                     class="py-3 px-4 font-display text-base transition flex items-center gap-2">
                 <i data-lucide="crosshair" class="w-4 h-4"></i>
-                Input Skor Presisi 20M
+                Input Skor Presisi 20M (Ring)
             </button>
             <button @click="activeTab = 'dueling'" 
                     :class="activeTab === 'dueling' ? 'border-copper-600 text-copper-600 border-b-2 font-bold' : 'border-transparent text-gray-500 hover:text-gray-700'"
@@ -69,8 +74,8 @@ require_once __DIR__ . '/../includes/header.php';
             
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <div class="text-xs text-gray-500">
-                    <p class="font-semibold text-gray-700">Panduan Pengisian:</p>
-                    <p>Ketik skor 0 - 10 pada kolom S1 s/d S10, dan masukkan total tembakan X pada kolom Jml X. Klik <strong>Simpan</strong> pada baris peserta untuk menyimpan ke server.</p>
+                    <p class="font-semibold text-gray-700">Panduan Penilaian Sistem Ring:</p>
+                    <p>Ketik jumlah peluru masuk pada kolom <strong>X</strong>, dan kolom <strong>10 s/d 1</strong>. Kolom <strong>Jml Masuk</strong> dan <strong>Nilai</strong> otomatis terhitung. Nilai X bernilai 0,1 dan tidak menambah jumlah masuk.</p>
                 </div>
                 <button type="button" @click="syncVerifiedParticipants()" :disabled="isSyncing"
                         class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-50 text-xs font-semibold rounded-xl transition flex items-center gap-1.5 shrink-0 shadow-sm">
@@ -85,21 +90,22 @@ require_once __DIR__ . '/../includes/header.php';
                     <table class="w-full text-left text-xs">
                         <thead class="bg-gray-100 uppercase font-bold text-gray-600 border-b border-gray-200">
                             <tr>
-                                <th class="py-3 px-3 w-12 text-center">Rank</th>
-                                <th class="py-3 px-3">No. Peserta</th>
-                                <th class="py-3 px-3">Nama & Satuan</th>
-                                <th class="py-3 px-1 text-center w-12">S1</th>
-                                <th class="py-3 px-1 text-center w-12">S2</th>
-                                <th class="py-3 px-1 text-center w-12">S3</th>
-                                <th class="py-3 px-1 text-center w-12">S4</th>
-                                <th class="py-3 px-1 text-center w-12">S5</th>
-                                <th class="py-3 px-1 text-center w-12">S6</th>
-                                <th class="py-3 px-1 text-center w-12">S7</th>
-                                <th class="py-3 px-1 text-center w-12">S8</th>
-                                <th class="py-3 px-1 text-center w-12">S9</th>
-                                <th class="py-3 px-1 text-center w-12">S10</th>
-                                <th class="py-3 px-2 text-center w-14 font-bold text-copper-600">Jml X</th>
-                                <th class="py-3 px-3 text-center w-16 font-bold bg-copper-50/50">Total</th>
+                                <th class="py-3 px-3 w-10 text-center">Rank</th>
+                                <th class="py-3 px-3 w-20">No. Peserta</th>
+                                <th class="py-3 px-3">Nama &amp; Satuan</th>
+                                <th class="py-3 px-1 text-center w-11 bg-amber-50 text-amber-700 font-extrabold" title="Inner X">X</th>
+                                <th class="py-3 px-1 text-center w-10">10</th>
+                                <th class="py-3 px-1 text-center w-10">9</th>
+                                <th class="py-3 px-1 text-center w-10">8</th>
+                                <th class="py-3 px-1 text-center w-10">7</th>
+                                <th class="py-3 px-1 text-center w-10">6</th>
+                                <th class="py-3 px-1 text-center w-10">5</th>
+                                <th class="py-3 px-1 text-center w-10">4</th>
+                                <th class="py-3 px-1 text-center w-10">3</th>
+                                <th class="py-3 px-1 text-center w-10">2</th>
+                                <th class="py-3 px-1 text-center w-10">1</th>
+                                <th class="py-3 px-2 text-center w-14 font-bold bg-gray-50">Jml Masuk</th>
+                                <th class="py-3 px-3 text-center w-16 font-extrabold text-copper-700 bg-copper-50/50">Nilai</th>
                                 <th class="py-3 px-3 text-center w-20">Aksi</th>
                             </tr>
                         </thead>
@@ -113,38 +119,87 @@ require_once __DIR__ . '/../includes/header.php';
                                         <div class="text-[11px] text-gray-500" x-text="item.satuan"></div>
                                     </td>
 
-                                    <!-- 10 Inputs for Seri 1 - 10 -->
-                                    <template x-for="i in 10" :key="i">
-                                        <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" 
-                                                   x-model.number="item['seri_' + i]"
-                                                   @input="calculateTotal(item)"
-                                                   class="w-10 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
-                                        </td>
-                                    </template>
-
-                                    <!-- X Count Input -->
-                                    <td class="py-2 px-2 text-center">
+                                    <!-- X Input -->
+                                    <td class="py-2 px-1 text-center bg-amber-50/30">
                                         <input type="number" min="0" max="10" 
-                                               x-model.number="item.x_count"
-                                               class="w-12 text-center py-1 rounded bg-copper-50/50 border border-copper-300 text-xs font-mono font-bold text-copper-700 focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                               x-model.number="item.ring_x"
+                                               @input="calculateNilai(item)"
+                                               @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-amber-50 border border-amber-300 text-xs font-mono font-bold text-amber-800 focus:ring-1 focus:ring-amber-500 focus:outline-none">
                                     </td>
 
-                                    <!-- Total Score -->
-                                    <td class="py-2 px-3 text-center font-mono font-extrabold text-sm text-gray-900 bg-copper-50/30" x-text="item.total_score"></td>
+                                    <!-- Ring 10 down to 1 Inputs (Static & Robust) -->
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_10" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_9" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_8" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_7" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_6" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_5" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_4" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_3" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_2" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+                                    <td class="py-2 px-1 text-center">
+                                        <input type="number" min="0" max="10" x-model.number="item.ring_1" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                               class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
+                                    </td>
+
+                                    <!-- Jumlah Masuk -->
+                                    <td class="py-2 px-2 text-center font-mono font-bold text-gray-800 bg-gray-50/50" x-text="item.jumlah_masuk"></td>
+
+                                    <!-- Nilai -->
+                                    <td class="py-2 px-3 text-center font-mono font-extrabold text-sm text-copper-700 bg-copper-50/30" x-text="item.nilai"></td>
 
                                     <!-- Save Action -->
                                     <td class="py-2 px-3 text-center">
                                         <button type="button" @click="savePresisiScore(item)" :disabled="item._saving"
-                                                class="px-2.5 py-1 bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white rounded font-semibold text-xs shadow-sm transition">
-                                            <span x-text="item._saving ? '...' : 'Simpan'"></span>
+                                                class="px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition flex items-center justify-center gap-1 mx-auto min-w-[70px]"
+                                                :class="item._saved ? 'bg-emerald-600 text-white' : 'bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white'">
+                                            <template x-if="item._saving">
+                                                <span class="inline-flex items-center gap-1">
+                                                    <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                                                    <span>...</span>
+                                                </span>
+                                            </template>
+                                            <template x-if="!item._saving && item._saved">
+                                                <span>✓ Tersimpan</span>
+                                            </template>
+                                            <template x-if="!item._saving && !item._saved">
+                                                <span>Simpan</span>
+                                            </template>
                                         </button>
                                     </td>
                                 </tr>
                             </template>
                             <template x-if="presisiList.length === 0">
                                 <tr>
-                                    <td colspan="16" class="py-8 text-center text-gray-500">
+                                    <td colspan="17" class="py-8 text-center text-gray-500">
                                         Belum ada peserta Presisi yang disinkronkan. Klik tombol <strong>Sinkron Peserta Verified</strong> di atas.
                                     </td>
                                 </tr>
@@ -178,31 +233,31 @@ require_once __DIR__ . '/../includes/header.php';
 
                     <div>
                         <label class="block font-semibold text-gray-700 mb-1">Nomor Match</label>
-                        <input type="number" min="1" x-model.number="newMatch.match_number" required placeholder="1" 
-                               class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                        <input type="number" min="1" x-model.number="newMatch.match_number" required placeholder="1"
+                               class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Peserta 1</label>
+                        <label class="block font-semibold text-gray-700 mb-1">Nama Peserta 1</label>
                         <input type="text" x-model="newMatch.participant_1_name" placeholder="Nama Peserta 1" required
                                class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Peserta 2</label>
+                        <label class="block font-semibold text-gray-700 mb-1">Nama Peserta 2</label>
                         <input type="text" x-model="newMatch.participant_2_name" placeholder="Nama Peserta 2" required
                                class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
                     </div>
 
                     <div class="sm:col-span-2 md:col-span-4 flex justify-end">
-                        <button type="submit" class="px-5 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-lg font-bold text-xs shadow-md transition flex items-center gap-1.5">
-                            <i data-lucide="plus" class="w-4 h-4"></i> Tambah ke Bagan
+                        <button type="submit" class="px-5 py-2.5 bg-copper-600 hover:bg-copper-700 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1.5">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Pertandingan
                         </button>
                     </div>
                 </form>
             </div>
 
-            <!-- Existing Matches Table -->
+            <!-- Matches Table -->
             <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
@@ -215,7 +270,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 <th class="py-3 px-3">Peserta 2</th>
                                 <th class="py-3 px-2 text-center w-24">Waktu 2 (s)</th>
                                 <th class="py-3 px-3">Pemenang</th>
-                                <th class="py-3 px-3 text-center w-24">Status</th>
+                                <th class="py-3 px-3 text-center w-28">Status</th>
                                 <th class="py-3 px-3 text-center w-28">Aksi</th>
                             </tr>
                         </thead>
@@ -223,14 +278,14 @@ require_once __DIR__ . '/../includes/header.php';
                             <template x-for="match in duelingList" :key="match.id">
                                 <tr class="hover:bg-gray-50/50 transition">
                                     <td class="py-2.5 px-3 font-semibold text-gray-900" x-text="match.round_name"></td>
-                                    <td class="py-2.5 px-2 text-center font-mono font-bold text-copper-600" x-text="match.match_number"></td>
-                                    
+                                    <td class="py-2.5 px-2 text-center font-mono font-bold text-copper-700" x-text="match.match_number"></td>
+
                                     <!-- Participant 1 -->
                                     <td class="py-2.5 px-3">
                                         <input type="text" x-model="match.participant_1_name" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
                                     </td>
                                     <td class="py-2.5 px-2 text-center">
-                                        <input type="number" step="0.001" x-model.number="match.time_1" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono">
+                                        <input type="number" step="0.001" x-model.number="match.time_1" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
                                     </td>
 
                                     <!-- Participant 2 -->
@@ -238,12 +293,12 @@ require_once __DIR__ . '/../includes/header.php';
                                         <input type="text" x-model="match.participant_2_name" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
                                     </td>
                                     <td class="py-2.5 px-2 text-center">
-                                        <input type="number" step="0.001" x-model.number="match.time_2" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono">
+                                        <input type="number" step="0.001" x-model.number="match.time_2" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
                                     </td>
 
                                     <!-- Winner Selector -->
                                     <td class="py-2.5 px-3">
-                                        <select x-model="match.winner_id" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
+                                        <select x-model="match.winner_id" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-semibold">
                                             <option value="">-- Belum Ada --</option>
                                             <option :value="match.participant_1_id || match.participant_1_name" x-text="match.participant_1_name"></option>
                                             <option :value="match.participant_2_id || match.participant_2_name" x-text="match.participant_2_name"></option>
@@ -286,7 +341,7 @@ require_once __DIR__ . '/../includes/header.php';
 </div>
 
 <script>
-const ADMIN_TOKEN = 'bsc2026-secret-token';
+const ADMIN_TOKEN = <?= json_encode(ADMIN_TOKEN) ?>;
 
 function adminScoresApp() {
     return {
@@ -308,12 +363,18 @@ function adminScoresApp() {
             this.fetchDuelingMatches();
         },
 
-        calculateTotal(item) {
-            let sum = 0;
-            for (let i = 1; i <= 10; i++) {
-                sum += Number(item['seri_' + i] || 0);
+        calculateNilai(item) {
+            let masuk = 0;
+            let total = 0;
+            for (let r = 10; r >= 1; r--) {
+                const count = parseInt(item['ring_' + r]) || 0;
+                masuk += count;
+                total += (r * count);
             }
-            item.total_score = sum;
+            const ringX = parseInt(item.ring_x) || 0;
+            total += (ringX * 0.1);
+            item.jumlah_masuk = masuk;
+            item.nilai = Math.round(total * 10) / 10;
         },
 
         async fetchPresisiScores() {
@@ -322,7 +383,7 @@ function adminScoresApp() {
                 const data = await res.json();
                 if (data.success) {
                     this.presisiList = (data.data || []).map(row => {
-                        this.calculateTotal(row);
+                        this.calculateNilai(row);
                         return row;
                     });
                 }
@@ -351,27 +412,29 @@ function adminScoresApp() {
                 if (data.success) {
                     const verifiedPresisi = (data.data || []).filter(r => 
                         r.status === 'Verified' && 
-                        (r.kategori.includes('Presisi') || r.kategori.includes('keduanya'))
+                        (r.kategori.toLowerCase().includes('presisi') || r.kategori.toLowerCase().includes('keduanya'))
                     );
                     
                     for (const r of verifiedPresisi) {
                         const exists = this.presisiList.find(p => p.registration_id === r.registration_id);
                         if (!exists) {
+                            const initPayload = {
+                                registration_id: r.registration_id,
+                                no_peserta: r.no_peserta,
+                                nama: r.nama,
+                                satuan: r.satuan,
+                                ring_x: 0
+                            };
+                            for (let i = 1; i <= 10; i++) {
+                                initPayload['ring_' + i] = 0;
+                            }
                             await fetch('/api/scores-presisi.php', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'X-Admin-Token': ADMIN_TOKEN
                                 },
-                                body: JSON.stringify({
-                                    registration_id: r.registration_id,
-                                    no_peserta: r.no_peserta,
-                                    nama: r.nama,
-                                    satuan: r.satuan,
-                                    seri_1: 0, seri_2: 0, seri_3: 0, seri_4: 0, seri_5: 0,
-                                    seri_6: 0, seri_7: 0, seri_8: 0, seri_9: 0, seri_10: 0,
-                                    x_count: 0
-                                })
+                                body: JSON.stringify(initPayload)
                             });
                         }
                     }
@@ -387,25 +450,47 @@ function adminScoresApp() {
 
         async savePresisiScore(item) {
             item._saving = true;
-            this.calculateTotal(item);
+            this.calculateNilai(item);
+
+            // Sanitize payload so unfilled rings default safely to 0
+            const payload = {
+                registration_id: item.registration_id,
+                no_peserta: item.no_peserta || '',
+                nama: item.nama || '',
+                satuan: item.satuan || '',
+                ring_x: parseInt(item.ring_x) || 0,
+                jumlah_masuk: parseInt(item.jumlah_masuk) || 0,
+                nilai: Math.round((parseFloat(item.nilai) || 0) * 10) / 10,
+                token: ADMIN_TOKEN
+            };
+            for (let r = 1; r <= 10; r++) {
+                payload['ring_' + r] = parseInt(item['ring_' + r]) || 0;
+            }
+
             try {
-                const res = await fetch('/api/scores-presisi.php', {
+                const res = await fetch('/api/scores-presisi.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Admin-Token': ADMIN_TOKEN
                     },
-                    body: JSON.stringify(item)
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (data.success) {
-                    this.showAlert('Skor peserta ' + item.nama + ' berhasil disimpan!', 'success');
+                    item._saved = true;
+                    setTimeout(() => { item._saved = false; }, 2500);
+                    this.showAlert('Skor ring peserta ' + item.nama + ' berhasil disimpan! (Nilai: ' + payload.nilai + ')', 'success');
+                    if (data.data) {
+                        item.nilai = data.data.nilai;
+                        item.jumlah_masuk = data.data.jumlah_masuk;
+                    }
                     await this.fetchPresisiScores(); // re-sort
                 } else {
-                    throw new Error(data.error || 'Gagal menyimpan skor');
+                    throw new Error(data.error || data.message || 'Gagal menyimpan skor');
                 }
             } catch (e) {
-                this.showAlert(e.message, 'error');
+                this.showAlert(e.message || 'Gagal menyimpan skor', 'error');
             } finally {
                 item._saving = false;
             }
@@ -425,11 +510,12 @@ function adminScoresApp() {
                 match_number: this.newMatch.match_number,
                 participant_1_name: this.newMatch.participant_1_name,
                 participant_2_name: this.newMatch.participant_2_name,
-                match_status: 'upcoming'
+                match_status: 'upcoming',
+                token: ADMIN_TOKEN
             };
 
             try {
-                const res = await fetch('/api/scores-dueling.php', {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -445,7 +531,7 @@ function adminScoresApp() {
                     this.newMatch.participant_2_name = '';
                     await this.fetchDuelingMatches();
                 } else {
-                    throw new Error(data.error || 'Gagal menambahkan match');
+                    throw new Error(data.error || data.message || 'Gagal menambahkan match');
                 }
             } catch (e) {
                 this.showAlert(e.message, 'error');
@@ -455,19 +541,19 @@ function adminScoresApp() {
         async saveDuelingMatch(match) {
             match._saving = true;
             try {
-                const res = await fetch('/api/scores-dueling.php', {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Admin-Token': ADMIN_TOKEN
                     },
-                    body: JSON.stringify(match)
+                    body: JSON.stringify({ ...match, token: ADMIN_TOKEN })
                 });
                 const data = await res.json();
                 if (data.success) {
                     this.showAlert('Data match #' + match.match_number + ' berhasil diperbarui!', 'success');
                 } else {
-                    throw new Error(data.error || 'Gagal menyimpan match');
+                    throw new Error(data.error || data.message || 'Gagal menyimpan match');
                 }
             } catch (e) {
                 this.showAlert(e.message, 'error');
