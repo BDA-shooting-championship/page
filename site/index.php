@@ -148,38 +148,38 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
     <!-- Decorative bottom divider -->
-    <div class="h-4 bg-gradient-to-b from-transparent to-white dark:to-gray-950"></div>
+    <div class="h-4 bg-gradient-to-b from-transparent to-white"></div>
 </section>
 
 <!-- Countdown Section (Tight Padding with Ambient Radar Sweep) -->
-<section class="py-6 md:py-8 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 relative overflow-hidden" x-data="countdown()" x-init="start()">
+<section class="py-6 md:py-8 bg-white border-b border-gray-100 relative overflow-hidden" x-data="countdown()" x-init="start()">
     <!-- Ambient Radar Sweep -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 pointer-events-none opacity-10 dark:opacity-15">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 pointer-events-none opacity-10">
         <div class="w-full h-full rounded-full border border-copper-500/40 animate-radar-sweep bg-gradient-to-tr from-copper-500/15 via-transparent to-transparent"></div>
     </div>
 
     <div class="relative max-w-4xl mx-auto px-4 text-center">
         <div class="flex items-center justify-center gap-2 mb-2">
-            <i data-lucide="timer" class="w-4 h-4 text-copper-600 dark:text-copper-400"></i>
-            <h2 class="font-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-gray-900 dark:text-white">Hitung Mundur Menuju Hari-H</h2>
+            <i data-lucide="timer" class="w-4 h-4 text-copper-600"></i>
+            <h2 class="font-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-gray-900">Hitung Mundur Menuju Hari-H</h2>
         </div>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">17 — 18 Oktober 2026 &bull; Lapangan Tembak Shooting House Brimob Bogor</p>
+        <p class="text-xs text-gray-500 mb-4">17 — 18 Oktober 2026 &bull; Lapangan Tembak Shooting House Brimob Bogor</p>
         
         <div class="grid grid-cols-4 gap-3 sm:gap-4 max-w-md mx-auto">
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 border border-gray-200 dark:border-gray-800 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600 dark:text-copper-400" x-text="days">0</span>
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="days">0</span>
                 <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Hari</p>
             </div>
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 border border-gray-200 dark:border-gray-800 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600 dark:text-copper-400" x-text="hours">0</span>
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="hours">0</span>
                 <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Jam</p>
             </div>
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 border border-gray-200 dark:border-gray-800 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600 dark:text-copper-400" x-text="minutes">0</span>
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="minutes">0</span>
                 <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Menit</p>
             </div>
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 border border-gray-200 dark:border-gray-800 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600 dark:text-copper-400" x-text="seconds">0</span>
+            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
+                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="seconds">0</span>
                 <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Detik</p>
             </div>
         </div>
@@ -187,44 +187,50 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- About Section (Tight Padding) -->
-<section id="tentang" class="py-8 md:py-10 bg-gray-50 dark:bg-gray-900/60">
+<section id="tentang" class="py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Tentang Kejuaraan</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Kejuaraan Menembak BDA 750</h2>
-            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-1">
-                Diselenggarakan oleh Brigade Diraya Adikara (BDA) 750 dalam rangka mempererat silaturahmi, sportivitas, dan mengasah ketangkasan menembak bagi anggota Polri, TNI, serta masyarakat sipil.
+            <!-- Centered Dual Logos with X -->
+            <div class="flex items-center justify-center gap-2.5 mb-3">
+                <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-10 w-10 object-contain drop-shadow-sm">
+                <span class="font-display font-bold text-xs sm:text-sm text-copper-600 select-none">X</span>
+                <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-10 w-10 object-contain drop-shadow-sm">
+            </div>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Tentang Kejuaraan</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Kejuaraan Menembak BDA 750</h2>
+            <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed">
+                Diselenggarakan oleh Brigade Diraya Adikara (BDA) 750 dalam rangka mempererat silaturahmi, sportivitas, dan mengasah ketangkasan menembak bagi anggota Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-copper-400 transition">
-                <div class="w-10 h-10 rounded-lg bg-copper-100 dark:bg-copper-900/30 flex items-center justify-center mb-3">
-                    <i data-lucide="crosshair" class="w-5 h-5 text-copper-600 dark:text-copper-400"></i>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:border-copper-400 hover:shadow-md transition text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
+                    <i data-lucide="crosshair" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1">2 Kategori Lomba</h3>
-                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">2 Kategori Lomba</h3>
+                <p class="text-xs text-gray-600 leading-relaxed text-center">
                     Pistol Presisi 20 Meter lesan ring dan Dueling Plat Speed sistem gugur head-to-head.
                 </p>
             </div>
             
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-copper-400 transition">
-                <div class="w-10 h-10 rounded-lg bg-copper-100 dark:bg-copper-900/30 flex items-center justify-center mb-3">
-                    <i data-lucide="trophy" class="w-5 h-5 text-copper-600 dark:text-copper-400"></i>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:border-copper-400 hover:shadow-md transition text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
+                    <i data-lucide="trophy" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1">Hadiah Pembinaan</h3>
-                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Hadiah Pembinaan</h3>
+                <p class="text-xs text-gray-600 leading-relaxed text-center">
                     Uang pembinaan Juara I, II, dan III per kategori + Trophy + Sertifikat penghargaan resmi.
                 </p>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-copper-400 transition">
-                <div class="w-10 h-10 rounded-lg bg-copper-100 dark:bg-copper-900/30 flex items-center justify-center mb-3">
-                    <i data-lucide="users" class="w-5 h-5 text-copper-600 dark:text-copper-400"></i>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:border-copper-400 hover:shadow-md transition text-center flex flex-col items-center">
+                <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1">Terbuka Umum</h3>
-                <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                    Dapat diikuti oleh anggota Polri aktif, TNI, club menembak Perbakin, maupun masyarakat umum.
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Peserta Kejuaraan</h3>
+                <p class="text-xs text-gray-600 leading-relaxed text-center">
+                    Terbuka untuk anggota Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.
                 </p>
             </div>
         </div>
@@ -232,74 +238,112 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Categories Section (Tight Padding) -->
-<section id="kategori" class="py-8 md:py-10 bg-white dark:bg-gray-950">
+<section id="kategori" class="py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Detail Pertandingan</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Kategori Lomba</h2>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Detail Pertandingan</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Kategori Lomba</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             <!-- Presisi 20M -->
-            <div class="group relative border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl hover:shadow-copper-500/10 transition-all duration-300 transform hover:-translate-y-1 bg-gray-50/50 dark:bg-gray-900/40">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="crosshair" class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:rotate-45 transition-transform duration-300"></i>
+            <div class="group relative border border-gray-200 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white">
+                <div class="flex items-center gap-3.5 mb-5 pb-4 border-b border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="crosshair" class="w-6 h-6 group-hover:rotate-45 transition-transform duration-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-display text-xl font-bold group-hover:text-copper-600 dark:group-hover:text-copper-400 transition-colors">Pistol Presisi 20M</h3>
-                        <p class="text-[11px] text-gray-500">Kelas Individu (Lesan Ring Target)</p>
+                        <h3 class="font-display text-xl font-bold text-gray-900 group-hover:text-copper-600 transition-colors">Pistol Presisi 20M</h3>
+                        <p class="text-[11px] text-gray-500 font-medium">Kelas Individu (Lesan Ring Target)</p>
                     </div>
                 </div>
-                <ul class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Jarak Tembak:</strong> 20 meter</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sikap Tembak:</strong> Berdiri, 2 tangan</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sasaran:</strong> Lesan Ring (Nilai 1 - 10 + Inner X)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Amunisi:</strong> 13 butir (3 percobaan + 10 penilaian)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Batas Waktu:</strong> 3 Menit</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
-                </ul>
+
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Jarak</span>
+                        <span class="font-bold text-gray-900">20 meter</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Sikap</span>
+                        <span class="font-bold text-gray-900">Berdiri, 2 tangan</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Sasaran</span>
+                        <span class="font-bold text-gray-900">Lesan Ring (1 - 10 + Inner X)</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Amunisi</span>
+                        <span class="font-bold text-gray-900">13 butir (3 coba + 10 nilai)</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Batas Waktu</span>
+                        <span class="font-bold text-gray-900">3 Menit</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2.5 px-3 rounded-xl bg-copper-50 border border-copper-200/80">
+                        <span class="text-copper-800 font-bold">Biaya</span>
+                        <span class="font-extrabold text-sm text-copper-600">Rp 200.000</span>
+                    </div>
+                </div>
             </div>
             
             <!-- Dueling Plat -->
-            <div class="group relative border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl hover:shadow-copper-500/10 transition-all duration-300 transform hover:-translate-y-1 bg-gray-50/50 dark:bg-gray-900/40">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="swords" class="w-5 h-5 text-red-600 dark:text-red-400 group-hover:rotate-12 transition-transform duration-300"></i>
+            <div class="group relative border border-gray-200 rounded-2xl p-6 hover:border-copper-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white">
+                <div class="flex items-center gap-3.5 mb-5 pb-4 border-b border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="swords" class="w-6 h-6 group-hover:rotate-12 transition-transform duration-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-display text-xl font-bold group-hover:text-copper-600 dark:group-hover:text-copper-400 transition-colors">Dueling Plat Speed</h3>
-                        <p class="text-[11px] text-gray-500">Kelas Individu (Eliminasi Head-to-Head)</p>
+                        <h3 class="font-display text-xl font-bold text-gray-900 group-hover:text-copper-600 transition-colors">Dueling Plat Speed</h3>
+                        <p class="text-[11px] text-gray-500 font-medium">Kelas Individu (Eliminasi Head-to-Head)</p>
                     </div>
                 </div>
-                <ul class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Jarak Tembak:</strong> 15 meter</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sikap Tembak:</strong> Berdiri (lari 10 meter menuju meja senjata)</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sasaran:</strong> 5 plat bulat + 1 stop popper</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Amunisi:</strong> 10 butir per putaran match</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Sistem:</strong> Catatan waktu tercepat melaju ke babak berikutnya</li>
-                    <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-copper-500 shrink-0 group-hover:scale-110 transition-transform"></i><strong>Biaya Registrasi:</strong> Rp 200.000</li>
-                </ul>
+
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Jarak</span>
+                        <span class="font-bold text-gray-900">15 meter</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Sikap</span>
+                        <span class="font-bold text-gray-900">Berdiri (lari 10m ke meja)</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Sasaran</span>
+                        <span class="font-bold text-gray-900">5 plat bulat + 1 stop popper</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Amunisi</span>
+                        <span class="font-bold text-gray-900">10 butir per putaran match</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-50 border border-gray-100/80">
+                        <span class="text-gray-500 font-medium">Sistem</span>
+                        <span class="font-bold text-gray-900">Waktu Tercepat (Eliminasi)</span>
+                    </div>
+                    <div class="flex items-center justify-between py-2.5 px-3 rounded-xl bg-copper-50 border border-copper-200/80">
+                        <span class="text-copper-800 font-bold">Biaya</span>
+                        <span class="font-extrabold text-sm text-copper-600">Rp 200.000</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Interactive Target Simulator Widget (Simulasi Tembak Lesan 20M) -->
-<section id="simulasi" class="py-8 md:py-10 bg-gray-100/70 dark:bg-gray-900/80 border-t border-gray-200 dark:border-gray-800" x-data="targetSimulator()">
+<section id="simulasi" class="py-8 md:py-10 bg-gray-50 border-t border-gray-200" x-data="targetSimulator()">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100 dark:bg-copper-900/40 text-copper-700 dark:text-copper-300 text-xs font-bold uppercase tracking-wider mb-2">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100 text-copper-700 text-xs font-bold uppercase tracking-wider mb-2">
             <i data-lucide="target" class="w-3.5 h-3.5"></i>
             Simulasi Tembak Interaktif
         </div>
-        <h2 class="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Uji Akurasi Lesan 20 Meter</h2>
-        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-xl mx-auto mt-1 mb-6">
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-gray-900">Uji Akurasi Lesan 20 Meter</h2>
+        <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1 mb-6">
             Klik pada lesan sasaran di bawah untuk mensimulasikan perolehan nilai tembakan kelas Pistol Presisi 20M (Nilai 1 hingga 10 dan Inner X).
         </p>
 
-        <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700 shadow-xl max-w-xl mx-auto">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-xl max-w-xl mx-auto">
             <!-- Target Canvas Area -->
-            <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto select-none cursor-crosshair group rounded-full overflow-hidden shadow-2xl border-4 border-gray-300 dark:border-gray-600 bg-white" @click="shoot($event)">
+            <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto select-none cursor-crosshair group rounded-full overflow-hidden shadow-2xl border-4 border-gray-300 bg-white" @click="shoot($event)">
                 <!-- SVG Target Rings (1-10 + Inner X) -->
                 <svg viewBox="0 0 300 300" class="w-full h-full">
                     <!-- Outer White Rings (1 - 6) -->
@@ -340,19 +384,19 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Score Dashboard -->
-            <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap items-center justify-between gap-4">
+            <div class="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
                 <div class="text-left">
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Total Tembakan: <span class="font-bold text-gray-900 dark:text-white" x-text="hits.length + ' / 10'"></span></p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Inner X: <span class="font-bold text-amber-500" x-text="innerXCount"></span></p>
+                    <p class="text-xs text-gray-500">Total Tembakan: <span class="font-bold text-gray-900" x-text="hits.length + ' / 10'"></span></p>
+                    <p class="text-xs text-gray-500 mt-0.5">Inner X: <span class="font-bold text-amber-500" x-text="innerXCount"></span></p>
                 </div>
 
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <span class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold block">Total Skor</span>
-                        <span class="font-display text-3xl font-extrabold text-copper-600 dark:text-copper-400" x-text="totalScore">0</span>
+                        <span class="font-display text-3xl font-extrabold text-copper-600" x-text="totalScore">0</span>
                     </div>
 
-                    <button @click="resetTarget()" type="button" class="px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-xs font-semibold text-gray-700 dark:text-gray-200 transition flex items-center gap-1.5 shadow-sm">
+                    <button @click="resetTarget()" type="button" class="px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 transition flex items-center gap-1.5 shadow-sm">
                         <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
                         <span>Reset</span>
                     </button>
@@ -360,55 +404,60 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <template x-if="lastScoreText">
-                <div class="mt-3 text-xs font-bold text-copper-600 dark:text-copper-400" x-text="lastScoreText"></div>
+                <div class="mt-3 text-xs font-bold text-copper-600" x-text="lastScoreText"></div>
             </template>
         </div>
     </div>
 </section>
 
 <!-- Prizes Section (Updated: Juara 3 = Rp 1.000.000) -->
-<section id="hadiah" class="py-8 md:py-10 bg-gray-50 dark:bg-gray-900/60">
+<section id="hadiah" class="py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Penghargaan</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Hadiah Pemenang</h2>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Penghargaan</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Hadiah Pemenang</h2>
             <p class="text-xs text-gray-500 mt-0.5">Diberikan untuk masing-masing kategori lomba</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto items-end">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto items-end pt-3">
             <!-- Juara 2 -->
-            <div class="order-2 md:order-1 text-center bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
-                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center font-display text-xl font-bold text-gray-700 dark:text-gray-200">
+            <div class="order-2 md:order-1 text-center bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center font-display text-xl font-bold text-gray-700">
                     2
                 </div>
-                <h3 class="font-display text-lg font-bold text-gray-800 dark:text-gray-200 mb-1">Juara II</h3>
-                <p class="font-display text-2xl font-bold text-copper-600 dark:text-copper-400 mb-1">Rp 2.000.000</p>
+                <h3 class="font-display text-lg font-bold text-gray-900 mb-1">Juara II</h3>
+                <p class="font-display text-2xl font-bold text-copper-600 mb-1">Rp 2.000.000</p>
                 <p class="text-xs text-gray-500">+ Trophy + Piagam Resmi</p>
             </div>
             
-            <!-- Juara 1 (Featured with Radiant Metallic Shimmer) -->
-            <div class="order-1 md:order-2 text-center bg-gradient-to-b from-copper-50 via-white to-copper-50/30 dark:from-gray-800 dark:to-gray-850 rounded-2xl p-7 border-2 border-copper-500 shadow-xl relative overflow-hidden group">
-                <!-- Metallic Gold Shimmer Beam -->
-                <div class="absolute -inset-full w-[300%] h-[300%] pointer-events-none animate-gold-shimmer bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+            <!-- Juara 1 (Featured with Radiant Metallic Shimmer & Visible Floating Badge) -->
+            <div class="order-1 md:order-2 text-center bg-gradient-to-b from-copper-50 via-white to-copper-50/40 rounded-2xl p-7 border-2 border-copper-500 shadow-xl relative group">
+                <!-- Inner overflow-hidden container for shimmer beam -->
+                <div class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                    <div class="absolute -inset-full w-[300%] h-[300%] animate-gold-shimmer bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+                </div>
 
-                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-copper-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md z-10">
-                    Utama
+                <!-- Floating Badge Utama - fully visible outside overflow -->
+                <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-copper-600 text-white text-[11px] font-bold uppercase tracking-widest rounded-full shadow-md z-20 flex items-center gap-1.5 border border-amber-300/40">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-amber-300"></i>
+                    <span>Utama</span>
                 </span>
-                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-copper-100 dark:bg-copper-900/40 flex items-center justify-center text-copper-600 dark:text-copper-400 relative z-10 group-hover:scale-110 transition-transform">
+
+                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-copper-100 flex items-center justify-center text-copper-600 relative z-10 group-hover:scale-110 transition-transform">
                     <i data-lucide="crown" class="w-7 h-7"></i>
                 </div>
-                <h3 class="font-display text-xl font-bold text-copper-700 dark:text-copper-300 mb-1 relative z-10">Juara I</h3>
-                <p class="font-display text-3xl font-extrabold text-copper-600 dark:text-copper-400 mb-1 relative z-10">Rp 3.000.000</p>
-                <p class="text-xs text-gray-600 dark:text-gray-300 font-semibold relative z-10">+ Trophy Bergilir + Piagam Resmi</p>
+                <h3 class="font-display text-xl font-bold text-copper-700 mb-1 relative z-10">Juara I</h3>
+                <p class="font-display text-3xl font-extrabold text-copper-600 mb-1 relative z-10">Rp 3.000.000</p>
+                <p class="text-xs text-gray-600 font-semibold relative z-10">+ Trophy Bergilir + Piagam Resmi</p>
             </div>
             
             <!-- Juara 3 (UPDATED TO 1 JUTA) -->
-            <div class="order-3 text-center bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
-                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center font-display text-xl font-bold text-amber-700 dark:text-amber-400">
+            <div class="order-3 text-center bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-amber-100 flex items-center justify-center font-display text-xl font-bold text-amber-700">
                     3
                 </div>
-                <h3 class="font-display text-lg font-bold text-gray-800 dark:text-gray-200 mb-1">Juara III</h3>
-                <p class="font-display text-2xl font-bold text-copper-600 dark:text-copper-400 mb-1">Rp 1.000.000</p>
+                <h3 class="font-display text-lg font-bold text-gray-900 mb-1">Juara III</h3>
+                <p class="font-display text-2xl font-bold text-copper-600 mb-1">Rp 1.000.000</p>
                 <p class="text-xs text-gray-500">+ Trophy + Piagam Resmi</p>
             </div>
         </div>
@@ -416,41 +465,41 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Schedule Section (Tight Padding) -->
-<section id="jadwal" class="py-8 md:py-10 bg-white dark:bg-gray-950">
+<section id="jadwal" class="py-8 md:py-10 bg-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Rundown Acara</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Jadwal Pertandingan</h2>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Rundown Acara</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Jadwal Pertandingan</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Day 1 -->
-            <div class="p-5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="px-2.5 py-1 bg-copper-600 text-white rounded font-display font-bold text-xs">Hari ke-1</span>
-                    <h3 class="font-display font-bold text-base">Jumat, 17 Oktober 2026</h3>
+                    <h3 class="font-display font-bold text-base text-gray-900">Jumat, 17 Oktober 2026</h3>
                 </div>
-                <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>07:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Daftar Ulang & Pengecekan Senjata</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>08:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Upacara Pembukaan Resmi</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>09:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Babak Penyisihan Presisi 20M</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>13:30 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Babak Penyisihan Dueling Plat</span></li>
-                    <li class="flex justify-between"><span>17:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Penutupan Hari Pertama</span></li>
+                <ul class="space-y-1.5 text-xs text-gray-600">
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>07:00 WIB</span><span class="font-medium text-gray-800">Daftar Ulang & Pengecekan Senjata</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>08:00 WIB</span><span class="font-medium text-gray-800">Upacara Pembukaan Resmi</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>09:00 WIB</span><span class="font-medium text-gray-800">Babak Penyisihan Presisi 20M</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>13:30 WIB</span><span class="font-medium text-gray-800">Babak Penyisihan Dueling Plat</span></li>
+                    <li class="flex justify-between"><span>17:00 WIB</span><span class="font-medium text-gray-800">Penutupan Hari Pertama</span></li>
                 </ul>
             </div>
 
             <!-- Day 2 -->
-            <div class="p-5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="px-2.5 py-1 bg-copper-600 text-white rounded font-display font-bold text-xs">Hari ke-2</span>
-                    <h3 class="font-display font-bold text-base">Sabtu, 18 Oktober 2026</h3>
+                    <h3 class="font-display font-bold text-base text-gray-900">Sabtu, 18 Oktober 2026</h3>
                 </div>
-                <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>08:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Babak Final Pistol Presisi 20M</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>10:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Semifinal & Final Dueling Plat</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>14:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Rekapitulasi Poin & Verifikasi Wasit</span></li>
-                    <li class="flex justify-between pb-1 border-b border-gray-200 dark:border-gray-800"><span>15:30 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Upacara Penutupan & Penyerahan Hadiah</span></li>
-                    <li class="flex justify-between"><span>17:00 WIB</span><span class="font-medium text-gray-800 dark:text-gray-200">Selesai & Ramah Tamah</span></li>
+                <ul class="space-y-1.5 text-xs text-gray-600">
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>08:00 WIB</span><span class="font-medium text-gray-800">Babak Final Pistol Presisi 20M</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>10:00 WIB</span><span class="font-medium text-gray-800">Semifinal & Final Dueling Plat</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>14:00 WIB</span><span class="font-medium text-gray-800">Rekapitulasi Poin & Verifikasi Wasit</span></li>
+                    <li class="flex justify-between pb-1 border-b border-gray-200"><span>15:30 WIB</span><span class="font-medium text-gray-800">Upacara Penutupan & Penyerahan Hadiah</span></li>
+                    <li class="flex justify-between"><span>17:00 WIB</span><span class="font-medium text-gray-800">Selesai & Ramah Tamah</span></li>
                 </ul>
             </div>
         </div>
@@ -458,34 +507,34 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Rules Section (Accordion, Tight Padding) -->
-<section id="juknis" class="py-8 md:py-10 bg-gray-50 dark:bg-gray-900/60">
+<section id="juknis" class="py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Petunjuk Teknis</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Peraturan & Persyaratan</h2>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Petunjuk Teknis</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Peraturan & Persyaratan</h2>
         </div>
 
         <div class="space-y-2.5" x-data="{ open: 1 }">
             <!-- Rule 1 -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-800">
-                <button @click="open = open === 1 ? null : 1" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 dark:hover:bg-gray-700/50 transition text-sm">
+            <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button @click="open = open === 1 ? null : 1" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 transition text-sm">
                     <span class="flex items-center gap-2"><i data-lucide="user-check" class="w-4 h-4 text-copper-500"></i> Persyaratan Peserta</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open === 1 ? 'rotate-180' : ''"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 1 ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === 1" x-transition class="px-4 pb-3.5 text-xs text-gray-600 dark:text-gray-400 space-y-1 border-t border-gray-100 dark:border-gray-700/50 pt-2.5">
-                    <p>&bull; Anggota Polri aktif / purnawirawan, TNI, atau anggota club menembak sipil.</p>
-                    <p>&bull; Memiliki KTA (Kartu Tanda Anggota) Polri/TNI/KTP yang sah dan diunggah saat pendaftaran.</p>
+                <div x-show="open === 1" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1 border-t border-gray-100 pt-2.5">
+                    <p>&bull; Terbuka untuk anggota Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.</p>
+                    <p>&bull; Memiliki KTA (Kartu Tanda Anggota) Polri yang sah dan diunggah saat pendaftaran.</p>
                     <p>&bull; Melakukan pendaftaran resmi secara online dan menyelesaikan biaya pendaftaran.</p>
                 </div>
             </div>
             
             <!-- Rule 2 -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-800">
-                <button @click="open = open === 2 ? null : 2" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 dark:hover:bg-gray-700/50 transition text-sm">
+            <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button @click="open = open === 2 ? null : 2" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 transition text-sm">
                     <span class="flex items-center gap-2"><i data-lucide="crosshair" class="w-4 h-4 text-copper-500"></i> Ketentuan Senjata & Amunisi</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open === 2 ? 'rotate-180' : ''"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 2 ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === 2" x-transition class="px-4 pb-3.5 text-xs text-gray-600 dark:text-gray-400 space-y-1 border-t border-gray-100 dark:border-gray-700/50 pt-2.5">
+                <div x-show="open === 2" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1 border-t border-gray-100 pt-2.5">
                     <p>&bull; Pistol kaliber 9mm organik/standar laik tembak.</p>
                     <p>&bull; Pemeriksaan senjata (gun check) akan dilakukan panitia sebelum pertandingan dimulai.</p>
                     <p>&bull; Wajib menggunakan safety glasses dan pelindung telinga (earmuff/earplug).</p>
@@ -493,24 +542,24 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Rule 3 -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-800">
-                <button @click="open = open === 3 ? null : 3" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 dark:hover:bg-gray-700/50 transition text-sm">
+            <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button @click="open = open === 3 ? null : 3" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 transition text-sm">
                     <span class="flex items-center gap-2"><i data-lucide="calculator" class="w-4 h-4 text-copper-500"></i> Sistem Penilaian & Ranking</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open === 3 ? 'rotate-180' : ''"></i>
+                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 3 ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === 3" x-transition class="px-4 pb-3.5 text-xs text-gray-600 dark:text-gray-400 space-y-1.5 border-t border-gray-100 dark:border-gray-700/50 pt-2.5">
+                <div x-show="open === 3" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1.5 border-t border-gray-100 pt-2.5">
                     <p><strong>Presisi 20M:</strong> Total akumulasi poin dari 10 tembakan seri. Jika terjadi draw/skor sama, penentu pemenang dihitung dari jumlah tembakan X (inner-10) terbanyak.</p>
                     <p><strong>Dueling Plat:</strong> Sistem gugur langsung head-to-head. Pemenang adalah penembak yang menjatuhkan 5 plat + 1 popper dengan waktu tercepat.</p>
                 </div>
             </div>
 
             <!-- Rule 4 -->
-            <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-white dark:bg-gray-800">
-                <button @click="open = open === 4 ? null : 4" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 dark:hover:bg-gray-700/50 transition text-sm">
-                    <span class="flex items-center gap-2"><i data-lucide="credit-card" class="w-4 h-4 text-copper-500"></i> Biaya Registrasi & Pembayaran</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open === 4 ? 'rotate-180' : ''"></i>
+            <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button @click="open = open === 4 ? null : 4" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 transition text-sm">
+                    <span class="flex items-center gap-2"><i data-lucide="credit-card" class="w-4 h-4 text-copper-500"></i> Biaya & Pembayaran</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 4 ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === 4" x-transition class="px-4 pb-3.5 text-xs text-gray-600 dark:text-gray-400 space-y-1 border-t border-gray-100 dark:border-gray-700/50 pt-2.5">
+                <div x-show="open === 4" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1 border-t border-gray-100 pt-2.5">
                     <p>&bull; Biaya: <strong>Rp 200.000 per kategori</strong> (Mengikuti 2 kategori: Rp 400.000).</p>
                     <p>&bull; Transfer ke rekening: <strong>Bank BRI 053801071906503</strong> a.n. <strong>Ahyandi Hi Karim</strong>.</p>
                     <p>&bull; Lampirkan bukti transfer saat pengisian formulir pendaftaran.</p>
@@ -521,21 +570,21 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Contact & Payment Section (Tight Padding) -->
-<section id="kontak" class="py-8 md:py-10 bg-white dark:bg-gray-950">
+<section id="kontak" class="py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600 dark:text-copper-400">Informasi & Bantuan</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1">Kontak Panitia Pelaksana</h2>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Informasi & Bantuan</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900">Kontak Panitia Pelaksana</h2>
         </div>
         
         <!-- Payment Info Box -->
-        <div class="max-w-md mx-auto mb-6 p-4 bg-copper-50 dark:bg-copper-900/20 border border-copper-200 dark:border-copper-800 rounded-xl text-center" x-data="{ copied: false }">
-            <p class="text-xs uppercase font-bold text-copper-700 dark:text-copper-300">Rekening Resmi Pendaftaran</p>
-            <p class="font-display text-lg font-bold text-gray-900 dark:text-white mt-1">Bank BRI</p>
+        <div class="max-w-md mx-auto mb-6 p-4 bg-copper-50 border border-copper-200 rounded-xl text-center" x-data="{ copied: false }">
+            <p class="text-xs uppercase font-bold text-copper-700">Rekening Resmi Pendaftaran</p>
+            <p class="font-display text-lg font-bold text-gray-900 mt-1">Bank BRI</p>
             <div class="mt-2 flex items-center justify-center gap-2">
-                <span class="font-mono text-base font-bold text-copper-700 dark:text-copper-300">053801071906503</span>
+                <span class="font-mono text-base font-bold text-copper-700">053801071906503</span>
                 <button type="button" @click="navigator.clipboard.writeText('053801071906503'); copied = true; setTimeout(() => copied = false, 2000)" 
-                        class="px-2.5 py-1 bg-white dark:bg-gray-800 rounded-md border border-copper-300 dark:border-copper-700 hover:bg-copper-100 text-xs font-semibold transition">
+                        class="px-2.5 py-1 bg-white rounded-md border border-copper-300 hover:bg-copper-100 text-xs font-semibold transition">
                     <span x-show="!copied">Salin</span>
                     <span x-show="copied" class="text-green-600">Tersalin!</span>
                 </button>
@@ -554,9 +603,9 @@ require_once __DIR__ . '/includes/header.php';
             ];
             foreach ($contacts as $c): ?>
             <a href="https://wa.me/<?= preg_replace('/^0/', '62', $c['phone']) ?>" target="_blank" 
-               class="p-3.5 bg-gray-50 dark:bg-gray-900 rounded-xl hover:bg-green-50 dark:hover:bg-green-950/20 border border-gray-200 dark:border-gray-800 hover:border-green-400 transition group text-left">
+               class="p-3.5 bg-gray-50 rounded-xl hover:bg-green-50 border border-gray-200 hover:border-green-400 transition group text-left">
                 <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5"><?= $c['role'] ?></p>
-                <p class="font-bold text-xs text-gray-900 dark:text-white"><?= $c['name'] ?></p>
+                <p class="font-bold text-xs text-gray-900"><?= $c['name'] ?></p>
                 <p class="text-[11px] text-gray-500 group-hover:text-green-600 flex items-center gap-1 mt-1">
                     <i data-lucide="message-circle" class="w-3.5 h-3.5 text-green-500"></i>
                     <?= $c['display'] ?>

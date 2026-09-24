@@ -1,13 +1,18 @@
 <!-- Footer -->
-<footer class="bg-gray-900 dark:bg-gray-950 text-gray-300 border-t border-gray-800">
+<footer class="bg-gray-900 text-gray-300 border-t border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Brand -->
             <div class="md:col-span-1">
                 <div class="flex items-center gap-2.5 mb-4">
-                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-10 w-10 object-contain">
-                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-10 w-10 object-contain">
-                    <span class="font-display font-bold text-lg text-copper-400">BSC 2026</span>
+                    <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center shadow-md">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                    </div>
+                    <span class="font-display font-bold text-xs sm:text-sm text-copper-400 select-none">X</span>
+                    <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center shadow-md">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                    </div>
+                    <span class="font-display font-bold text-lg text-copper-400 ml-1">BSC 2026</span>
                 </div>
                 <p class="text-sm text-gray-400">Kejuaraan Menembak Pistol Presisi 20M & Dueling Plat</p>
                 <p class="text-sm text-gray-500 mt-2">17 — 18 Oktober 2026</p>

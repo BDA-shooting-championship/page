@@ -16,7 +16,6 @@ $currentPage = $currentPage ?? '';
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -43,11 +42,10 @@ $currentPage = $currentPage ?? '';
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Dark Mode Init -->
+    <!-- Force Light Mode Only -->
     <script>
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
+        document.documentElement.classList.remove('dark');
+        try { localStorage.removeItem('theme'); } catch(e) {}
     </script>
     
     <style>
@@ -65,36 +63,32 @@ $currentPage = $currentPage ?? '';
         .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
     </style>
 </head>
-<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-body" x-data="{ mobileMenu: false }">
+<body class="bg-white text-gray-900 font-body" x-data="{ mobileMenu: false }">
 
 <!-- Navbar -->
-<nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 50">
+<nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
-            <!-- Logo -->
-            <a href="/" class="flex items-center gap-2.5">
+            <!-- Logo with X in the middle -->
+            <a href="/" class="flex items-center gap-2 sm:gap-2.5">
                 <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-9 w-9 object-contain drop-shadow-sm">
+                <span class="font-display font-bold text-xs sm:text-sm text-copper-600 select-none">X</span>
                 <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-9 w-9 object-contain drop-shadow-sm">
-                <div class="flex flex-col">
-                    <span class="font-display font-bold text-base leading-tight text-copper-600 dark:text-copper-400">BSC 2026</span>
+                <div class="flex flex-col ml-1">
+                    <span class="font-display font-bold text-base leading-tight text-copper-600">BSC 2026</span>
                     <span class="text-[9px] uppercase tracking-wider text-gray-500 font-semibold leading-none">Shooting Championship</span>
                 </div>
             </a>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6">
-                <a href="/" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'home' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Beranda</a>
-                <a href="/daftar.php" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'daftar' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Pendaftaran</a>
-                <a href="/live-score.php" class="text-sm font-medium hover:text-copper-600 dark:hover:text-copper-400 transition <?= $currentPage === 'live-score' ? 'text-copper-600 dark:text-copper-400 font-semibold' : '' ?>">Live Score</a>
-                <!-- Dark Mode Toggle -->
-                <button @click="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="Toggle Theme">
-                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
-                </button>
+                <a href="/" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'home' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Beranda</a>
+                <a href="/daftar.php" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'daftar' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Pendaftaran</a>
+                <a href="/live-score.php" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'live-score' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Live Score</a>
             </div>
             
             <!-- Mobile Toggle -->
-            <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-700">
                 <i data-lucide="menu" class="w-6 h-6" x-show="!mobileMenu"></i>
                 <i data-lucide="x" class="w-6 h-6" x-show="mobileMenu" x-cloak></i>
             </button>
@@ -102,12 +96,11 @@ $currentPage = $currentPage ?? '';
     </div>
     
     <!-- Mobile Menu -->
-    <div x-show="mobileMenu" x-transition class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+    <div x-show="mobileMenu" x-transition class="md:hidden border-t border-gray-200 bg-white">
         <div class="px-4 py-3 space-y-2">
-            <a href="/" class="block py-2 text-sm font-medium hover:text-copper-600">Beranda</a>
-            <a href="/daftar.php" class="block py-2 text-sm font-medium hover:text-copper-600">Pendaftaran</a>
-            <a href="/live-score.php" class="block py-2 text-sm font-medium hover:text-copper-600">Live Score</a>
-            <button @click="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')" class="py-2 text-sm font-medium hover:text-copper-600">Toggle Dark Mode</button>
+            <a href="/" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Beranda</a>
+            <a href="/daftar.php" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Pendaftaran</a>
+            <a href="/live-score.php" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Live Score</a>
         </div>
     </div>
 </nav>
