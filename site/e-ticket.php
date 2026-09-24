@@ -56,11 +56,23 @@ require_once __DIR__ . '/includes/header.php';
                     Pendaftaran untuk <strong><?= htmlspecialchars($ticket['nama']) ?></strong> (ID: <code class="font-mono text-copper-600"><?= htmlspecialchars($ticket['registration_id']) ?></code>) sedang dalam proses verifikasi bukti transfer.
                     E-Ticket resmi dan Nomor Peserta akan aktif otomatis setelah verifikasi selesai.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-3">
-                    <a href="https://wa.me/6285283525761?text=Halo%20Panitia,%20saya%20ingin%20menanyakan%20status%20pendaftaran%20ID%20<?= urlencode($ticket['registration_id']) ?>" target="_blank" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2">
-                        <i data-lucide="message-circle" class="w-4 h-4"></i> Hubungi Panitia (WA)
-                    </a>
-                    <a href="/" class="px-5 py-2.5 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm font-semibold rounded-lg transition">
+                <?php
+                $msgTemplateZyaldi = "Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: " . $ticket['registration_id'] . "\n• Nama Lengkap: " . $ticket['nama'] . "\n• Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
+                $msgTemplateRully = "Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: " . $ticket['registration_id'] . "\n• Nama Lengkap: " . $ticket['nama'] . "\n• Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
+                ?>
+                <div class="mt-4 mb-6">
+                    <p class="text-xs text-gray-500 mb-3 font-semibold">Hubungi Seksi Pendaftaran untuk pertanyaan / konfirmasi:</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-3">
+                        <a href="https://wa.me/6282134651503?text=<?= urlencode($msgTemplateZyaldi) ?>" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> Briptu Zyaldi (WA)
+                        </a>
+                        <a href="https://wa.me/6285775015786?text=<?= urlencode($msgTemplateRully) ?>" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> Briptu Rully (WA)
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <a href="/" class="px-5 py-2.5 border border-gray-300 hover:bg-gray-100 text-xs font-semibold rounded-xl transition">
                         Kembali ke Beranda
                     </a>
                 </div>

@@ -45,16 +45,41 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 </div>
 
-                <div class="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-xs text-amber-800 dark:text-amber-300 text-left max-w-lg mx-auto mb-6">
-                    <p class="font-semibold mb-1 flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> Informasi Selanjutnya:</p>
-                    <p>Setelah pembayaran Anda dikonfirmasi oleh panitia, E-Ticket resmi beserta QR Code unik dan Nomor Peserta (BSC-xxx) akan otomatis dikirimkan ke WhatsApp Anda di <strong x-text="formData.telepon"></strong>.</p>
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 text-left max-w-lg mx-auto mb-4">
+                    <p class="font-semibold mb-1 flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4 text-amber-600"></i> Informasi Selanjutnya:</p>
+                    <p>Setelah pembayaran Anda diverifikasi oleh panitia, E-Ticket resmi beserta QR Code unik dan Nomor Peserta (BSC-26xxx) akan otomatis diterbitkan. Anda juga dapat mengecek status tiket kapan saja.</p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a :href="`/e-ticket.php?id=${encodeURIComponent(successData.registrationId)}`" class="px-6 py-3 bg-copper-600 hover:bg-copper-700 text-white font-semibold rounded-lg transition shadow-md flex items-center justify-center gap-2">
+                <!-- Kontak Seksi Pendaftaran (Zyaldi & Rully) -->
+                <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl max-w-lg mx-auto text-left mb-6 shadow-sm">
+                    <p class="font-bold text-xs text-emerald-900 mb-1 flex items-center gap-1.5">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
+                        Pertanyaan & Konfirmasi Seksi Pendaftaran:
+                    </p>
+                    <p class="text-[11px] text-gray-600 mb-3">
+                        Jika ingin konfirmasi atau memiliki pertanyaan, silakan hubungi Seksi Pendaftaran via WhatsApp:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <a :href="`https://wa.me/6282134651503?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: ${successData.registrationId}\n• Nama Lengkap: ${formData.nama}\n• Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
+                           target="_blank"
+                           class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                            <span>Briptu Zyaldi (WA)</span>
+                        </a>
+                        <a :href="`https://wa.me/6285775015786?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: ${successData.registrationId}\n• Nama Lengkap: ${formData.nama}\n• Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
+                           target="_blank"
+                           class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                            <span>Briptu Rully (WA)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3 max-w-lg mx-auto">
+                    <a :href="`/e-ticket.php?id=${encodeURIComponent(successData.registrationId)}`" class="flex-1 px-5 py-3 bg-copper-600 hover:bg-copper-700 text-white font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm">
                         <i data-lucide="ticket" class="w-4 h-4"></i> Cek Status E-Ticket
                     </a>
-                    <a href="/" class="px-6 py-3 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold rounded-lg transition flex items-center justify-center gap-2">
+                    <a href="/" class="flex-1 px-5 py-3 border border-gray-300 hover:bg-gray-100 font-bold rounded-xl transition flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-700">
                         <i data-lucide="home" class="w-4 h-4"></i> Kembali ke Beranda
                     </a>
                 </div>

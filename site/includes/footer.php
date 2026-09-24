@@ -39,10 +39,12 @@
             
             <!-- Contact -->
             <div>
-                <h4 class="font-display font-semibold text-white mb-4">Kontak</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="https://wa.me/6285283525761" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i>Briptu Ady — 0852-8352-5761</a></li>
-                    <li><a href="https://wa.me/6285272377704" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i>Briptu Huges — 0852-7237-7704</a></li>
+                <h4 class="font-display font-semibold text-white mb-4">Kontak Panitia</h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><a href="https://wa.me/6282134651503" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Zyaldi (Pendaftaran) — 0821-3465-1503</a></li>
+                    <li><a href="https://wa.me/6285775015786" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Rully (Pendaftaran) — 0857-7501-5786</a></li>
+                    <li><a href="https://wa.me/6285283525761" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Ady (Materi & Teknis) — 0852-8352-5761</a></li>
+                    <li><a href="https://wa.me/6285272377704" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Huges (Ketua Pelaksana) — 0852-7237-7704</a></li>
                 </ul>
             </div>
         </div>
