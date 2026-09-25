@@ -5,6 +5,9 @@
  * Mobile bottom navigation, Excel exports, WhatsApp E-ticket integration.
  */
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
@@ -837,51 +840,50 @@ include __DIR__ . '/../includes/header.php';
                                                 min="0"
                                                 max="10"
                                                 x-model.number="item.ring_x"
-                                                @input="calculateNilai(item)"
-                                                @keydown.enter="savePresisiScore(item)"
+                                                @input="calculateNilai(item); item._saved = false;"
                                                 class="w-9 text-center py-1 rounded bg-amber-50 border border-amber-300 text-xs font-mono font-bold text-amber-800 focus:ring-1 focus:ring-amber-500 focus:outline-none"
                                             >
                                         </td>
 
                                         <!-- Ring 10 down to 1 Inputs (Static & Robust) -->
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_10" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_10" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_9" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_9" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_8" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_8" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_7" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_7" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_6" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_6" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_5" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_5" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_4" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_4" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_3" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_3" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_2" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_2" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_1" @input="calculateNilai(item)" @keydown.enter="savePresisiScore(item)"
+                                            <input type="number" min="0" max="10" x-model.number="item.ring_1" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
 
@@ -891,28 +893,28 @@ include __DIR__ . '/../includes/header.php';
                                         <!-- Nilai (Auto real-time) -->
                                         <td class="py-2 px-3 text-center font-mono font-extrabold text-sm text-copper-700 bg-copper-50/30" x-text="item.nilai"></td>
 
-                                        <!-- Direct Save Action -->
-                                        <td class="py-2 px-3 text-center">
+                                        <!-- Direct Save Action: ALWAYS ENABLED -->
+                                        <td class="py-2 px-3 text-center whitespace-nowrap">
                                             <button
                                                 type="button"
                                                 @click="savePresisiScore(item)"
-                                                :disabled="item._saving"
-                                                class="px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition flex items-center justify-center gap-1 mx-auto min-w-[70px]"
-                                                :class="item._saved ? 'bg-emerald-600 text-white' : 'bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white'"
+                                                class="px-3.5 py-1.5 rounded-lg font-bold text-xs shadow transition-all duration-150 flex items-center justify-center gap-1 mx-auto min-w-[75px] cursor-pointer"
+                                                :class="item._saved ? 'bg-emerald-600 text-white ring-2 ring-emerald-300' : (item._saving ? 'bg-amber-600 text-white animate-pulse' : 'bg-copper-600 hover:bg-copper-700 active:scale-95 text-white')"
                                             >
                                                 <template x-if="item._saving">
                                                     <span class="inline-flex items-center gap-1">
-                                                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
-                                                        <span>...</span>
+                                                        <svg class="animate-spin h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                                                        <span>Menyimpan...</span>
                                                     </span>
                                                 </template>
                                                 <template x-if="!item._saving && item._saved">
-                                                    <span>✓ Tersimpan</span>
+                                                    <span class="font-bold flex items-center gap-1">✓ Tersimpan</span>
                                                 </template>
                                                 <template x-if="!item._saving && !item._saved">
                                                     <span>Simpan</span>
                                                 </template>
                                             </button>
+                                            <div x-show="item._error" x-text="item._error" class="text-[10px] text-red-600 font-bold mt-1"></div>
                                         </td>
                                     </tr>
                                 </template>
@@ -931,116 +933,222 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- ===== SUBTAB 2: DUELING PLAT ===== -->
             <div x-show="scoresSubTab === 'dueling'" x-transition>
-                <!-- Add New Match Card -->
-                <div class="bg-white rounded-2xl shadow-sm p-5 border border-gray-200 mb-6">
-                    <h3 class="font-display text-base sm:text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                        <i data-lucide="plus-circle" class="w-4 h-4 text-copper-600"></i>
-                        <span>Tambah Pertandingan Dueling Plat Baru</span>
-                    </h3>
-
-                    <form @submit.prevent="createDuelingMatch" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                
+                <!-- Tournament Bracket Maker Toolbar -->
+                <div class="bg-gradient-to-r from-copper-50 via-white to-amber-50 rounded-2xl shadow-sm p-5 border border-copper-200 mb-6">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <div>
-                            <label class="block font-bold text-gray-700 mb-1">Babak Pertandingan</label>
-                            <select x-model="newMatch.round_name" required class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
-                                <option value="Penyisihan">Penyisihan</option>
-                                <option value="Perempat Final">Perempat Final</option>
-                                <option value="Semifinal">Semifinal</option>
-                                <option value="Perebutan Juara 3">Perebutan Juara 3</option>
-                                <option value="Final">Final</option>
-                            </select>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-copper-600 text-white uppercase tracking-wider">Tournament Bracket Maker</span>
+                                <span class="text-xs text-gray-500 font-semibold" x-text="duelingList.length + ' Match Terdaftar'"></span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-gray-900 mt-1">Bagan Turnamen Eliminasi Dueling Plat</h3>
+                            <p class="text-xs text-gray-600 mt-0.5">
+                                Input peserta &amp; tentukan pemenang <strong>langsung pada kotak bagan visual</strong>. Klik tombol 👑 <strong>Menang</strong> untuk langsung menaikkan pemenang ke babak berikutnya!
+                            </p>
                         </div>
 
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">Nomor Match</label>
-                            <input type="number" min="1" x-model.number="newMatch.match_number" required placeholder="1"
-                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
-                        </div>
+                        <!-- Participant Count & Generator Controls -->
+                        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                            <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-xl border border-gray-300 shadow-sm">
+                                <label class="text-xs font-bold text-gray-700 whitespace-nowrap">Jml Peserta:</label>
+                                <input type="number" min="2" max="256" x-model.number="bracketParticipantCount"
+                                       class="w-16 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500">
+                                <div class="flex flex-wrap items-center gap-1 border-l border-gray-200 pl-2">
+                                    <button type="button" @click="bracketParticipantCount = 8" :class="bracketParticipantCount === 8 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">8</button>
+                                    <button type="button" @click="bracketParticipantCount = 16" :class="bracketParticipantCount === 16 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">16</button>
+                                    <button type="button" @click="bracketParticipantCount = 32" :class="bracketParticipantCount === 32 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">32</button>
+                                    <button type="button" @click="bracketParticipantCount = 55" :class="bracketParticipantCount === 55 ? 'bg-amber-600 text-white font-bold' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'" class="px-1.5 py-0.5 rounded text-[11px] transition font-semibold" title="Preset 55 peserta (Kapasitas 64, 9 BYE)">55</button>
+                                    <button type="button" @click="bracketParticipantCount = 64" :class="bracketParticipantCount === 64 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">64</button>
+                                    <button type="button" @click="bracketParticipantCount = 67" :class="bracketParticipantCount === 67 ? 'bg-amber-600 text-white font-bold' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'" class="px-1.5 py-0.5 rounded text-[11px] transition font-semibold" title="Preset 67 peserta (Kapasitas 128, 61 BYE)">67</button>
+                                    <button type="button" @click="bracketParticipantCount = 128" :class="bracketParticipantCount === 128 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">128</button>
+                                </div>
+                            </div>
 
-                        <!-- Participant 1 Autocomplete -->
-                        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
-                            <label class="block font-bold text-gray-700 mb-1">Peserta 1 (Ketik Nama / No. BSC)</label>
-                            <div class="relative">
-                                <input
-                                    type="text"
-                                    x-model="newMatch.participant_1_name"
-                                    @focus="open = true"
-                                    @input="open = true"
-                                    placeholder="Cari nama atau no peserta..."
-                                    required
-                                    class="w-full px-3 py-2 pr-7 rounded-lg border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
-                                >
-                                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                            </div>
-                            <div
-                                x-show="open && getDuelingParticipants(newMatch.participant_1_name).length > 0"
-                                x-transition
-                                class="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto divide-y divide-gray-100"
-                                style="display: none;"
-                            >
-                                <template x-for="p in getDuelingParticipants(newMatch.participant_1_name)" :key="p.registration_id">
-                                    <button
-                                        type="button"
-                                        @click="selectNewMatchParticipant(1, p); open = false"
-                                        class="w-full text-left px-3 py-2 hover:bg-copper-50 text-xs transition flex items-center justify-between gap-2"
-                                    >
-                                        <div class="truncate">
-                                            <span class="font-bold text-gray-900" x-text="p.nama"></span>
-                                            <span class="text-gray-400 text-[10px] ml-1" x-text="'(' + (p.satuan || '-') + ')'"></span>
-                                        </div>
-                                        <span class="px-1.5 py-0.5 rounded bg-copper-100 text-copper-800 font-mono font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-
-                        <!-- Participant 2 Autocomplete -->
-                        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
-                            <label class="block font-bold text-gray-700 mb-1">Peserta 2 (Ketik Nama / No. BSC)</label>
-                            <div class="relative">
-                                <input
-                                    type="text"
-                                    x-model="newMatch.participant_2_name"
-                                    @focus="open = true"
-                                    @input="open = true"
-                                    placeholder="Cari nama atau no peserta..."
-                                    required
-                                    class="w-full px-3 py-2 pr-7 rounded-lg border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
-                                >
-                                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                            </div>
-                            <div
-                                x-show="open && getDuelingParticipants(newMatch.participant_2_name).length > 0"
-                                x-transition
-                                class="absolute z-50 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto divide-y divide-gray-100"
-                                style="display: none;"
-                            >
-                                <template x-for="p in getDuelingParticipants(newMatch.participant_2_name)" :key="p.registration_id">
-                                    <button
-                                        type="button"
-                                        @click="selectNewMatchParticipant(2, p); open = false"
-                                        class="w-full text-left px-3 py-2 hover:bg-copper-50 text-xs transition flex items-center justify-between gap-2"
-                                    >
-                                        <div class="truncate">
-                                            <span class="font-bold text-gray-900" x-text="p.nama"></span>
-                                            <span class="text-gray-400 text-[10px] ml-1" x-text="'(' + (p.satuan || '-') + ')'"></span>
-                                        </div>
-                                        <span class="px-1.5 py-0.5 rounded bg-copper-100 text-copper-800 font-mono font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2 md:col-span-4 flex justify-end">
-                            <button type="submit" class="px-5 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1.5">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                <span>Tambah ke Bagan</span>
+                            <button type="button" @click="generateTournamentBracket(bracketParticipantCount)" 
+                                    class="px-4 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-xl font-bold text-xs shadow transition flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="git-merge" class="w-4 h-4"></i>
+                                <span x-text="'⚡ Buat Bagan ' + bracketParticipantCount + ' Peserta'"></span>
                             </button>
+
+                            <button type="button" @click="resetTournamentBracket()" 
+                                    class="px-3 py-2 bg-white hover:bg-red-50 text-red-600 border border-red-200 rounded-xl font-bold text-xs transition flex items-center gap-1 cursor-pointer" title="Reset semua pertandingan">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                <span>Reset</span>
+                            </button>
+
+                            <div class="w-full flex items-center gap-2 mt-0.5">
+                                <span class="text-[11px] font-semibold text-copper-800 bg-copper-50 px-2.5 py-0.5 rounded-lg border border-copper-200 flex items-center gap-1">
+                                    <i data-lucide="info" class="w-3 h-3 text-copper-600"></i>
+                                    <span x-text="bracketCapacityInfo.label"></span>
+                                </span>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+
+                    <!-- View Mode Switcher -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-4 pt-3 border-t border-copper-100 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-gray-700">Tampilan Mode Input:</span>
+                            <div class="inline-flex rounded-xl p-1 bg-gray-200/80 border border-gray-300">
+                                <button type="button" @click="duelingAdminView = 'bracket'" 
+                                        :class="duelingAdminView === 'bracket' ? 'bg-white shadow text-copper-700 font-bold' : 'text-gray-600 hover:text-gray-900'"
+                                        class="px-3 py-1 text-xs rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="git-merge" class="w-3.5 h-3.5"></i>
+                                    <span>Bagan Visual (Input Langsung)</span>
+                                </button>
+                                <button type="button" @click="duelingAdminView = 'table'" 
+                                        :class="duelingAdminView === 'table' ? 'bg-white shadow text-copper-700 font-bold' : 'text-gray-600 hover:text-gray-900'"
+                                        class="px-3 py-1 text-xs rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="table" class="w-3.5 h-3.5"></i>
+                                    <span>Tabel Datar</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-gray-500 flex items-center gap-2">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            <span>Normalisasi otomatis ganjil dengan BYE (Lolos Otomatis). Tanpa aturan waktu (hanya pemenang duel).</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Existing Matches Table -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <!-- Participant Datalist Autocomplete -->
+                <datalist id="duelingParticipantsListIndex">
+                    <template x-for="p in (registrations || []).filter(r => (r.status || '').toLowerCase() === 'verified')" :key="p.registration_id || p.no_peserta">
+                        <option :value="p.nama" x-text="(p.no_peserta ? '[' + p.no_peserta + '] ' : '') + p.nama + (p.satuan ? ' - ' + p.satuan : '')"></option>
+                    </template>
+                </datalist>
+
+                <!-- ================= VIEW 1: INTERACTIVE VISUAL TOURNAMENT TREE BRACKET ================= -->
+                <div x-show="duelingAdminView === 'bracket' && groupedDuelingMatches.length > 0" class="overflow-x-auto pb-6">
+                    <div class="w-max min-w-full flex items-stretch gap-6 justify-start">
+                        <template x-for="round in groupedDuelingMatches" :key="round.name">
+                            <div class="w-[310px] shrink-0 flex flex-col">
+                                <!-- Round Header -->
+                                <div class="mb-4 text-center pb-2.5 border-b-2 border-copper-600 bg-white rounded-t-xl pt-2.5 shadow-sm">
+                                    <h4 class="font-display font-bold text-gray-900 text-sm tracking-wide uppercase" x-text="round.name"></h4>
+                                    <span class="text-[10px] text-gray-500 font-semibold" x-text="round.matches.length + ' Match'"></span>
+                                </div>
+
+                                <!-- Matches in Round -->
+                                <div class="flex-1 flex flex-col justify-around gap-4 py-2">
+                                    <template x-for="match in round.matches" :key="match.id">
+                                        <div class="bg-white rounded-2xl border shadow-sm transition hover:shadow-md relative overflow-hidden"
+                                             :class="{
+                                                 'border-red-400 ring-2 ring-red-100': match.match_status === 'live',
+                                                 'border-emerald-400 ring-1 ring-emerald-200': match.match_status === 'finished',
+                                                 'border-gray-200': match.match_status === 'upcoming'
+                                             }">
+                                            <!-- Match Badge & Actions Header -->
+                                            <div class="px-3 py-1.5 bg-gray-50 border-b border-gray-100 flex items-center justify-between text-[11px]">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="font-mono font-bold text-copper-700" x-text="'Match #' + match.match_number"></span>
+                                                    <template x-if="match.next_match_id">
+                                                        <span class="text-[9px] text-copper-600 font-medium" :title="'Pemenang lolos ke Match #' + (duelingList.find(x => x.id == match.next_match_id)?.match_number || '-')">
+                                                            → M#<span x-text="duelingList.find(x => x.id == match.next_match_id)?.match_number || '-'"></span> (Slot <span x-text="match.next_slot"></span>)
+                                                        </span>
+                                                    </template>
+                                                </div>
+                                                <div class="flex items-center gap-1">
+                                                    <select x-model="match.match_status" @change="saveDuelingMatch(match)" 
+                                                            class="text-[10px] font-bold rounded px-1.5 py-0.5 border border-gray-300 bg-white cursor-pointer focus:ring-1 focus:ring-copper-500"
+                                                            :class="{
+                                                                'text-gray-600': match.match_status === 'upcoming',
+                                                                'text-red-600 font-extrabold': match.match_status === 'live',
+                                                                'text-emerald-700 font-extrabold': match.match_status === 'finished'
+                                                            }">
+                                                        <option value="upcoming">Upcoming</option>
+                                                        <option value="live">🔴 Live</option>
+                                                        <option value="finished">✓ Selesai</option>
+                                                    </select>
+                                                    <button type="button" @click="deleteDuelingMatch(match)" class="p-1 text-gray-400 hover:text-red-600 rounded transition" title="Hapus match">
+                                                        <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Participant 1 Box -->
+                                            <div class="p-2.5 border-b border-gray-100 transition"
+                                                 :class="isSlotWinner(match, 1) ? 'bg-emerald-50/80 border-emerald-200' : 'bg-white'">
+                                                <div class="flex items-center justify-between gap-1.5">
+                                                    <div class="flex-1 min-w-0">
+                                                        <div class="flex items-center gap-1">
+                                                            <span class="text-[10px] font-bold text-gray-400 w-4">#1</span>
+                                                            <input type="text" list="duelingParticipantsListIndex"
+                                                                   x-model="match.participant_1_name"
+                                                                   @change="onParticipantChange(match, 1); saveDuelingMatch(match)"
+                                                                   placeholder="Nama Peserta 1..."
+                                                                   class="w-full px-2 py-1 rounded border text-xs font-semibold focus:ring-1 focus:ring-copper-500"
+                                                                   :class="isSlotWinner(match, 1) ? 'bg-emerald-100/60 border-emerald-400 text-emerald-950 font-bold' : 'bg-gray-50 border-gray-200 text-gray-800'">
+                                                        </div>
+                                                        <input type="text" x-model="match.participant_1_satuan" @change="saveDuelingMatch(match)"
+                                                               placeholder="Satuan / Kontingen..."
+                                                               class="w-full text-[10px] px-2 py-0.5 mt-0.5 rounded border border-transparent hover:border-gray-200 focus:border-gray-300 text-gray-500 bg-transparent">
+                                                    </div>
+                                                    <button type="button" @click="setMatchWinner(match, 1)"
+                                                            class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                                            :class="isSlotWinner(match, 1) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
+                                                            :title="isSlotWinner(match, 1) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
+                                                        <span class="text-xs">👑</span>
+                                                        <span class="text-[10px]" x-text="isSlotWinner(match, 1) ? 'MENANG' : 'Pilih'"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Participant 2 Box -->
+                                            <div class="p-2.5 transition"
+                                                 :class="isSlotWinner(match, 2) ? 'bg-emerald-50/80 border-emerald-200' : 'bg-white'">
+                                                <div class="flex items-center justify-between gap-1.5">
+                                                    <div class="flex-1 min-w-0">
+                                                        <div class="flex items-center gap-1">
+                                                            <span class="text-[10px] font-bold text-gray-400 w-4">#2</span>
+                                                            <input type="text" list="duelingParticipantsListIndex"
+                                                                   x-model="match.participant_2_name"
+                                                                   @change="onParticipantChange(match, 2); saveDuelingMatch(match)"
+                                                                   placeholder="Nama Peserta 2..."
+                                                                   class="w-full px-2 py-1 rounded border text-xs font-semibold focus:ring-1 focus:ring-copper-500"
+                                                                   :class="isSlotWinner(match, 2) ? 'bg-emerald-100/60 border-emerald-400 text-emerald-950 font-bold' : 'bg-gray-50 border-gray-200 text-gray-800'">
+                                                        </div>
+                                                        <input type="text" x-model="match.participant_2_satuan" @change="saveDuelingMatch(match)"
+                                                               placeholder="Satuan / Kontingen..."
+                                                               class="w-full text-[10px] px-2 py-0.5 mt-0.5 rounded border border-transparent hover:border-gray-200 focus:border-gray-300 text-gray-500 bg-transparent">
+                                                    </div>
+                                                    <button type="button" @click="setMatchWinner(match, 2)"
+                                                            class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                                            :class="isSlotWinner(match, 2) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
+                                                            :title="isSlotWinner(match, 2) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
+                                                        <span class="text-xs">👑</span>
+                                                        <span class="text-[10px]" x-text="isSlotWinner(match, 2) ? 'MENANG' : 'Pilih'"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Match Quick Actions Footer -->
+                                            <div class="px-3 py-1.5 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-[10px]">
+                                                <div>
+                                                    <template x-if="match.winner_id">
+                                                        <button type="button" @click="clearMatchWinner(match)" class="text-gray-400 hover:text-red-600 underline cursor-pointer">
+                                                            Batal Pemenang
+                                                        </button>
+                                                    </template>
+                                                </div>
+                                                <button type="button" @click="saveDuelingMatch(match)"
+                                                        class="px-2.5 py-0.5 rounded text-white font-bold transition flex items-center gap-1 cursor-pointer"
+                                                        :class="match._saved ? 'bg-emerald-600' : (match._saving ? 'bg-amber-600 animate-pulse' : 'bg-copper-600 hover:bg-copper-700')">
+                                                    <span x-text="match._saving ? '...' : (match._saved ? '✓ Tersimpan' : 'Simpan')"></span>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 2: FLAT TABLE VIEW ================= -->
+                <div x-show="duelingAdminView === 'table'" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs">
                             <thead class="bg-gray-100 uppercase font-bold text-gray-600 border-b border-gray-200">
@@ -1048,10 +1156,8 @@ include __DIR__ . '/../includes/header.php';
                                     <th class="py-3 px-3">Babak</th>
                                     <th class="py-3 px-2 w-16 text-center">Match #</th>
                                     <th class="py-3 px-3">Peserta 1</th>
-                                    <th class="py-3 px-2 text-center w-24">Waktu 1 (s)</th>
                                     <th class="py-3 px-3">Peserta 2</th>
-                                    <th class="py-3 px-2 text-center w-24">Waktu 2 (s)</th>
-                                    <th class="py-3 px-3">Pemenang</th>
+                                    <th class="py-3 px-3">Pemenang Duel</th>
                                     <th class="py-3 px-3 text-center w-28">Status</th>
                                     <th class="py-3 px-3 text-center w-28">Aksi</th>
                                 </tr>
@@ -1062,102 +1168,58 @@ include __DIR__ . '/../includes/header.php';
                                         <td class="py-2.5 px-3 font-semibold text-gray-900" x-text="match.round_name"></td>
                                         <td class="py-2.5 px-2 text-center font-mono font-bold text-copper-700" x-text="match.match_number"></td>
 
-                                        <!-- Participant 1 Autocomplete -->
-                                        <td class="py-2.5 px-3 relative" x-data="{ open: false }" @click.outside="open = false">
-                                            <div class="relative">
-                                                <input
-                                                    type="text"
-                                                    x-model="match.participant_1_name"
-                                                    @focus="open = true"
-                                                    @input="open = true"
-                                                    placeholder="Nama / No BSC"
-                                                    class="w-full px-2 py-1 pr-5 rounded border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
-                                                >
-                                                <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                                            </div>
-                                            <div
-                                                x-show="open && getDuelingParticipants(match.participant_1_name).length > 0"
-                                                x-transition
-                                                class="absolute z-50 left-2 right-2 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-40 overflow-y-auto divide-y divide-gray-100"
-                                                style="display: none;"
-                                            >
-                                                <template x-for="p in getDuelingParticipants(match.participant_1_name)" :key="p.registration_id">
-                                                    <button
-                                                        type="button"
-                                                        @click="selectMatchParticipant(match, 1, p); open = false"
-                                                        class="w-full text-left px-2 py-1.5 hover:bg-copper-50 text-[11px] flex items-center justify-between gap-1 transition"
-                                                    >
-                                                        <span class="font-bold text-gray-900 truncate" x-text="p.nama"></span>
-                                                        <span class="font-mono text-copper-700 font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
-                                                    </button>
-                                                </template>
-                                            </div>
-                                        </td>
-                                        <td class="py-2.5 px-2 text-center">
-                                            <input type="number" step="0.001" x-model.number="match.time_1" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
-                                        </td>
-
-                                        <!-- Participant 2 Autocomplete -->
-                                        <td class="py-2.5 px-3 relative" x-data="{ open: false }" @click.outside="open = false">
-                                            <div class="relative">
-                                                <input
-                                                    type="text"
-                                                    x-model="match.participant_2_name"
-                                                    @focus="open = true"
-                                                    @input="open = true"
-                                                    placeholder="Nama / No BSC"
-                                                    class="w-full px-2 py-1 pr-5 rounded border border-gray-300 bg-gray-50 text-xs focus:bg-white focus:ring-1 focus:ring-copper-500"
-                                                >
-                                                <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                                            </div>
-                                            <div
-                                                x-show="open && getDuelingParticipants(match.participant_2_name).length > 0"
-                                                x-transition
-                                                class="absolute z-50 left-2 right-2 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-40 overflow-y-auto divide-y divide-gray-100"
-                                                style="display: none;"
-                                            >
-                                                <template x-for="p in getDuelingParticipants(match.participant_2_name)" :key="p.registration_id">
-                                                    <button
-                                                        type="button"
-                                                        @click="selectMatchParticipant(match, 2, p); open = false"
-                                                        class="w-full text-left px-2 py-1.5 hover:bg-copper-50 text-[11px] flex items-center justify-between gap-1 transition"
-                                                    >
-                                                        <span class="font-bold text-gray-900 truncate" x-text="p.nama"></span>
-                                                        <span class="font-mono text-copper-700 font-bold text-[10px] shrink-0" x-text="p.no_peserta || p.registration_id"></span>
-                                                    </button>
-                                                </template>
-                                            </div>
-                                        </td>
-                                        <td class="py-2.5 px-2 text-center">
-                                            <input type="number" step="0.001" x-model.number="match.time_2" placeholder="0.000" class="w-20 text-center px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
-                                        </td>
-
-                                        <!-- Winner Selector -->
+                                        <!-- Participant 1 -->
                                         <td class="py-2.5 px-3">
-                                            <select x-model="match.winner_id" class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-bold">
-                                                <option value="">-- Belum Ada --</option>
-                                                <option :value="match.participant_1_id || match.participant_1_name" x-text="match.participant_1_name"></option>
-                                                <option :value="match.participant_2_id || match.participant_2_name" x-text="match.participant_2_name"></option>
+                                            <input type="text" list="duelingParticipantsListIndex" x-model="match.participant_1_name" 
+                                                   @change="onParticipantChange(match, 1)"
+                                                   class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
+                                            <div class="text-[10px] text-gray-400 mt-0.5" x-text="match.participant_1_satuan || '-'"></div>
+                                        </td>
+
+                                        <!-- Participant 2 -->
+                                        <td class="py-2.5 px-3">
+                                            <input type="text" list="duelingParticipantsListIndex" x-model="match.participant_2_name" 
+                                                   @change="onParticipantChange(match, 2)"
+                                                   class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs">
+                                            <div class="text-[10px] text-gray-400 mt-0.5" x-text="match.participant_2_satuan || '-'"></div>
+                                        </td>
+
+                                        <!-- Winner Selector with Auto-Progression -->
+                                        <td class="py-2.5 px-3">
+                                            <select x-model="match.winner_id" @change="saveDuelingMatch(match)" 
+                                                    class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-bold focus:ring-1 focus:ring-copper-500">
+                                                <option value="">-- Pilih Pemenang --</option>
+                                                <option :value="match.participant_1_id || match.participant_1_name" 
+                                                        x-text="match.participant_1_name ? '👑 ' + match.participant_1_name : 'Peserta 1'"></option>
+                                                <option :value="match.participant_2_id || match.participant_2_name" 
+                                                        x-text="match.participant_2_name ? '👑 ' + match.participant_2_name : 'Peserta 2'"></option>
                                             </select>
+                                            <template x-if="match.next_match_id">
+                                                <div class="text-[10px] text-copper-600 font-semibold mt-0.5 flex items-center gap-0.5">
+                                                    <i data-lucide="corner-down-right" class="w-2.5 h-2.5"></i>
+                                                    <span x-text="'Maju ke Match #' + (duelingList.find(x => x.id == match.next_match_id)?.match_number || '-') + ' (Slot ' + match.next_slot + ')'"></span>
+                                                </div>
+                                            </template>
                                         </td>
 
                                         <!-- Status Selector -->
                                         <td class="py-2.5 px-3 text-center">
                                             <select x-model="match.match_status" class="w-full px-1.5 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-bold">
                                                 <option value="upcoming">Upcoming</option>
-                                                <option value="live">Live</option>
-                                                <option value="finished">Finished</option>
+                                                <option value="live">🔴 Live</option>
+                                                <option value="finished">✓ Selesai</option>
                                             </select>
                                         </td>
 
                                         <!-- Actions -->
-                                        <td class="py-2.5 px-3 text-center space-x-1">
-                                            <button type="button" @click="saveDuelingMatch(match)" :disabled="match._saving"
-                                                    class="px-2.5 py-1 bg-copper-600 hover:bg-copper-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition">
-                                                <span x-text="match._saving ? '...' : 'Simpan'"></span>
+                                        <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
+                                            <button type="button" @click="saveDuelingMatch(match)"
+                                                    class="px-3 py-1 bg-copper-600 hover:bg-copper-700 active:scale-95 text-white rounded-lg text-xs font-bold transition shadow-sm cursor-pointer"
+                                                    :class="match._saved ? 'bg-emerald-600 ring-2 ring-emerald-300' : ''">
+                                                <span x-text="match._saving ? '...' : (match._saved ? '✓' : 'Simpan')"></span>
                                             </button>
                                             <button type="button" @click="deleteDuelingMatch(match)"
-                                                    class="p-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition text-xs" title="Hapus match">
+                                                    class="p-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition text-xs cursor-pointer" title="Hapus match">
                                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                             </button>
                                         </td>
@@ -1165,8 +1227,8 @@ include __DIR__ . '/../includes/header.php';
                                 </template>
                                 <template x-if="duelingList.length === 0">
                                     <tr>
-                                        <td colspan="9" class="py-10 text-center text-gray-400">
-                                            Belum ada jadwal pertandingan dueling plat. Gunakan formulir di atas untuk menambahkan pertandingan.
+                                        <td colspan="7" class="py-10 text-center text-gray-400">
+                                            Belum ada jadwal pertandingan dueling plat. Gunakan tombol Buat Bagan di atas untuk membuat jadwal otomatis.
                                         </td>
                                     </tr>
                                 </template>
@@ -1174,6 +1236,65 @@ include __DIR__ . '/../includes/header.php';
                         </table>
                     </div>
                 </div>
+
+                <!-- Empty Bracket Notice -->
+                <template x-if="duelingList.length === 0">
+                    <div class="bg-white rounded-2xl p-12 text-center border border-gray-200 shadow-sm mb-6">
+                        <i data-lucide="git-merge" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
+                        <h4 class="font-display font-bold text-gray-800 text-base">Belum Ada Pertandingan Dueling Plat</h4>
+                        <p class="text-xs text-gray-500 mt-1 max-w-md mx-auto">
+                            Masukkan jumlah peserta pada kolom di atas (misal 8, 16, atau jumlah kustom seperti 7 atau 11) dan klik <strong>Buat Bagan</strong> untuk menyusun bagan turnamen secara otomatis.
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Collapsible: Manual Match Form -->
+                <details class="bg-white rounded-2xl shadow-sm p-4 border border-gray-200 mb-8 text-xs">
+                    <summary class="font-display text-sm font-bold text-gray-800 cursor-pointer flex items-center gap-2 select-none">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-copper-600"></i>
+                        <span>Tambah Pertandingan Manual (Opsional)</span>
+                    </summary>
+
+                    <form @submit.prevent="createDuelingMatch" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-3 border-t border-gray-100">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Babak Pertandingan</label>
+                            <select x-model="newMatch.round_name" required class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                                <option value="Babak 32 Besar">Babak 32 Besar</option>
+                                <option value="Babak 16 Besar">Babak 16 Besar</option>
+                                <option value="Perempat Final">Perempat Final</option>
+                                <option value="Semifinal">Semifinal</option>
+                                <option value="Perebutan Juara 3">Perebutan Juara 3</option>
+                                <option value="Final">Final</option>
+                                <option value="Penyisihan">Penyisihan</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Nomor Match</label>
+                            <input type="number" min="1" x-model.number="newMatch.match_number" required placeholder="1"
+                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs font-mono font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Nama Peserta 1</label>
+                            <input type="text" list="duelingParticipantsListIndex" x-model="newMatch.participant_1_name" placeholder="Nama Peserta 1" required
+                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Nama Peserta 2</label>
+                            <input type="text" list="duelingParticipantsListIndex" x-model="newMatch.participant_2_name" placeholder="Nama Peserta 2" required
+                                   class="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-xs">
+                        </div>
+
+                        <div class="sm:col-span-2 md:col-span-4 flex justify-end">
+                            <button type="submit" class="px-5 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>Tambah ke Bagan</span>
+                            </button>
+                        </div>
+                    </form>
+                </details>
             </div>
         </div>
 
@@ -2199,6 +2320,8 @@ function adminDashboard() {
         // Active Navigation Tab: 'antrean' (DEFAULT) | 'peserta' | 'scores'
         activeTab: 'antrean',
         scoresSubTab: 'presisi', // 'presisi' | 'dueling'
+        duelingAdminView: 'bracket',
+        bracketParticipantCount: 8,
 
         // Data arrays
         registrations: [],
@@ -2826,6 +2949,8 @@ Salam Hormat,
 
         async savePresisiScore(item) {
             item._saving = true;
+            item._saved = false;
+            item._error = null;
             this.calculateNilai(item);
 
             // Sanitize payload so unfilled rings default safely to 0
@@ -2852,18 +2977,20 @@ Salam Hormat,
                 const data = await res.json();
                 if (data.success) {
                     item._saved = true;
-                    setTimeout(() => { item._saved = false; }, 2500);
+                    item._error = null;
+                    setTimeout(() => { item._saved = false; }, 3000);
                     this.showToast('Skor ' + item.nama + ' berhasil disimpan! (Nilai: ' + payload.nilai + ')', 'success');
                     if (data.data) {
                         item.nilai = data.data.nilai;
                         item.jumlah_masuk = data.data.jumlah_masuk;
                     }
-                    await this.fetchPresisiScores();
                 } else {
                     throw new Error(data.error || data.message || 'Gagal menyimpan skor');
                 }
             } catch (e) {
-                this.showToast(e.message || 'Gagal menyimpan skor', 'error');
+                item._error = e.message || 'Gagal menyimpan';
+                this.showToast(item._error, 'error');
+                alert('Pemberitahuan: ' + item._error);
             } finally {
                 item._saving = false;
             }
@@ -3086,14 +3213,147 @@ Salam Hormat,
                 });
                 const data = await res.json();
                 if (data.success) {
-                    this.showToast('Data match #' + match.match_number + ' diperbarui!', 'success');
+                    match._saved = true;
+                    setTimeout(() => { match._saved = false; }, 2500);
+                    this.showToast(data.message || ('Data match #' + match.match_number + ' diperbarui!'), 'success');
+                    await this.fetchDuelingMatches();
                 } else {
                     throw new Error(data.error || data.message || 'Gagal menyimpan match');
                 }
             } catch (e) {
                 this.showToast(e.message, 'error');
+                alert('Pemberitahuan: ' + e.message);
             } finally {
                 match._saving = false;
+            }
+        },
+
+        get groupedDuelingMatches() {
+            const groups = {};
+            this.duelingList.forEach(m => {
+                const round = m.round_name || 'Penyisihan';
+                if (!groups[round]) {
+                    groups[round] = { name: round, order: parseInt(m.round_order) || 99, matches: [] };
+                }
+                groups[round].matches.push(m);
+            });
+            const result = Object.values(groups);
+            result.sort((a, b) => a.order - b.order);
+            return result;
+        },
+
+        get bracketCapacityInfo() {
+            const n = parseInt(this.bracketParticipantCount) || 2;
+            let p = 1;
+            while (p < n) { p *= 2; }
+            if (p < 4) p = 4;
+            const byes = p - n;
+            return {
+                capacity: p,
+                byes: byes,
+                label: `Kapasitas: ${p} bagan (${n} peserta${byes > 0 ? `, ${byes} slot BYE otomatis` : ', bagan genap'})`
+            };
+        },
+
+        isSlotWinner(match, slot) {
+            if (!match.winner_id) return false;
+            const w = String(match.winner_id).trim().toLowerCase();
+            if (slot === 1) {
+                const id1 = String(match.participant_1_id || '').trim().toLowerCase();
+                const name1 = String(match.participant_1_name || '').trim().toLowerCase();
+                return (id1 && w === id1) || (name1 && w === name1);
+            } else {
+                const id2 = String(match.participant_2_id || '').trim().toLowerCase();
+                const name2 = String(match.participant_2_name || '').trim().toLowerCase();
+                return (id2 && w === id2) || (name2 && w === name2);
+            }
+        },
+
+        setMatchWinner(match, slot) {
+            if (this.isSlotWinner(match, slot)) {
+                this.clearMatchWinner(match);
+                return;
+            }
+            if (slot === 1) {
+                const name = (match.participant_1_name || '').trim();
+                if (!name || name === 'TBD') {
+                    alert('Nama Peserta 1 belum diisi');
+                    return;
+                }
+                match.winner_id = match.participant_1_id || name;
+            } else {
+                const name = (match.participant_2_name || '').trim();
+                if (!name || name === 'TBD') {
+                    alert('Nama Peserta 2 belum diisi');
+                    return;
+                }
+                match.winner_id = match.participant_2_id || name;
+            }
+            match.match_status = 'finished';
+            this.saveDuelingMatch(match);
+        },
+
+        clearMatchWinner(match) {
+            match.winner_id = '';
+            match.match_status = 'upcoming';
+            this.saveDuelingMatch(match);
+        },
+
+        onParticipantChange(match, slot) {
+            const name = (slot === 1 ? match.participant_1_name : match.participant_2_name || '').trim().toLowerCase();
+            if (!name) return;
+            const verified = (this.registrations || []).filter(r => (r.status || '').toLowerCase() === 'verified');
+            const found = verified.find(p => (p.nama || '').trim().toLowerCase() === name);
+            if (found) {
+                if (slot === 1) {
+                    match.participant_1_id = found.no_peserta || found.registration_id;
+                    if (!match.participant_1_satuan) match.participant_1_satuan = found.satuan || '';
+                } else {
+                    match.participant_2_id = found.no_peserta || found.registration_id;
+                    if (!match.participant_2_satuan) match.participant_2_satuan = found.satuan || '';
+                }
+            }
+        },
+
+        async generateTournamentBracket(size) {
+            const count = parseInt(size) || 8;
+            if (!confirm(`Buat bagan turnamen eliminasi ${count} peserta? Bagan pertandingan sebelumnya akan digantikan secara otomatis.`)) return;
+            try {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'generate_bracket', count: count, size: count, token: this.adminToken })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.showToast(data.message, 'success');
+                    await this.fetchDuelingMatches();
+                } else {
+                    throw new Error(data.message || 'Gagal membuat bagan turnamen');
+                }
+            } catch (e) {
+                this.showToast(e.message, 'error');
+                alert('Gagal membuat bagan: ' + e.message);
+            }
+        },
+
+        async resetTournamentBracket() {
+            if (!confirm('Yakin ingin mereset dan mengosongkan seluruh bagan pertandingan dueling plat?')) return;
+            try {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
+                    body: JSON.stringify({ action: 'reset_bracket', token: this.adminToken })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.showToast(data.message, 'info');
+                    await this.fetchDuelingMatches();
+                } else {
+                    throw new Error(data.message || 'Gagal mereset bagan');
+                }
+            } catch (e) {
+                this.showToast(e.message, 'error');
             }
         },
 
