@@ -55,7 +55,7 @@ export default function Prizes() {
             Hadiah Pemenang Kejuaraan
           </h2>
           <p className="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base mt-2">
-            Apresiasi dan uang pembinaan berlaku untuk masing-masing kategori lomba (Pistol Presisi 20M dan Dueling Plat).
+            Apresiasi dan uang tunai berlaku untuk masing-masing kategori lomba (Pistol Presisi 20M dan Dueling Plat).
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function Prizes() {
 
                   <div className="py-4 border-y border-neutral-100 dark:border-neutral-800/80 mb-6">
                     <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 block">
-                      Uang Pembinaan
+                      Uang Tunai
                     </span>
                     <span className="font-heading font-bold text-3xl sm:text-4xl text-brand-500">
                       {formatRupiah(tier.reward)}

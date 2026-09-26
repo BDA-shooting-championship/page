@@ -50,7 +50,7 @@ export default function Schedule() {
         {
           time: '14:30 — 16:30 WIB',
           title: 'Babak Final & Upacara Penutupan',
-          desc: 'Pengumuman pemenang, penyerahan medali, trophy, dan uang pembinaan.',
+          desc: 'Pengumuman pemenang, penyerahan medali, trophy, dan uang tunai.',
         },
       ],
     },

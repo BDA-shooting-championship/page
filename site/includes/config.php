@@ -24,6 +24,7 @@ define('EVENT_NAME', 'BDA Shooting Championship 2026');
 define('EVENT_DATE', '17-18 Oktober 2026');
 define('EVENT_LOCATION', 'Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor');
 define('REGISTRATION_FEE', 200000);
+define('REGISTRATION_FEE_BDA', 100000);
 
 // Bank
 define('BANK_NAME', 'BRI');

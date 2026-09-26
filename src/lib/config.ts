@@ -13,7 +13,8 @@ export const CONFIG = {
   SITE_URL: "https://bda-shooting-championship.sbs",
 
   // Biaya Pendaftaran
-  REGISTRATION_FEE_PER_CATEGORY: 200000, // Rp 200.000 per kategori
+  REGISTRATION_FEE_PER_CATEGORY: 200000, // Rp 200.000 per kategori (Umum)
+  REGISTRATION_FEE_BDA: 100000, // Rp 100.000 (Khusus Letting BDA 750)
   
   // Info Pembayaran
   BANK_ACCOUNT: {

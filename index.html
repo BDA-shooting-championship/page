@@ -2070,7 +2070,7 @@
           <div class="spec-footer-row">
             <div>
               <div class="fee-desc">Biaya Registrasi</div>
-              <div class="fee-num">Rp 200.000</div>
+              <div class="fee-num">Rp 100.000</div>
             </div>
             <a href="https://wa.me/6282134651503?text=Halo%20Briptu%20Zyaldi,%20saya%20ingin%20mendaftar%20Kategori%20Dueling%20Plat%20Khusus%20BDA%202026" target="_blank" rel="noopener noreferrer" class="btn btn-navy">
               Pilih Kategori Ini
@@ -2167,7 +2167,7 @@
             <div class="tl-item">
               <div class="tl-time">14:30 — 16:30 WIB</div>
               <div class="tl-event-title">Babak Final &amp; Upacara Penutupan</div>
-              <div class="tl-event-desc">Perebutan podium juara, pengumuman pemenang, penyerahan tropi, piagam, dan uang pembinaan.</div>
+              <div class="tl-event-desc">Perebutan podium juara, pengumuman pemenang, penyerahan tropi, piagam, dan uang tunai.</div>
             </div>
           </div>
         </div>
@@ -2186,7 +2186,7 @@
           <h2 class="section-heading">Hadiah Pemenang</h2>
         </div>
         <p style="font-size: 0.82rem; color: var(--text-muted); max-width: 440px;">
-          Total pembinaan dan penghargaan kejuaraan resmi BDA Shooting Championship 2026.
+          Total uang tunai dan penghargaan kejuaraan resmi BDA Shooting Championship 2026.
         </p>
       </div>
 
@@ -2335,7 +2335,7 @@
               <span>Khusus Letting Brigade Diraya Adikara 750</span>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span style="font-weight: 800; font-size: 0.88rem; color: var(--navy-900);">Rp 200.000</span>
+              <span style="font-weight: 800; font-size: 0.88rem; color: var(--navy-900);">Rp 100.000</span>
               <div class="check-custom" id="chkDuelingBda"></div>
             </div>
           </div>
@@ -2856,7 +2856,7 @@
       if (selectedCategories.dueling_bda) {
         optDuelingBda.classList.add('checked');
         chkDuelingBda.textContent = '✓';
-        total += 200000;
+        total += 100000;
       } else {
         optDuelingBda.classList.remove('checked');
         chkDuelingBda.textContent = '';
@@ -2867,12 +2867,13 @@
 
     function sendRegistrationWA() {
       let cats = [];
-      if (selectedCategories.presisi) cats.push('Pistol Presisi 20M (Umum)');
-      if (selectedCategories.dueling_umum) cats.push('Dueling Plat 15M (Umum)');
-      if (selectedCategories.dueling_bda) cats.push('Dueling Plat 15M (Khusus BDA)');
+      let total = 0;
+      if (selectedCategories.presisi) { cats.push('Pistol Presisi 20M (Umum)'); total += 200000; }
+      if (selectedCategories.dueling_umum) { cats.push('Dueling Plat 15M (Umum)'); total += 200000; }
+      if (selectedCategories.dueling_bda) { cats.push('Dueling Plat 15M (Khusus BDA)'); total += 100000; }
       
-      const total = (cats.length * 200000).toLocaleString('id-ID');
-      const msg = `Halo Panitia BDA Shooting Championship 2026, saya ingin mendaftar kejuaraan pada kategori: ${cats.join(' & ')} (Total Biaya: Rp ${total}). Mohon informasi konfirmasi registrasi.`;
+      const totalStr = total.toLocaleString('id-ID');
+      const msg = `Halo Panitia BDA Shooting Championship 2026, saya ingin mendaftar kejuaraan pada kategori: ${cats.join(' & ')} (Total Biaya: Rp ${totalStr}). Mohon informasi konfirmasi registrasi.`;
       
       window.open(`https://wa.me/6285775015786?text=${encodeURIComponent(msg)}`, '_blank');
     }

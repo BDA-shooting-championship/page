@@ -255,7 +255,7 @@ require_once __DIR__ . '/includes/header.php';
                                     <h4 class="font-display font-semibold text-base text-gray-900">Dueling Plat 15M</h4>
                                     <p class="text-xs text-gray-500 mt-1">Bagan khusus letting BDA Korbrimob Polri</p>
                                 </div>
-                                <span class="inline-block mt-3 text-xs font-bold text-copper-600">Rp 200.000</span>
+                                <span class="inline-block mt-3 text-xs font-bold text-amber-600">Rp 100.000</span>
                             </div>
                         </div>
 
@@ -378,7 +378,9 @@ function registrationForm() {
         successData: null,
 
         get totalBiaya() {
-            return this.selectedKategori.length * 200000;
+            return this.selectedKategori.reduce((sum, kat) => {
+                return sum + (kat.toLowerCase().includes('bda') ? 100000 : 200000);
+            }, 0);
         },
 
         toggleKategori(kat) {

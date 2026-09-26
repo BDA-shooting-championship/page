@@ -203,7 +203,7 @@ require_once __DIR__ . '/includes/header.php';
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Tentang Kejuaraan</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Kejuaraan Menembak BDA 750</h2>
             <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed">
-                Diselenggarakan oleh Brigade Diraya Adikara (BDA) 750 dalam rangka mempererat silaturahmi, sportivitas, dan mengasah ketangkasan menembak bagi anggota Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.
+                Diselenggarakan oleh Brigade Diraya Adikara (BDA) 750 dalam rangka mempererat silaturahmi, sportivitas, dan mengasah ketangkasan menembak bagi anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.
             </p>
         </div>
 
@@ -222,9 +222,9 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
                     <i data-lucide="trophy" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Hadiah Pembinaan</h3>
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Hadiah Uang Tunai</h3>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">
-                    Uang pembinaan Juara I, II, dan III per kategori + Tropi + Sertifikat penghargaan resmi.
+                    Uang tunai Juara I, II, dan III per kategori + Tropi + Sertifikat penghargaan resmi.
                 </p>
             </div>
 
@@ -234,7 +234,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
                 <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Peserta Kejuaraan</h3>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">
-                    Terbuka untuk anggota Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.
+                    Terbuka untuk anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.
                 </p>
             </div>
         </div>
@@ -385,7 +385,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div class="flex items-center justify-between py-2.5 px-3 rounded-xl bg-amber-100/70 border border-amber-300">
                             <span class="text-amber-900 font-bold">Biaya Pendaftaran</span>
-                            <span class="font-extrabold text-sm text-copper-700">Rp 200.000</span>
+                            <span class="font-extrabold text-sm text-copper-700">Rp 100.000</span>
                         </div>
                     </div>
                 </div>
@@ -404,7 +404,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="text-center mb-8">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Penghargaan Resmi</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Hadiah Pemenang</h2>
-            <p class="text-xs text-gray-500 mt-1 max-w-xl mx-auto">Diberikan kepada penembak terbaik berupa Uang Pembinaan + Tropi + Piagam Resmi</p>
+            <p class="text-xs text-gray-500 mt-1 max-w-xl mx-auto">Diberikan kepada penembak terbaik berupa Uang Tunai + Tropi + Piagam Resmi</p>
         </div>
 
         <div class="space-y-10 max-w-6xl mx-auto">
@@ -690,7 +690,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 1 ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open === 1" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1.5 border-t border-gray-100 pt-2.5">
-                    <p>&bull; Terbuka untuk seluruh personel Brimob Resimen I Pasukan Pelopor dan Letting BDA 750 se-Korbrimob Polri.</p>
+                    <p>&bull; Terbuka untuk seluruh anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.</p>
                     <p>&bull; Wajib mengunggah <strong>Foto KTA (Kartu Tanda Anggota) Polri</strong> yang masih berlaku pada saat pendaftaran online.</p>
                     <p>&bull; Mengisi data resmi dengan mencantumkan <strong>Nomor Registrasi Pokok (NRP)</strong> dan Kesatuan/Club.</p>
                     <p>&bull; Menyelesaikan administrasi biaya pendaftaran resmi sesuai kategori yang diikuti.</p>
@@ -743,7 +743,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 5 ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open === 5" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1.5 border-t border-gray-100 pt-2.5">
-                    <p>&bull; Biaya: <strong>Rp 200.000 per kategori/kelas</strong> (Mengikuti 2 kategori: Rp 400.000).</p>
+                    <p>&bull; Biaya: <strong>Rp 200.000 per kategori (Umum POLRI)</strong> dan <strong>Rp 100.000 (Khusus Letting BDA 750)</strong>.</p>
                     <p>&bull; Transfer ke rekening resmi: <strong>Bank BRI 0538 0107 2120 508</strong> a.n. <strong>Ruly Ardana Putra</strong>.</p>
                     <p>&bull; Lampirkan bukti transfer saat pengisian formulir pendaftaran online.</p>
                 </div>
