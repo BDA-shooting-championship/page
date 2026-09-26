@@ -2,9 +2,12 @@
 /**
  * BDA Shooting Championship 2026 — Scores Presisi 20M API
  * Ring-Based Scoring: X | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | jumlah_masuk | nilai
- * X is tiebreaker only, NOT in jumlah_masuk or nilai.
+ * Sesuai aturan panitia:
+ * Peluru ring 10 diinput terpisah, X bernilai 0.1 poin tambahan (total 10.1).
+ * X tidak dimasukkan ke dalam hitungan jumlah_masuk.
  */
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 cors();
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -13,11 +16,6 @@ if ($method === 'GET') {
     requireAdmin();
 
     $db = getDB();
-
-    // Auto-migrate nilai to DECIMAL(6,1) if needed
-    try {
-        $db->exec("ALTER TABLE scores_presisi MODIFY COLUMN nilai DECIMAL(6,1) NOT NULL DEFAULT 0.0");
-    } catch (Exception $e) {}
 
     // Auto-populate verified Presisi participants who are not in scores_presisi yet
     try {
@@ -29,7 +27,9 @@ if ($method === 'GET') {
               AND (LOWER(r.kategori) LIKE '%presisi%' OR LOWER(r.kategori) LIKE '%keduanya%')
               AND r.registration_id NOT IN (SELECT registration_id FROM scores_presisi)
         ");
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+        error_log('Auto-populate scores_presisi note: ' . $e->getMessage());
+    }
 
     try {
         $stmt = $db->query('
@@ -60,7 +60,8 @@ if ($method === 'GET') {
         ]);
 
     } catch (PDOException $e) {
-        jsonResponse(['success' => false, 'message' => 'Gagal mengambil data skor: ' . $e->getMessage()], 500);
+        error_log('Gagal mengambil data skor presisi: ' . $e->getMessage());
+        jsonResponse(['success' => false, 'message' => 'Terjadi kesalahan sistem saat mengambil data skor.'], 500);
     }
 
 } elseif ($method === 'POST') {
@@ -79,11 +80,6 @@ if ($method === 'GET') {
     }
 
     $db = getDB();
-
-    // Auto-migrate nilai to DECIMAL(6,1) if needed
-    try {
-        $db->exec("ALTER TABLE scores_presisi MODIFY COLUMN nilai DECIMAL(6,1) NOT NULL DEFAULT 0.0");
-    } catch (Exception $e) {}
 
     // Verify participant: search registrations, fallback to existing scores_presisi, fallback to input
     $stmt = $db->prepare('SELECT registration_id, no_peserta, nama, satuan FROM registrations WHERE registration_id = ?');
@@ -123,7 +119,7 @@ if ($method === 'GET') {
         $nilaiRing += ($r * $val);
     }
 
-    // Nilai X merupakan nilai 0,1. Nilai X tidak menambah jumlah_masuk.
+    // Nilai X merupakan nilai 0,1. Nilai X tidak menambah jumlah_masuk (sesuai instruksi panitia).
     $nilai = round($nilaiRing + ($ringX * 0.1), 1);
 
     try {
@@ -188,7 +184,8 @@ if ($method === 'GET') {
         ]);
 
     } catch (PDOException $e) {
-        jsonResponse(['success' => false, 'message' => 'Gagal menyimpan skor: ' . $e->getMessage()], 500);
+        error_log('Gagal menyimpan skor presisi: ' . $e->getMessage());
+        jsonResponse(['success' => false, 'message' => 'Terjadi kesalahan sistem saat menyimpan skor.'], 500);
     }
 
 } else {

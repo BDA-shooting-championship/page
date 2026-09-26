@@ -59,14 +59,14 @@ require_once __DIR__ . '/includes/header.php';
                     :class="activeTab === 'presisi' ? 'border-copper-600 text-copper-600 border-b-2' : 'border-transparent text-gray-500 hover:text-gray-700'"
                     class="py-3 px-4 font-display text-lg font-bold transition flex items-center gap-2">
                 <i data-lucide="crosshair" class="w-5 h-5"></i>
-                Pistol Presisi 20M
+                Pistol Presisi 20M (Umum POLRI)
                 <span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-sans" x-text="presisiScores.length"></span>
             </button>
             <button @click="activeTab = 'dueling'" 
                     :class="activeTab === 'dueling' ? 'border-copper-600 text-copper-600 border-b-2' : 'border-transparent text-gray-500 hover:text-gray-700'"
                     class="py-3 px-4 font-display text-lg font-bold transition flex items-center gap-2">
                 <i data-lucide="swords" class="w-5 h-5"></i>
-                Dueling Plat
+                Dueling Plat 15M
                 <span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-sans" x-text="duelingMatches.length"></span>
             </button>
         </div>
@@ -91,7 +91,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <th class="py-3.5 px-3 text-center w-14">Rank</th>
                                 <th class="py-3.5 px-3">No. Peserta</th>
                                 <th class="py-3.5 px-4">Nama Lengkap</th>
-                                <th class="py-3.5 px-3">Satuan / Club</th>
+                                <th class="py-3.5 px-3">Kesatuan / Club</th>
                                 <th class="py-3.5 px-2 text-center text-amber-700 bg-amber-50 font-extrabold" title="Inner X (Tiebreaker)">X</th>
                                 <th class="py-3.5 px-2 text-center text-gray-700">10</th>
                                 <th class="py-3.5 px-2 text-center text-gray-700">9</th>
@@ -180,9 +180,34 @@ require_once __DIR__ . '/includes/header.php';
             <!-- Rules Banner -->
             <div class="mb-6 p-4 rounded-xl bg-copper-50 border border-copper-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <span class="text-copper-800">
-                    <strong>Sistem Eliminasi (Gugur):</strong> Pertandingan head-to-head 5 plat + 1 popper. Pemenang setiap duel berhak melaju ke babak berikutnya hingga Babak Final.
+                    <strong>Sistem Eliminasi (Gugur):</strong> Pertandingan head-to-head 5 plat + 1 popper (jarak 15M). Amunisi 10 butir (5 plat + 1 popper + 4 cadangan). Pemenang setiap duel berhak melaju ke babak berikutnya hingga Babak Final.
                 </span>
                 <span class="text-gray-500 shrink-0" x-text="'Terakhir diperbarui: ' + lastUpdated"></span>
+            </div>
+
+            <!-- Dueling Category Selector Pills -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6 p-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-bold text-gray-700 mr-1">Kelas Dueling:</span>
+                    <button type="button" @click="duelingCategory = 'umum'"
+                            :class="duelingCategory === 'umum' ? 'bg-copper-600 text-white shadow-md font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium'"
+                            class="px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                        <span>Kelas Umum POLRI (15M)</span>
+                        <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full" :class="duelingCategory === 'umum' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="duelingMatches.filter(m => (m.category || 'umum') === 'umum').length"></span>
+                    </button>
+                    <button type="button" @click="duelingCategory = 'bda'"
+                            :class="duelingCategory === 'bda' ? 'bg-copper-600 text-white shadow-md font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium'"
+                            class="px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer">
+                        <i data-lucide="award" class="w-4 h-4"></i>
+                        <span>Khusus BDA Korbrimob POLRI (15M)</span>
+                        <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full" :class="duelingCategory === 'bda' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="duelingMatches.filter(m => m.category === 'bda').length"></span>
+                    </button>
+                </div>
+                <div class="text-xs text-gray-500 italic">
+                    <span x-show="duelingCategory === 'umum'">Bagan Eliminasi Kelas Umum POLRI</span>
+                    <span x-show="duelingCategory === 'bda'">Bagan Eliminasi Khusus Anggota BDA Korbrimob</span>
+                </div>
             </div>
 
             <!-- View Mode Switcher -->
@@ -210,11 +235,32 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
+            <!-- Round Quick Navigator Bar -->
+            <div x-show="groupedDuelingMatches.length > 0" class="flex flex-wrap items-center gap-1.5 mb-4 p-2 bg-white rounded-xl border border-gray-200 shadow-sm text-xs">
+                <span class="text-gray-500 font-semibold px-2 flex items-center gap-1">
+                    <i data-lucide="layers" class="w-3.5 h-3.5 text-copper-600"></i>
+                    <span>Fokus Babak:</span>
+                </span>
+                <button type="button" @click="activeDuelingRound = 'all'"
+                        :class="activeDuelingRound === 'all' ? 'bg-copper-600 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                        class="px-2.5 py-1 rounded-lg transition cursor-pointer">
+                    Semua Babak
+                </button>
+                <template x-for="r in groupedDuelingMatches" :key="r.name">
+                    <button type="button" @click="activeDuelingRound = r.name"
+                            :class="activeDuelingRound === r.name ? 'bg-copper-600 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            class="px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1">
+                        <span x-text="r.name"></span>
+                        <span class="text-[10px] opacity-75 font-mono" x-text="'(' + r.matches.length + ')'"></span>
+                    </button>
+                </template>
+            </div>
+
             <!-- ================= VIEW 1: TOURNAMENT BRACKET TREE ================= -->
             <div x-show="duelingViewMode === 'bracket' && groupedDuelingMatches.length > 0" class="overflow-x-auto pb-6">
                 <div class="w-max min-w-full flex items-stretch gap-6 justify-start">
                     <template x-for="round in groupedDuelingMatches" :key="round.name">
-                        <div class="w-[280px] shrink-0 flex flex-col">
+                        <div x-show="activeDuelingRound === 'all' || activeDuelingRound === round.name" class="w-[280px] shrink-0 flex flex-col">
                             <!-- Round Header -->
                             <div class="mb-4 text-center pb-2 border-b-2 border-copper-600 bg-white rounded-t-xl pt-2 shadow-sm">
                                 <h4 class="font-display font-bold text-gray-900 text-sm tracking-wide uppercase" x-text="round.name"></h4>
@@ -294,7 +340,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- ================= VIEW 2: CARD GRID PER ROUND ================= -->
             <div x-show="duelingViewMode === 'list'">
                 <template x-for="round in groupedDuelingMatches" :key="round.name">
-                    <div class="mb-8">
+                    <div x-show="activeDuelingRound === 'all' || activeDuelingRound === round.name" class="mb-8">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="w-2.5 h-6 rounded bg-copper-600"></span>
                             <h3 class="font-display text-xl font-bold text-gray-900" x-text="round.name"></h3>
@@ -392,6 +438,8 @@ function liveScoreApp() {
     return {
         activeTab: 'presisi',
         duelingViewMode: 'bracket',
+        duelingCategory: 'umum',
+        activeDuelingRound: 'all',
         presisiScores: [],
         duelingMatches: [],
         isLoading: false,
@@ -402,12 +450,23 @@ function liveScoreApp() {
         initScores() {
             this.fetchScores();
             this.startAutoRefresh();
+            this.$watch('duelingCategory', () => {
+                setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 50);
+            });
+            this.$watch('duelingViewMode', () => {
+                setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 50);
+            });
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && this.autoRefresh) {
+                    this.fetchScores(false);
+                }
+            });
         },
 
         startAutoRefresh() {
             if (this.refreshTimer) clearInterval(this.refreshTimer);
             this.refreshTimer = setInterval(() => {
-                if (this.autoRefresh) {
+                if (this.autoRefresh && !document.hidden) {
                     this.fetchScores(false);
                 }
             }, 10000); // 10 detik
@@ -441,9 +500,17 @@ function liveScoreApp() {
             }
         },
 
+        get filteredDuelingMatches() {
+            const cat = this.duelingCategory;
+            return this.duelingMatches.filter(m => {
+                const mCat = m.category || 'umum';
+                return mCat === cat;
+            });
+        },
+
         get groupedDuelingMatches() {
             const groups = {};
-            this.duelingMatches.forEach(m => {
+            this.filteredDuelingMatches.forEach(m => {
                 const round = m.round_name || 'Penyisihan';
                 if (!groups[round]) {
                     groups[round] = { name: round, order: parseInt(m.round_order) || 99, matches: [] };
@@ -452,6 +519,9 @@ function liveScoreApp() {
             });
             const result = Object.values(groups);
             result.sort((a, b) => a.order - b.order);
+            result.forEach(g => {
+                g.matches.sort((a, b) => (parseInt(a.match_number) || 0) - (parseInt(b.match_number) || 0));
+            });
             return result;
         }
     }

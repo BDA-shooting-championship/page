@@ -53,10 +53,16 @@ function requireAdmin(): void {
 
 function cors(): void {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-    if (!empty($origin)) {
+    $allowedOrigins = [
+        'https://bda-shooting-championship.sbs',
+        'http://bda-shooting-championship.sbs',
+        'http://localhost',
+        'http://localhost:3000',
+        'http://127.0.0.1'
+    ];
+    if (in_array($origin, $allowedOrigins, true)) {
         header("Access-Control-Allow-Origin: $origin");
-    } else {
-        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Credentials: true');
     }
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization");

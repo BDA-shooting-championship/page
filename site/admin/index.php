@@ -192,7 +192,7 @@ include __DIR__ . '/../includes/header.php';
         <!-- Header Bar -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-gray-200">
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-white p-1 shadow-sm border border-gray-200 flex items-center justify-center shrink-0">
+                <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-sm border border-gray-200 flex items-center justify-center shrink-0">
                     <img src="/assets/logo-bda.png" alt="BDA" class="h-9 w-9 object-contain">
                 </div>
                 <div>
@@ -221,40 +221,59 @@ include __DIR__ . '/../includes/header.php';
                     </button>
 
                     <div x-show="open" x-cloak x-transition
-                         class="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 text-xs">
+                         class="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 text-xs">
                         <div class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 border-b border-gray-100">
-                            Pilih Format Unduhan Excel
+                            Format Excel (.xls)
                         </div>
-                        <a :href="'/admin/export-excel.php?scope=all&token=' + encodeURIComponent(adminToken)" target="_blank"
+                        <a href="/admin/export-excel.php?scope=all" target="_blank"
                            class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-copper-50 hover:text-copper-700 transition">
                             <i data-lucide="layers" class="w-4 h-4 text-emerald-600"></i>
                             <div>
-                                <p class="font-bold">Seluruh Data (Multi-Sheet)</p>
+                                <p class="font-bold">Seluruh Data (Multi-Sheet .xls)</p>
                                 <p class="text-[10px] text-gray-400">Pendaftar, Presisi & Dueling Plat</p>
                             </div>
                         </a>
-                        <a :href="'/admin/export-excel.php?scope=peserta&token=' + encodeURIComponent(adminToken)" target="_blank"
+                        <a href="/admin/export-excel.php?scope=peserta" target="_blank"
                            class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-copper-50 hover:text-copper-700 transition">
                             <i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i>
                             <div>
-                                <p class="font-bold">Khusus Data Peserta Resmi</p>
+                                <p class="font-bold">Khusus Data Peserta Resmi (.xls)</p>
                                 <p class="text-[10px] text-gray-400">Peserta dengan No. Peserta BSC-26xxx</p>
                             </div>
                         </a>
-                        <a :href="'/admin/export-excel.php?scope=presisi&token=' + encodeURIComponent(adminToken)" target="_blank"
+                        <a href="/admin/export-excel.php?scope=presisi" target="_blank"
                            class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-copper-50 hover:text-copper-700 transition">
                             <i data-lucide="crosshair" class="w-4 h-4 text-copper-600"></i>
                             <div>
-                                <p class="font-bold">Skor Presisi 20M</p>
+                                <p class="font-bold">Skor Presisi 20M (.xls)</p>
                                 <p class="text-[10px] text-gray-400">Papan skor lengkap Seri 1–10 & X</p>
                             </div>
                         </a>
-                        <a :href="'/admin/export-excel.php?scope=dueling&token=' + encodeURIComponent(adminToken)" target="_blank"
+                        <a href="/admin/export-excel.php?scope=dueling" target="_blank"
                            class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-copper-50 hover:text-copper-700 transition">
                             <i data-lucide="swords" class="w-4 h-4 text-purple-600"></i>
                             <div>
-                                <p class="font-bold">Bagan Dueling Plat</p>
+                                <p class="font-bold">Bagan Dueling Plat (.xls)</p>
                                 <p class="text-[10px] text-gray-400">Hasil pertandingan & eliminasi</p>
+                            </div>
+                        </a>
+                        <div class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 border-t border-b border-gray-100 mt-1">
+                            Format CSV (.csv Universal)
+                        </div>
+                        <a href="/admin/export-excel.php?scope=peserta&format=csv" target="_blank"
+                           class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-emerald-50 hover:text-emerald-700 transition">
+                            <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i>
+                            <div>
+                                <p class="font-bold">Export CSV Peserta (.csv)</p>
+                                <p class="text-[10px] text-gray-400">Kompatibel semua versi Excel & HP</p>
+                            </div>
+                        </a>
+                        <a href="/admin/export-excel.php?scope=presisi&format=csv" target="_blank"
+                           class="flex items-center gap-2 px-3 py-2 text-gray-800 hover:bg-emerald-50 hover:text-emerald-700 transition">
+                            <i data-lucide="file-text" class="w-4 h-4 text-copper-600"></i>
+                            <div>
+                                <p class="font-bold">Export CSV Skor Presisi (.csv)</p>
+                                <p class="text-[10px] text-gray-400">Data teks mentah skor presisi</p>
                             </div>
                         </a>
                     </div>
@@ -437,13 +456,45 @@ include __DIR__ . '/../includes/header.php';
                         <span>Refresh</span>
                     </button>
                     <a
-                        :href="'/admin/export-excel.php?scope=antrean&token=' + encodeURIComponent(adminToken)"
+                        href="/admin/export-excel.php?scope=antrean"
                         target="_blank"
                         class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold rounded-xl transition"
                     >
                         <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
                         <span>Excel Antrean</span>
                     </a>
+                </div>
+
+                <!-- Category Filter Badges -->
+                <div class="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                    <span class="text-xs font-bold text-gray-500 mr-1 flex items-center gap-1">
+                        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                        <span>Filter Kategori:</span>
+                    </span>
+                    <button type="button" @click="antreanCategoryFilter = 'all'; filterRegistrations()"
+                            :class="antreanCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span>Semua Kategori</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded-full" :class="antreanCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="registrations.length"></span>
+                    </button>
+                    <button type="button" @click="antreanCategoryFilter = 'presisi'; filterRegistrations()"
+                            :class="antreanCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                        <span>Presisi 20M (Umum)</span>
+                    </button>
+                    <button type="button" @click="antreanCategoryFilter = 'dueling_umum'; filterRegistrations()"
+                            :class="antreanCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span>Dueling Plat (Umum)</span>
+                    </button>
+                    <button type="button" @click="antreanCategoryFilter = 'dueling_bda'; filterRegistrations()"
+                            :class="antreanCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span>Dueling Plat (Khusus BDA)</span>
+                    </button>
                 </div>
             </div>
 
@@ -457,11 +508,11 @@ include __DIR__ . '/../includes/header.php';
                                 <th class="py-3 px-3">ID Registrasi</th>
                                 <th class="py-3 px-3">Nama Lengkap</th>
                                 <th class="py-3 px-3 hidden md:table-cell">Pangkat / NRP</th>
-                                <th class="py-3 px-3 hidden lg:table-cell">Satuan</th>
+                                <th class="py-3 px-3 hidden lg:table-cell">Kesatuan / Club</th>
                                 <th class="py-3 px-3 hidden lg:table-cell">Kategori</th>
                                 <th class="py-3 px-3 text-center">Status</th>
                                 <th class="py-3 px-3 hidden xl:table-cell">Waktu Daftar</th>
-                                <th class="py-3 px-3 text-center w-28">Aksi</th>
+                                <th class="py-3 px-3 text-center w-36">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -503,14 +554,25 @@ include __DIR__ . '/../includes/header.php';
                                     </td>
                                     <td class="py-3 px-3 text-gray-500 text-xs hidden xl:table-cell" x-text="formatDate(reg.created_at)"></td>
                                     <td class="py-3 px-3 text-center">
-                                        <button
-                                            type="button"
-                                            @click.stop="openDetail(reg)"
-                                            class="px-3 py-1.5 bg-copper-50 hover:bg-copper-100 text-copper-700 font-bold rounded-lg transition text-xs inline-flex items-center gap-1 border border-copper-200 shadow-sm"
-                                        >
-                                            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                            <span>Rincian</span>
-                                        </button>
+                                        <div class="flex items-center justify-center gap-1.5" @click.stop>
+                                            <button
+                                                type="button"
+                                                @click.stop="openDetail(reg)"
+                                                class="px-2.5 py-1.5 bg-copper-50 hover:bg-copper-100 text-copper-700 font-bold rounded-lg transition text-xs inline-flex items-center gap-1 border border-copper-200 shadow-sm cursor-pointer"
+                                                title="Lihat Rincian & Konfirmasi"
+                                            >
+                                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                                <span class="hidden sm:inline">Rincian</span>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                @click.stop="deletePeserta(reg)"
+                                                class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition text-xs cursor-pointer shadow-sm"
+                                                title="Hapus Data Pendaftar"
+                                            >
+                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             </template>
@@ -566,7 +628,7 @@ include __DIR__ . '/../includes/header.php';
 
                     <!-- Export Excel Peserta -->
                     <a
-                        :href="'/admin/export-excel.php?scope=peserta&token=' + encodeURIComponent(adminToken)"
+                        href="/admin/export-excel.php?scope=peserta"
                         target="_blank"
                         class="px-4 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-sm"
                     >
@@ -576,28 +638,50 @@ include __DIR__ . '/../includes/header.php';
                 </div>
             </div>
 
-            <!-- Peserta Search & Category Filter -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-4 mb-6 shadow-sm flex flex-col sm:flex-row gap-3">
-                <div class="relative flex-1">
+            <!-- Peserta Search & Category Filter Badges -->
+            <div class="bg-white rounded-2xl border border-gray-200 p-4 mb-6 shadow-sm">
+                <div class="relative w-full">
                     <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     <input
                         type="text"
                         x-model="pesertaSearch"
                         @input.debounce.300ms="filterPeserta()"
-                        placeholder="Cari nama, No. Peserta BSC-26xxx, NRP, Satuan..."
+                        placeholder="Cari nama, No. Peserta BSC-26xxx, NRP, Kesatuan / Club..."
                         class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50 text-gray-900 text-xs sm:text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition"
                     >
                 </div>
-                <select
-                    x-model="pesertaCategoryFilter"
-                    @change="filterPeserta()"
-                    class="px-3.5 py-2.5 border border-gray-300 rounded-xl bg-gray-50 text-gray-900 text-xs sm:text-sm font-medium focus:bg-white focus:ring-2 focus:ring-copper-500 transition"
-                >
-                    <option value="all">Semua Kategori</option>
-                    <option value="presisi">Pistol Presisi 20M</option>
-                    <option value="dueling">Dueling Plat</option>
-                    <option value="keduanya">Presisi & Dueling Plat</option>
-                </select>
+                
+                <!-- Category Filter Badges for Peserta -->
+                <div class="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-gray-100">
+                    <span class="text-xs font-bold text-gray-500 mr-1 flex items-center gap-1">
+                        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                        <span>Filter Kategori:</span>
+                    </span>
+                    <button type="button" @click="pesertaCategoryFilter = 'all'; filterPeserta()"
+                            :class="pesertaCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span>Semua Peserta</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded-full" :class="pesertaCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="registrations.filter(r => (r.status||'').toLowerCase() === 'verified').length"></span>
+                    </button>
+                    <button type="button" @click="pesertaCategoryFilter = 'presisi'; filterPeserta()"
+                            :class="pesertaCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                        <span>Presisi 20M (Umum)</span>
+                    </button>
+                    <button type="button" @click="pesertaCategoryFilter = 'dueling_umum'; filterPeserta()"
+                            :class="pesertaCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span>Dueling Plat (Umum)</span>
+                    </button>
+                    <button type="button" @click="pesertaCategoryFilter = 'dueling_bda'; filterPeserta()"
+                            :class="pesertaCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
+                            class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span>Dueling Plat (Khusus BDA)</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Peserta Table -->
@@ -609,7 +693,7 @@ include __DIR__ . '/../includes/header.php';
                                 <th class="py-3 px-3 w-12 text-center">No</th>
                                 <th class="py-3 px-3">No. Peserta</th>
                                 <th class="py-3 px-3">Nama & Pangkat</th>
-                                <th class="py-3 px-3 hidden md:table-cell">NRP / Satuan</th>
+                                <th class="py-3 px-3 hidden md:table-cell">NRP / Kesatuan / Club</th>
                                 <th class="py-3 px-3">Kategori</th>
                                 <th class="py-3 px-3 hidden lg:table-cell">Kontak</th>
                                 <th class="py-3 px-3 text-center">Status</th>
@@ -742,7 +826,7 @@ include __DIR__ . '/../includes/header.php';
 
                 <div class="flex items-center flex-wrap gap-2.5">
                     <a
-                        :href="'/admin/export-excel.php?scope=scores&token=' + encodeURIComponent(adminToken)"
+                        href="/admin/export-excel.php?scope=scores"
                         target="_blank"
                         class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
                     >
@@ -839,6 +923,7 @@ include __DIR__ . '/../includes/header.php';
                                                 type="number"
                                                 min="0"
                                                 max="10"
+                                                :aria-label="'Ring X ' + item.nama"
                                                 x-model.number="item.ring_x"
                                                 @input="calculateNilai(item); item._saved = false;"
                                                 class="w-9 text-center py-1 rounded bg-amber-50 border border-amber-300 text-xs font-mono font-bold text-amber-800 focus:ring-1 focus:ring-amber-500 focus:outline-none"
@@ -847,43 +932,43 @@ include __DIR__ . '/../includes/header.php';
 
                                         <!-- Ring 10 down to 1 Inputs (Static & Robust) -->
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_10" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 10 ' + item.nama" x-model.number="item.ring_10" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_9" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 9 ' + item.nama" x-model.number="item.ring_9" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_8" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 8 ' + item.nama" x-model.number="item.ring_8" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_7" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 7 ' + item.nama" x-model.number="item.ring_7" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_6" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 6 ' + item.nama" x-model.number="item.ring_6" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_5" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 5 ' + item.nama" x-model.number="item.ring_5" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_4" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 4 ' + item.nama" x-model.number="item.ring_4" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_3" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 3 ' + item.nama" x-model.number="item.ring_3" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_2" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 2 ' + item.nama" x-model.number="item.ring_2" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
                                         <td class="py-2 px-1 text-center">
-                                            <input type="number" min="0" max="10" x-model.number="item.ring_1" @input="calculateNilai(item); item._saved = false;"
+                                            <input type="number" min="0" max="10" :aria-label="'Ring 1 ' + item.nama" x-model.number="item.ring_1" @input="calculateNilai(item); item._saved = false;"
                                                    class="w-9 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500 focus:outline-none">
                                         </td>
 
@@ -934,15 +1019,43 @@ include __DIR__ . '/../includes/header.php';
             <!-- ===== SUBTAB 2: DUELING PLAT ===== -->
             <div x-show="scoresSubTab === 'dueling'" x-transition>
                 
+                <!-- Dueling Category Selector Pills -->
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4 p-3 rounded-2xl bg-white border border-copper-200 shadow-sm">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-bold text-gray-700 mr-1 flex items-center gap-1">
+                            <i data-lucide="tag" class="w-3.5 h-3.5 text-copper-600"></i>
+                            <span>Pilih Kelas Dueling:</span>
+                        </span>
+                        <button type="button" @click="duelingCategory = 'umum'"
+                                :class="duelingCategory === 'umum' ? 'bg-copper-600 text-white shadow-md font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium'"
+                                class="px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer">
+                            <i data-lucide="shield" class="w-4 h-4"></i>
+                            <span>Kelas Umum POLRI (15M)</span>
+                            <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full" :class="duelingCategory === 'umum' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="duelingList.filter(m => (m.category || 'umum') === 'umum').length"></span>
+                        </button>
+                        <button type="button" @click="duelingCategory = 'bda'"
+                                :class="duelingCategory === 'bda' ? 'bg-copper-600 text-white shadow-md font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium'"
+                                class="px-4 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            <span>Khusus BDA Korbrimob POLRI (15M)</span>
+                            <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full" :class="duelingCategory === 'bda' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="duelingList.filter(m => m.category === 'bda').length"></span>
+                        </button>
+                    </div>
+                    <div class="text-xs font-semibold" :class="duelingCategory === 'umum' ? 'text-blue-700' : 'text-amber-700'">
+                        <span x-show="duelingCategory === 'umum'">Bagan &amp; Pertandingan Kelas Umum POLRI</span>
+                        <span x-show="duelingCategory === 'bda'">Bagan &amp; Pertandingan Khusus BDA Korbrimob POLRI</span>
+                    </div>
+                </div>
+
                 <!-- Tournament Bracket Maker Toolbar -->
                 <div class="bg-gradient-to-r from-copper-50 via-white to-amber-50 rounded-2xl shadow-sm p-5 border border-copper-200 mb-6">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-copper-600 text-white uppercase tracking-wider">Tournament Bracket Maker</span>
-                                <span class="text-xs text-gray-500 font-semibold" x-text="duelingList.length + ' Match Terdaftar'"></span>
+                                <span class="text-xs text-gray-500 font-semibold" x-text="filteredDuelingList.length + ' Match Terdaftar'"></span>
                             </div>
-                            <h3 class="font-display text-lg font-bold text-gray-900 mt-1">Bagan Turnamen Eliminasi Dueling Plat</h3>
+                            <h3 class="font-display text-lg font-bold text-gray-900 mt-1" x-text="'Bagan Turnamen Eliminasi Dueling Plat (' + (duelingCategory === 'bda' ? 'Khusus BDA Korbrimob' : 'Kelas Umum POLRI') + ')'"></h3>
                             <p class="text-xs text-gray-600 mt-0.5">
                                 Input peserta &amp; tentukan pemenang <strong>langsung pada kotak bagan visual</strong>. Klik tombol 👑 <strong>Menang</strong> untuk langsung menaikkan pemenang ke babak berikutnya!
                             </p>
@@ -957,11 +1070,11 @@ include __DIR__ . '/../includes/header.php';
                                 <div class="flex flex-wrap items-center gap-1 border-l border-gray-200 pl-2">
                                     <button type="button" @click="bracketParticipantCount = 8" :class="bracketParticipantCount === 8 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">8</button>
                                     <button type="button" @click="bracketParticipantCount = 16" :class="bracketParticipantCount === 16 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">16</button>
+                                    <button type="button" @click="bracketParticipantCount = 24" :class="bracketParticipantCount === 24 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 24 peserta (8 Pra-Eliminasi + 16 Besar)">24</button>
                                     <button type="button" @click="bracketParticipantCount = 32" :class="bracketParticipantCount === 32 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">32</button>
-                                    <button type="button" @click="bracketParticipantCount = 55" :class="bracketParticipantCount === 55 ? 'bg-amber-600 text-white font-bold' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'" class="px-1.5 py-0.5 rounded text-[11px] transition font-semibold" title="Preset 55 peserta (Kapasitas 64, 9 BYE)">55</button>
+                                    <button type="button" @click="bracketParticipantCount = 55" :class="bracketParticipantCount === 55 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 55 peserta (23 Pra-Eliminasi + 32 Besar)">55</button>
                                     <button type="button" @click="bracketParticipantCount = 64" :class="bracketParticipantCount === 64 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">64</button>
-                                    <button type="button" @click="bracketParticipantCount = 67" :class="bracketParticipantCount === 67 ? 'bg-amber-600 text-white font-bold' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'" class="px-1.5 py-0.5 rounded text-[11px] transition font-semibold" title="Preset 67 peserta (Kapasitas 128, 61 BYE)">67</button>
-                                    <button type="button" @click="bracketParticipantCount = 128" :class="bracketParticipantCount === 128 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">128</button>
+                                    <button type="button" @click="bracketParticipantCount = 67" :class="bracketParticipantCount === 67 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 67 peserta (3 Pra-Eliminasi + 64 Besar)">67</button>
                                 </div>
                             </div>
 
@@ -1007,7 +1120,7 @@ include __DIR__ . '/../includes/header.php';
                         </div>
                         <div class="text-[11px] text-gray-500 flex items-center gap-2">
                             <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                            <span>Normalisasi otomatis ganjil dengan BYE (Lolos Otomatis). Tanpa aturan waktu (hanya pemenang duel).</span>
+                            <span>Sistem eliminasi gugur adaptif: babak pra-eliminasi otomatis untuk peserta ganjil/non-pangkat 2 tanpa kartu dummy.</span>
                         </div>
                     </div>
                 </div>
@@ -1019,11 +1132,32 @@ include __DIR__ . '/../includes/header.php';
                     </template>
                 </datalist>
 
+                <!-- Round Quick Navigator Bar -->
+                <div x-show="groupedDuelingMatches.length > 0" class="flex flex-wrap items-center gap-1.5 mb-4 p-2 bg-white rounded-xl border border-gray-200 shadow-sm text-xs">
+                    <span class="text-gray-500 font-semibold px-2 flex items-center gap-1">
+                        <i data-lucide="layers" class="w-3.5 h-3.5 text-copper-600"></i>
+                        <span>Fokus Babak:</span>
+                    </span>
+                    <button type="button" @click="activeDuelingRound = 'all'"
+                            :class="activeDuelingRound === 'all' ? 'bg-copper-600 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            class="px-2.5 py-1 rounded-lg transition cursor-pointer">
+                        Semua Babak
+                    </button>
+                    <template x-for="r in groupedDuelingMatches" :key="r.name">
+                        <button type="button" @click="activeDuelingRound = r.name"
+                                :class="activeDuelingRound === r.name ? 'bg-copper-600 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                                class="px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1">
+                            <span x-text="r.name"></span>
+                            <span class="text-[10px] opacity-75 font-mono" x-text="'(' + r.matches.length + ')'"></span>
+                        </button>
+                    </template>
+                </div>
+
                 <!-- ================= VIEW 1: INTERACTIVE VISUAL TOURNAMENT TREE BRACKET ================= -->
                 <div x-show="duelingAdminView === 'bracket' && groupedDuelingMatches.length > 0" class="overflow-x-auto pb-6">
                     <div class="w-max min-w-full flex items-stretch gap-6 justify-start">
                         <template x-for="round in groupedDuelingMatches" :key="round.name">
-                            <div class="w-[310px] shrink-0 flex flex-col">
+                            <div x-show="activeDuelingRound === 'all' || activeDuelingRound === round.name" class="w-[310px] shrink-0 flex flex-col">
                                 <!-- Round Header -->
                                 <div class="mb-4 text-center pb-2.5 border-b-2 border-copper-600 bg-white rounded-t-xl pt-2.5 shadow-sm">
                                     <h4 class="font-display font-bold text-gray-900 text-sm tracking-wide uppercase" x-text="round.name"></h4>
@@ -1538,6 +1672,9 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- Modal Content (Wider, Flex Column, Scrollable Body) -->
             <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Rincian Pendaftar"
                 class="relative w-full max-w-4xl lg:max-w-5xl max-h-[92vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-gray-200 z-10 overflow-hidden"
                 @click.stop
             >
@@ -1602,7 +1739,7 @@ include __DIR__ . '/../includes/header.php';
                                 <p class="font-bold text-gray-900 mt-0.5" x-text="selectedReg.pangkat || '-'"></p>
                             </div>
                             <div>
-                                <span class="text-gray-400 font-semibold block text-[11px] uppercase">NRP / NIK</span>
+                                <span class="text-gray-400 font-semibold block text-[11px] uppercase">NRP</span>
                                 <p class="font-mono font-bold text-gray-900 mt-0.5" x-text="selectedReg.nrp"></p>
                             </div>
                             <div>
@@ -1615,7 +1752,7 @@ include __DIR__ . '/../includes/header.php';
                                     <template x-for="item in formatKategoriList(selectedReg.kategori)" :key="item">
                                         <li class="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-copper-800">
                                             <span class="w-1.5 h-1.5 rounded-full shrink-0"
-                                                  :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-copper-600')"></span>
+                                                  :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('bda') ? 'bg-amber-600' : 'bg-purple-600')"></span>
                                             <span x-text="item"></span>
                                         </li>
                                     </template>
@@ -1643,7 +1780,7 @@ include __DIR__ . '/../includes/header.php';
                             <div class="flex items-center justify-between mb-3">
                                 <h4 class="font-bold text-gray-800 text-xs flex items-center gap-1.5">
                                     <i data-lucide="id-card" class="w-4 h-4 text-copper-600"></i>
-                                    Foto KTA / Identitas
+                                    Foto KTA (Kartu Tanda Anggota Polri)
                                 </h4>
                                 <template x-if="selectedReg.kta_filename">
                                     <a :href="'/uploads/kta/' + selectedReg.kta_filename" target="_blank" class="text-xs text-copper-600 font-bold hover:underline flex items-center gap-1">
@@ -1787,11 +1924,23 @@ include __DIR__ . '/../includes/header.php';
                             </button>
                         </template>
 
+                        <!-- Action Hapus Pendaftar -->
+                        <button
+                            type="button"
+                            @click="deletePeserta(selectedReg)"
+                            :disabled="updating"
+                            class="px-4 py-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-1.5 cursor-pointer"
+                            title="Hapus Data Pendaftar Secara Permanen"
+                        >
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <span>Hapus</span>
+                        </button>
+
                         <!-- Tutup -->
                         <button
                             type="button"
                             @click="closeDetailModal()"
-                            class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs sm:text-sm transition"
+                            class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs sm:text-sm transition cursor-pointer"
                         >
                             Tutup
                         </button>
@@ -1812,7 +1961,7 @@ include __DIR__ . '/../includes/header.php';
         >
             <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showEditModal = false"></div>
 
-            <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+            <div role="dialog" aria-modal="true" aria-label="Edit Detail Peserta" class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
                 <!-- Header -->
                 <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
                     <div>
@@ -1855,7 +2004,7 @@ include __DIR__ . '/../includes/header.php';
                         </div>
 
                         <div>
-                            <label class="block font-bold text-gray-700 mb-1">NRP / NIK</label>
+                            <label class="block font-bold text-gray-700 mb-1">NRP (Nomor Registrasi Pokok)</label>
                             <input type="text" x-model="editForm.nrp" required
                                    class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-mono focus:bg-white">
                         </div>
@@ -1868,10 +2017,12 @@ include __DIR__ . '/../includes/header.php';
 
                         <div>
                             <label class="block font-bold text-gray-700 mb-1">Kategori Lomba</label>
-                            <select x-model="editForm.kategori" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white">
-                                <option value="presisi">Pistol Presisi 20M</option>
-                                <option value="dueling">Dueling Plat</option>
-                                <option value="keduanya">Keduanya (Presisi & Dueling Plat)</option>
+                            <select x-model="editForm.kategori" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white text-xs">
+                                <option value="Pistol Presisi 20M (Umum POLRI)">Pistol Presisi 20M (Umum POLRI)</option>
+                                <option value="Dueling Plat 15M (Umum POLRI)">Dueling Plat 15M (Umum POLRI)</option>
+                                <option value="Dueling Plat 15M (Khusus BDA Korbrimob POLRI)">Dueling Plat 15M (Khusus BDA Korbrimob POLRI)</option>
+                                <option value="Pistol Presisi 20M (Umum POLRI), Dueling Plat 15M (Umum POLRI)">Pistol Presisi 20M (Umum) &amp; Dueling Plat 15M (Umum)</option>
+                                <option value="Pistol Presisi 20M (Umum POLRI), Dueling Plat 15M (Khusus BDA Korbrimob POLRI)">Pistol Presisi 20M (Umum) &amp; Dueling Plat 15M (Khusus BDA)</option>
                             </select>
                         </div>
 
@@ -1920,7 +2071,7 @@ include __DIR__ . '/../includes/header.php';
         >
             <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showAddModal = false"></div>
 
-            <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+            <div role="dialog" aria-modal="true" aria-label="Tambah Peserta Baru" class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
                 <!-- Header -->
                 <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
                     <div>
@@ -1948,7 +2099,7 @@ include __DIR__ . '/../includes/header.php';
                         </div>
 
                         <div>
-                            <label class="block font-bold text-gray-700 mb-1">NRP / NIK *</label>
+                            <label class="block font-bold text-gray-700 mb-1">NRP (Nomor Registrasi Pokok) *</label>
                             <input type="text" x-model="addForm.nrp" required placeholder="Contoh: 98010234"
                                    class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-mono focus:bg-white">
                         </div>
@@ -1961,10 +2112,12 @@ include __DIR__ . '/../includes/header.php';
 
                         <div>
                             <label class="block font-bold text-gray-700 mb-1">Kategori Lomba *</label>
-                            <select x-model="addForm.kategori" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white">
-                                <option value="presisi">Pistol Presisi 20M</option>
-                                <option value="dueling">Dueling Plat</option>
-                                <option value="keduanya">Keduanya (Presisi & Dueling Plat)</option>
+                            <select x-model="addForm.kategori" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-gray-50 font-semibold focus:bg-white text-xs">
+                                <option value="Pistol Presisi 20M (Umum POLRI)">Pistol Presisi 20M (Umum POLRI)</option>
+                                <option value="Dueling Plat 15M (Umum POLRI)">Dueling Plat 15M (Umum POLRI)</option>
+                                <option value="Dueling Plat 15M (Khusus BDA Korbrimob POLRI)">Dueling Plat 15M (Khusus BDA Korbrimob POLRI)</option>
+                                <option value="Pistol Presisi 20M (Umum POLRI), Dueling Plat 15M (Umum POLRI)">Pistol Presisi 20M (Umum) &amp; Dueling Plat 15M (Umum)</option>
+                                <option value="Pistol Presisi 20M (Umum POLRI), Dueling Plat 15M (Khusus BDA Korbrimob POLRI)">Pistol Presisi 20M (Umum) &amp; Dueling Plat 15M (Khusus BDA)</option>
                             </select>
                         </div>
 
@@ -2026,7 +2179,7 @@ include __DIR__ . '/../includes/header.php';
         >
             <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showAddUserModal = false"></div>
 
-            <div class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+            <div role="dialog" aria-modal="true" aria-label="Tambah Akun Admin" class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
                 <!-- Header -->
                 <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
                     <div class="flex items-center gap-2.5">
@@ -2162,7 +2315,7 @@ include __DIR__ . '/../includes/header.php';
         >
             <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" @click="showEditUserModal = false"></div>
 
-            <div class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
+            <div role="dialog" aria-modal="true" aria-label="Edit Akun Admin" class="relative w-full max-w-xl max-h-[85vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-gray-200 z-10" @click.stop>
                 <!-- Header -->
                 <div class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-3xl">
                     <div class="flex items-center gap-2.5">
@@ -2284,30 +2437,38 @@ include __DIR__ . '/../includes/header.php';
     </template>
 
 
-    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <!-- ==================== TOAST NOTIFICATION (TOP NOTIFICATION BAR) ==================== -->
     <div
         x-show="toast.show"
         x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-3"
-        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:enter-start="opacity-0 -translate-y-8 scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
         x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 translate-y-3"
-        class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-[200] max-w-sm"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 -translate-y-8 scale-95"
+        class="fixed top-5 sm:top-6 left-1/2 -translate-x-1/2 z-[300] w-full max-w-md px-4 pointer-events-none"
         x-cloak
     >
         <div
-            class="px-5 py-3.5 rounded-2xl shadow-xl font-bold text-xs sm:text-sm flex items-center gap-3 border"
+            class="pointer-events-auto px-5 py-3.5 rounded-2xl shadow-2xl font-bold text-xs sm:text-sm flex items-center gap-3 border backdrop-blur-md"
             :class="{
-                'bg-emerald-600 text-white border-emerald-500': toast.type === 'success',
-                'bg-red-600 text-white border-red-500': toast.type === 'error',
-                'bg-copper-600 text-white border-copper-500': toast.type === 'info'
+                'bg-emerald-600/95 text-white border-emerald-400 shadow-emerald-900/30': toast.type === 'success',
+                'bg-red-600/95 text-white border-red-400 shadow-red-900/30': toast.type === 'error',
+                'bg-copper-600/95 text-white border-copper-400 shadow-copper-900/30': toast.type === 'info'
             }"
         >
-            <i data-lucide="check-circle" class="w-5 h-5 flex-shrink-0" x-show="toast.type === 'success'"></i>
-            <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0" x-show="toast.type === 'error'"></i>
-            <i data-lucide="info" class="w-5 h-5 flex-shrink-0" x-show="toast.type === 'info'"></i>
-            <span x-text="toast.message"></span>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-white" x-show="toast.type === 'success'"></i>
+                <i data-lucide="alert-circle" class="w-5 h-5 text-white" x-show="toast.type === 'error'"></i>
+                <i data-lucide="info" class="w-5 h-5 flex-shrink-0 text-white" x-show="toast.type === 'info'"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <span class="block text-[10px] uppercase tracking-wider opacity-85 font-mono" x-text="toast.type === 'success' ? 'Sukses' : (toast.type === 'error' ? 'Peringatan / Error' : 'Informasi')"></span>
+                <span class="block text-xs sm:text-sm font-semibold truncate" x-text="toast.message"></span>
+            </div>
+            <button type="button" @click="toast.show = false" class="p-1 hover:bg-white/20 rounded-lg transition text-white/80 hover:text-white cursor-pointer shrink-0" title="Tutup">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
     </div>
 
@@ -2321,7 +2482,9 @@ function adminDashboard() {
         activeTab: 'antrean',
         scoresSubTab: 'presisi', // 'presisi' | 'dueling'
         duelingAdminView: 'bracket',
+        duelingCategory: 'umum', // 'umum' | 'bda'
         bracketParticipantCount: 8,
+        activeDuelingRound: 'all', // 'all' | round_name
 
         // Data arrays
         registrations: [],
@@ -2333,9 +2496,10 @@ function adminDashboard() {
         // Filter & Search states
         searchQuery: '',
         statusFilter: 'all',
+        antreanCategoryFilter: 'all', // 'all' | 'presisi' | 'dueling_umum' | 'dueling_bda'
         showVerifiedInAntrean: false,
         pesertaSearch: '',
-        pesertaCategoryFilter: 'all',
+        pesertaCategoryFilter: 'all', // 'all' | 'presisi' | 'dueling_umum' | 'dueling_bda'
 
         // Loading states
         loading: true,
@@ -2418,6 +2582,7 @@ function adminDashboard() {
 
         // Toast & Stats
         toast: { show: false, message: '', type: 'success' },
+        toastTimer: null,
         stats: { total: 0, pending: 0, verified: 0, rejected: 0 },
 
         // Injected Config
@@ -2507,6 +2672,16 @@ function adminDashboard() {
                 // Sembunyikan yang sudah dikonfirmasi (Verified) dari antrean pendaftar secara default
                 res = res.filter(r => (r.status || '').toLowerCase() !== 'verified');
             }
+            if (this.antreanCategoryFilter !== 'all') {
+                const cf = this.antreanCategoryFilter;
+                res = res.filter(r => {
+                    const k = (r.kategori || '').toLowerCase();
+                    if (cf === 'presisi') return k.includes('presisi');
+                    if (cf === 'dueling_bda') return k.includes('bda');
+                    if (cf === 'dueling_umum') return k.includes('dueling') && (k.includes('umum') || !k.includes('bda'));
+                    return true;
+                });
+            }
             if (this.searchQuery.trim()) {
                 const q = this.searchQuery.toLowerCase().trim();
                 res = res.filter(r =>
@@ -2523,7 +2698,14 @@ function adminDashboard() {
         filterPeserta() {
             let res = this.registrations.filter(r => (r.status || '').toLowerCase() === 'verified');
             if (this.pesertaCategoryFilter !== 'all') {
-                res = res.filter(r => (r.kategori || '').toLowerCase().includes(this.pesertaCategoryFilter.toLowerCase()));
+                const cf = this.pesertaCategoryFilter;
+                res = res.filter(r => {
+                    const k = (r.kategori || '').toLowerCase();
+                    if (cf === 'presisi') return k.includes('presisi');
+                    if (cf === 'dueling_bda') return k.includes('bda');
+                    if (cf === 'dueling_umum') return k.includes('dueling') && (k.includes('umum') || !k.includes('bda'));
+                    return true;
+                });
             }
             if (this.pesertaSearch.trim()) {
                 const q = this.pesertaSearch.toLowerCase().trim();
@@ -2646,14 +2828,11 @@ function adminDashboard() {
 
         // Edit Peserta Langsung
         openEditPeserta(p) {
-            let kat = (p.kategori || 'presisi').toLowerCase();
-            if (kat.includes('keduanya') || (kat.includes('presisi') && kat.includes('dueling'))) {
-                kat = 'keduanya';
-            } else if (kat.includes('presisi')) {
-                kat = 'presisi';
-            } else if (kat.includes('dueling')) {
-                kat = 'dueling';
-            }
+            let kat = p.kategori || 'Pistol Presisi 20M (Umum POLRI)';
+            const kl = String(kat).toLowerCase();
+            if (kl === 'presisi') kat = 'Pistol Presisi 20M (Umum POLRI)';
+            else if (kl === 'dueling') kat = 'Dueling Plat 15M (Umum POLRI)';
+            else if (kl === 'keduanya') kat = 'Pistol Presisi 20M (Umum POLRI), Dueling Plat 15M (Umum POLRI)';
 
             this.editForm = {
                 id: p.id,
@@ -2718,7 +2897,7 @@ function adminDashboard() {
                 satuan: '',
                 telepon: '',
                 email: '',
-                kategori: 'presisi',
+                kategori: 'Pistol Presisi 20M (Umum POLRI)',
                 status: 'Verified',
                 no_peserta: '',
                 admin_notes: ''
@@ -2776,7 +2955,10 @@ function adminDashboard() {
                 this.calculateStats();
                 this.filterRegistrations();
                 this.filterPeserta();
-                this.showToast('Peserta berhasil dihapus', 'info');
+                if (this.selectedReg && this.selectedReg.registration_id === p.registration_id) {
+                    this.closeDetailModal();
+                }
+                this.showToast('Data pendaftar ' + p.nama + ' berhasil dihapus', 'info');
             } catch (err) {
                 this.showToast(err.message, 'error');
             }
@@ -2836,8 +3018,8 @@ Pendaftaran Anda pada BDA Shooting Championship 2026 telah *DIKONFIRMASI & VERIF
 - ID Registrasi: ${reg.registration_id}
 - Nama Lengkap: ${reg.nama}
 - Pangkat: ${reg.pangkat || '-'}
-- NRP / NIK: ${reg.nrp}
-- Satuan / Club: ${reg.satuan}
+- NRP: ${reg.nrp}
+- Kesatuan / Club: ${reg.satuan}
 - Kategori Lomba: ${katText}
 - Status Registrasi: *${statusLabel}*
 
@@ -2848,11 +3030,11 @@ ${eTicketUrl}
 *CATATAN PENTING PESERTA (WAJIB DIBACA):*
 1. *Simpan pesan ini, link E-Ticket, dan QR Code* agar tidak hilang.
 2. Tunjukkan E-Ticket & QR Code ini (pada layar HP atau cetak) saat *Daftar Ulang* di lokasi kejuaraan.
-3. *Wajib membawa fisik KTA & KTP Asli* untuk verifikasi data keabsahan peserta di meja panitia.
-4. Seluruh peserta *Wajib Hadir saat Technical Meeting (TM: Kamis, 15 Oktober 2026)* sebelum rangkaian pertandingan dimulai.
+3. *Wajib membawa fisik KTA Asli* untuk verifikasi data keabsahan peserta di meja panitia.
+4. Seluruh peserta *Wajib Hadir saat Technical Meeting (Minggu, 4 Oktober 2026)* dan Uji Coba Lapangan (Kamis, 15 Oktober 2026) sebelum pertandingan.
 
 - Lokasi: Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor
-- Jadwal: 17 - 18 Oktober 2026 (TM: 15 Oktober 2026)
+- Jadwal Pertandingan: 17 - 18 Oktober 2026 (TM: 4 Oktober 2026, Uji Coba: 15 Oktober 2026)
 
 Salam Hormat,
 *Panitia Pelaksana BDA Shooting Championship 2026*`;
@@ -3175,6 +3357,7 @@ Salam Hormat,
                 participant_2_id: this.newMatch.participant_2_id || '',
                 participant_2_name: this.newMatch.participant_2_name,
                 participant_2_satuan: this.newMatch.participant_2_satuan || '',
+                category: this.duelingCategory || 'umum',
                 match_status: 'upcoming'
             };
 
@@ -3209,7 +3392,7 @@ Salam Hormat,
                 const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify({ ...match, token: this.adminToken })
+                    body: JSON.stringify({ ...match, category: match.category || this.duelingCategory || 'umum', token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -3228,9 +3411,14 @@ Salam Hormat,
             }
         },
 
+        get filteredDuelingList() {
+            const cat = this.duelingCategory || 'umum';
+            return this.duelingList.filter(m => (m.category || 'umum') === cat);
+        },
+
         get groupedDuelingMatches() {
             const groups = {};
-            this.duelingList.forEach(m => {
+            this.filteredDuelingList.forEach(m => {
                 const round = m.round_name || 'Penyisihan';
                 if (!groups[round]) {
                     groups[round] = { name: round, order: parseInt(m.round_order) || 99, matches: [] };
@@ -3239,19 +3427,35 @@ Salam Hormat,
             });
             const result = Object.values(groups);
             result.sort((a, b) => a.order - b.order);
+            result.forEach(g => {
+                g.matches.sort((a, b) => (parseInt(a.match_number) || 0) - (parseInt(b.match_number) || 0));
+            });
             return result;
         },
 
         get bracketCapacityInfo() {
             const n = parseInt(this.bracketParticipantCount) || 2;
-            let p = 1;
-            while (p < n) { p *= 2; }
-            if (p < 4) p = 4;
-            const byes = p - n;
+            const isPow2 = (n > 0) && ((n & (n - 1)) === 0);
+            let pBase = n;
+            let mPre = 0;
+            if (!isPow2) {
+                pBase = Math.pow(2, Math.floor(Math.log2(n)));
+                if (pBase < 2) pBase = 2;
+                mPre = n - pBase;
+            }
+            const directSeeds = pBase - mPre;
+            let label = '';
+            if (mPre > 0) {
+                label = `Sistem Play-In: ${n} Peserta (${mPre} partai Pra-Eliminasi, ${directSeeds} seeded langsung lolos Babak ${pBase} Besar. 0 dummy match / tanpa slot BYE kosong).`;
+            } else {
+                label = `Sistem Standar: ${n} Peserta langsung bertanding dari Babak ${pBase} Besar (Bagan genap sempurna, 0 dummy match).`;
+            }
             return {
-                capacity: p,
-                byes: byes,
-                label: `Kapasitas: ${p} bagan (${n} peserta${byes > 0 ? `, ${byes} slot BYE otomatis` : ', bagan genap'})`
+                capacity: n,
+                pBase: pBase,
+                mPre: mPre,
+                directSeeds: directSeeds,
+                label: label
             };
         },
 
@@ -3317,12 +3521,13 @@ Salam Hormat,
 
         async generateTournamentBracket(size) {
             const count = parseInt(size) || 8;
-            if (!confirm(`Buat bagan turnamen eliminasi ${count} peserta? Bagan pertandingan sebelumnya akan digantikan secara otomatis.`)) return;
+            const catName = this.duelingCategory === 'bda' ? 'Khusus BDA Korbrimob POLRI' : 'Kelas Umum POLRI';
+            if (!confirm(`Buat bagan turnamen eliminasi ${count} peserta untuk ${catName}? Bagan pertandingan ${catName} sebelumnya akan digantikan secara otomatis.`)) return;
             try {
                 const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify({ action: 'generate_bracket', count: count, size: count, token: this.adminToken })
+                    body: JSON.stringify({ action: 'generate_bracket', count: count, size: count, category: this.duelingCategory, token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -3338,12 +3543,13 @@ Salam Hormat,
         },
 
         async resetTournamentBracket() {
-            if (!confirm('Yakin ingin mereset dan mengosongkan seluruh bagan pertandingan dueling plat?')) return;
+            const catName = this.duelingCategory === 'bda' ? 'Khusus BDA Korbrimob' : 'Kelas Umum POLRI';
+            if (!confirm(`Yakin ingin mereset dan mengosongkan bagan pertandingan ${catName}?`)) return;
             try {
                 const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(this.adminToken), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': this.adminToken },
-                    body: JSON.stringify({ action: 'reset_bracket', token: this.adminToken })
+                    body: JSON.stringify({ action: 'reset_bracket', category: this.duelingCategory, token: this.adminToken })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -3382,28 +3588,22 @@ Salam Hormat,
             if (!kat) return ['-'];
             const s = String(kat).trim();
             const lower = s.toLowerCase();
-            
-            if (lower === 'keduanya' || lower.includes('keduanya')) {
-                return ['Pistol Presisi 20M', 'Dueling Plat'];
-            }
-            if (lower.includes('presisi') && lower.includes('dueling')) {
-                return ['Pistol Presisi 20M', 'Dueling Plat'];
+
+            const mapPart = (p) => {
+                const pl = p.toLowerCase();
+                if (pl.includes('bda')) return 'Dueling Plat 15M (Khusus BDA)';
+                if (pl.includes('dueling')) return 'Dueling Plat 15M (Umum)';
+                if (pl.includes('presisi')) return 'Pistol Presisi 20M (Umum)';
+                return p;
+            };
+
+            if (lower === 'keduanya') {
+                return ['Pistol Presisi 20M (Umum)', 'Dueling Plat 15M (Umum)'];
             }
             if (s.includes(',') || s.includes(';') || s.includes('+')) {
-                return s.split(/[,;+]/).map(p => p.trim()).filter(Boolean).map(p => {
-                    const pl = p.toLowerCase();
-                    if (pl.includes('presisi')) return 'Pistol Presisi 20M';
-                    if (pl.includes('dueling')) return 'Dueling Plat';
-                    return p;
-                });
+                return s.split(/[,;+]/).map(p => p.trim()).filter(Boolean).map(mapPart);
             }
-            if (lower === 'presisi' || lower.includes('presisi')) {
-                return ['Pistol Presisi 20M'];
-            }
-            if (lower === 'dueling' || lower.includes('dueling')) {
-                return ['Dueling Plat'];
-            }
-            return [s];
+            return [mapPart(s)];
         },
 
         formatDate(dateStr) {
@@ -3420,13 +3620,14 @@ Salam Hormat,
         },
 
         showToast(message, type = 'success') {
+            if (this.toastTimer) clearTimeout(this.toastTimer);
             this.toast = { show: true, message, type };
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });
-            setTimeout(() => {
+            this.toastTimer = setTimeout(() => {
                 this.toast.show = false;
-            }, 4000);
+            }, 4500);
         }
     };
 }

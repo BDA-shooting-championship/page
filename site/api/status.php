@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
 cors();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -13,9 +14,11 @@ if (!$input) {
     jsonResponse(['success' => false, 'message' => 'Invalid JSON body'], 400);
 }
 
-// Authenticate using token from Header, JSON body, or Query Param
+// Authenticate using token from Header, JSON body, Query Param, or active admin session
 $token = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $input['token'] ?? $_GET['token'] ?? '';
-if ($token !== ADMIN_TOKEN) {
+$isSessionAdmin = isAdminLoggedIn();
+
+if ($token !== ADMIN_TOKEN && !$isSessionAdmin) {
     jsonResponse(['success' => false, 'message' => 'Unauthorized'], 401);
 }
 
@@ -38,7 +41,7 @@ if (!in_array($status, $allowedStatuses)) {
 $db = getDB();
 
 // Check if registration exists
-$stmt = $db->prepare('SELECT id, status, no_peserta FROM registrations WHERE registration_id = ?');
+$stmt = $db->prepare('SELECT id, status, no_peserta, kategori, nama, satuan FROM registrations WHERE registration_id = ?');
 $stmt->execute([$registrationId]);
 $registration = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -49,21 +52,17 @@ if (!$registration) {
 try {
     $noPeserta = !empty($customNoPeserta) ? $customNoPeserta : $registration['no_peserta'];
 
-    // Auto-generate no_peserta when status is Verified and no_peserta is not yet assigned
+    // Auto-generate no_peserta atomically when status is Verified and no_peserta is not yet assigned
     if ($status === 'Verified' && empty($noPeserta)) {
-        $stmt = $db->query("SELECT no_peserta FROM registrations WHERE no_peserta LIKE 'BSC-26%'");
-        $allPeserta = $stmt ? $stmt->fetchAll(PDO::FETCH_COLUMN) : [];
-        $maxNumber = 0;
-        foreach ($allPeserta as $p) {
-            if (preg_match('/BSC-26(\d+)/i', $p, $matches)) {
-                $num = (int)$matches[1];
-                if ($num > $maxNumber) {
-                    $maxNumber = $num;
-                }
-            }
-        }
-        $nextNumber = $maxNumber + 1;
-        $noPeserta = 'BSC-26' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        $stmt = $db->query("SELECT COALESCE(MAX(CAST(SUBSTRING(no_peserta, 7) AS UNSIGNED)), 0) + 1 FROM registrations WHERE no_peserta LIKE 'BSC-26%'");
+        $nextNum = (int)$stmt->fetchColumn();
+        $noPeserta = 'BSC-26' . str_pad($nextNum, 3, '0', STR_PAD_LEFT);
+    } elseif ($status === 'Rejected') {
+        // Clear no_peserta and remove from scores_presisi if rejected
+        $noPeserta = null;
+        try {
+            $db->prepare('DELETE FROM scores_presisi WHERE registration_id = ?')->execute([$registrationId]);
+        } catch (Exception $e) {}
     }
 
     // Update the registration
@@ -73,6 +72,19 @@ try {
         WHERE registration_id = ?
     ');
     $stmt->execute([$status, $noPeserta, $notes, $registrationId]);
+
+    // If verified, ensure present in scores_presisi if presisi category
+    if ($status === 'Verified') {
+        $kategori = $registration['kategori'] ?? '';
+        if (stripos($kategori, 'presisi') !== false || stripos($kategori, 'keduanya') !== false) {
+            $chk = $db->prepare('SELECT id FROM scores_presisi WHERE registration_id = ?');
+            $chk->execute([$registrationId]);
+            if (!$chk->fetch()) {
+                $db->prepare('INSERT INTO scores_presisi (registration_id, no_peserta, nama, satuan) VALUES (?, ?, ?, ?)')
+                   ->execute([$registrationId, $noPeserta, $registration['nama'], $registration['satuan']]);
+            }
+        }
+    }
 
     jsonResponse([
         'success' => true,
@@ -86,5 +98,6 @@ try {
     ]);
 
 } catch (PDOException $e) {
-    jsonResponse(['success' => false, 'message' => 'Gagal memperbarui status: ' . $e->getMessage()], 500);
+    error_log('Gagal memperbarui status: ' . $e->getMessage());
+    jsonResponse(['success' => false, 'message' => 'Terjadi kesalahan sistem saat memperbarui status.'], 500);
 }

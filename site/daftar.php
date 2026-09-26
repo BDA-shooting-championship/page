@@ -71,13 +71,13 @@ require_once __DIR__ . '/includes/header.php';
                         Jika ingin konfirmasi atau memiliki pertanyaan, silakan hubungi Seksi Pendaftaran via WhatsApp:
                     </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <a :href="`https://wa.me/6282134651503?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: ${successData.registrationId}\n• Nama Lengkap: ${formData.nama}\n• Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
+                        <a :href="`https://wa.me/6282134651503?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n- ID Registrasi: ${successData.registrationId}\n- Nama Lengkap: ${formData.nama}\n- Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
                            target="_blank"
                            class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
                             <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
                             <span>Briptu Zyaldi (WA)</span>
                         </a>
-                        <a :href="`https://wa.me/6285775015786?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: ${successData.registrationId}\n• Nama Lengkap: ${formData.nama}\n• Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
+                        <a :href="`https://wa.me/6285775015786?text=${encodeURIComponent(`Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n- ID Registrasi: ${successData.registrationId}\n- Nama Lengkap: ${formData.nama}\n- Satuan: ${formData.satuan}\n\nMohon konfirmasi dan informasinya. Terima kasih.`)}`"
                            target="_blank"
                            class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
                             <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
@@ -133,27 +133,27 @@ require_once __DIR__ . '/includes/header.php';
                     
                     <!-- 1. Nama Lengkap -->
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                        <label for="reg-nama" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                             1. Nama Lengkap *
                         </label>
-                        <input type="text" x-model="formData.nama" required placeholder="Contoh: Huggies Yustisio" 
+                        <input id="reg-nama" type="text" x-model="formData.nama" required autocomplete="name" placeholder="Contoh: Huggies Yustisio" 
                                class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                     </div>
 
                     <!-- 2 & 3. Email & No. Telp -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                            <label for="reg-email" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                                 2. Email Aktif *
                             </label>
-                            <input type="email" x-model="formData.email" required placeholder="nama@email.com" 
+                            <input id="reg-email" type="email" x-model="formData.email" required autocomplete="email" placeholder="nama@email.com" 
                                    class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                            <label for="reg-telepon" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                                 3. No. WhatsApp *
                             </label>
-                            <input type="tel" x-model="formData.telepon" required placeholder="Contoh: 085272377704" 
+                            <input id="reg-telepon" type="tel" x-model="formData.telepon" required autocomplete="tel" placeholder="Contoh: 085272377704" 
                                    class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                             <span class="text-[11px] text-gray-500 mt-1 block">E-Ticket resmi akan dikirim ke nomor ini</span>
                         </div>
@@ -162,64 +162,100 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- 4 & 5. Pangkat & NRP -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                            <label for="reg-pangkat" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
                                 4. Pangkat *
                             </label>
-                            <input type="text" x-model="formData.pangkat" required placeholder="Contoh: Briptu / Ipda / Sipil" 
+                            <input id="reg-pangkat" type="text" x-model="formData.pangkat" required placeholder="Contoh: Bripda / Briptu / Ipda" 
                                    class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                                5. NRP / NIP / NIK *
+                            <label for="reg-nrp" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                                5. NRP (Nomor Registrasi Pokok) *
                             </label>
-                            <input type="text" x-model="formData.nrp" required placeholder="Contoh: 00120207" 
+                            <input id="reg-nrp" type="text" x-model="formData.nrp" required placeholder="Contoh: 98010234" 
                                    class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                         </div>
                     </div>
 
-                    <!-- 6. Satuan / Club -->
+                    <!-- 6. Kesatuan / Club -->
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                            6. Satuan / Club Menembak *
+                        <label for="reg-satuan" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                            6. Kesatuan / Club *
                         </label>
-                        <input type="text" x-model="formData.satuan" required placeholder="Contoh: Batalyon A Resimen I Pasukan Pelopor / Perbakin" 
+                        <input id="reg-satuan" type="text" x-model="formData.satuan" required placeholder="Contoh: Resimen I Pasukan Pelopor / BDA 750" 
                                class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 text-sm focus:bg-white focus:ring-2 focus:ring-copper-500 focus:outline-none transition">
                     </div>
 
                     <!-- 7. Kategori Pertandingan -->
                     <div class="pt-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                            7. Kategori Pertandingan (Pilih salah satu atau keduanya) *
+                            7. Kategori Pertandingan (Pilih satu atau lebih) *
                         </label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- Presisi 20M -->
-                            <div @click="toggleKategori('Pistol Presisi 20M')" 
-                                 :class="selectedKategori.includes('Pistol Presisi 20M') ? 'border-copper-500 bg-copper-50/50 ring-2 ring-copper-500/20' : 'border-gray-200 bg-gray-50'"
-                                 class="p-4 rounded-xl border cursor-pointer transition flex items-start justify-between">
-                                <div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Presisi 20M Umum -->
+                            <div role="checkbox" tabindex="0" 
+                                 :aria-checked="selectedKategori.includes('Pistol Presisi 20M (Umum POLRI)')"
+                                 @click="toggleKategori('Pistol Presisi 20M (Umum POLRI)')" 
+                                 @keydown.space.prevent="toggleKategori('Pistol Presisi 20M (Umum POLRI)')"
+                                 @keydown.enter.prevent="toggleKategori('Pistol Presisi 20M (Umum POLRI)')"
+                                 :class="selectedKategori.includes('Pistol Presisi 20M (Umum POLRI)') ? 'border-copper-500 bg-copper-50/50 ring-2 ring-copper-500/20' : 'border-gray-200 bg-gray-50'"
+                                 class="p-4 rounded-xl border cursor-pointer transition flex items-start justify-between flex-col justify-between h-full focus:outline-none focus:ring-2 focus:ring-copper-500">
+                                <div class="w-full">
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 text-blue-800">Umum POLRI</span>
+                                        <div class="w-5 h-5 rounded border flex items-center justify-center shrink-0 transition"
+                                             :class="selectedKategori.includes('Pistol Presisi 20M (Umum POLRI)') ? 'bg-copper-600 border-copper-600 text-white' : 'border-gray-300'">
+                                            <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedKategori.includes('Pistol Presisi 20M (Umum POLRI)')"></i>
+                                        </div>
+                                    </div>
                                     <h4 class="font-display font-semibold text-base text-gray-900">Pistol Presisi 20M</h4>
-                                    <p class="text-xs text-gray-500 mt-1">10 seri tembakan lesan ring, jarak 20 meter</p>
-                                    <span class="inline-block mt-2 text-xs font-bold text-copper-600">Rp 200.000</span>
+                                    <p class="text-xs text-gray-500 mt-1">13 butir (3 coba + 10 nilai), lesan ring target 20 meter</p>
                                 </div>
-                                <div class="w-5 h-5 rounded border flex items-center justify-center shrink-0 transition"
-                                     :class="selectedKategori.includes('Pistol Presisi 20M') ? 'bg-copper-600 border-copper-600 text-white' : 'border-gray-300'">
-                                    <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedKategori.includes('Pistol Presisi 20M')"></i>
-                                </div>
+                                <span class="inline-block mt-3 text-xs font-bold text-copper-600">Rp 200.000</span>
                             </div>
 
-                            <!-- Dueling Plat -->
-                            <div @click="toggleKategori('Dueling Plat')" 
-                                 :class="selectedKategori.includes('Dueling Plat') ? 'border-copper-500 bg-copper-50/50 ring-2 ring-copper-500/20' : 'border-gray-200 bg-gray-50'"
-                                 class="p-4 rounded-xl border cursor-pointer transition flex items-start justify-between">
-                                <div>
-                                    <h4 class="font-display font-semibold text-base text-gray-900">Dueling Plat</h4>
-                                    <p class="text-xs text-gray-500 mt-1">Sistem gugur head-to-head, 5 plat + 1 popper</p>
-                                    <span class="inline-block mt-2 text-xs font-bold text-copper-600">Rp 200.000</span>
+                            <!-- Dueling Plat Umum -->
+                            <div role="checkbox" tabindex="0" 
+                                 :aria-checked="selectedKategori.includes('Dueling Plat 15M (Umum POLRI)')"
+                                 @click="toggleKategori('Dueling Plat 15M (Umum POLRI)')" 
+                                 @keydown.space.prevent="toggleKategori('Dueling Plat 15M (Umum POLRI)')"
+                                 @keydown.enter.prevent="toggleKategori('Dueling Plat 15M (Umum POLRI)')"
+                                 :class="selectedKategori.includes('Dueling Plat 15M (Umum POLRI)') ? 'border-copper-500 bg-copper-50/50 ring-2 ring-copper-500/20' : 'border-gray-200 bg-gray-50'"
+                                 class="p-4 rounded-xl border cursor-pointer transition flex items-start justify-between flex-col justify-between h-full focus:outline-none focus:ring-2 focus:ring-copper-500">
+                                <div class="w-full">
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-red-100 text-red-800">Umum POLRI</span>
+                                        <div class="w-5 h-5 rounded border flex items-center justify-center shrink-0 transition"
+                                             :class="selectedKategori.includes('Dueling Plat 15M (Umum POLRI)') ? 'bg-copper-600 border-copper-600 text-white' : 'border-gray-300'">
+                                            <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedKategori.includes('Dueling Plat 15M (Umum POLRI)')"></i>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-display font-semibold text-base text-gray-900">Dueling Plat 15M</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Sistem gugur head-to-head, 5 plat + 1 popper, jarak 15M</p>
                                 </div>
-                                <div class="w-5 h-5 rounded border flex items-center justify-center shrink-0 transition"
-                                     :class="selectedKategori.includes('Dueling Plat') ? 'bg-copper-600 border-copper-600 text-white' : 'border-gray-300'">
-                                    <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedKategori.includes('Dueling Plat')"></i>
+                                <span class="inline-block mt-3 text-xs font-bold text-copper-600">Rp 200.000</span>
+                            </div>
+
+                            <!-- Dueling Plat Khusus BDA -->
+                            <div role="checkbox" tabindex="0" 
+                                 :aria-checked="selectedKategori.includes('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)')"
+                                 @click="toggleKategori('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)')" 
+                                 @keydown.space.prevent="toggleKategori('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)')"
+                                 @keydown.enter.prevent="toggleKategori('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)')"
+                                 :class="selectedKategori.includes('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)') ? 'border-amber-500 bg-amber-50/60 ring-2 ring-amber-500/20' : 'border-gray-200 bg-gray-50'"
+                                 class="p-4 rounded-xl border cursor-pointer transition flex items-start justify-between flex-col justify-between h-full focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <div class="w-full">
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-500 text-white">Khusus BDA 750</span>
+                                        <div class="w-5 h-5 rounded border flex items-center justify-center shrink-0 transition"
+                                             :class="selectedKategori.includes('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)') ? 'bg-amber-600 border-amber-600 text-white' : 'border-gray-300'">
+                                            <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedKategori.includes('Dueling Plat 15M (Khusus BDA Korbrimob POLRI)')"></i>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-display font-semibold text-base text-gray-900">Dueling Plat 15M</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Bagan khusus letting BDA Korbrimob Polri</p>
                                 </div>
+                                <span class="inline-block mt-3 text-xs font-bold text-copper-600">Rp 200.000</span>
                             </div>
                         </div>
 
@@ -235,14 +271,14 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="mt-4 p-5 bg-gradient-to-r from-copper-50 to-orange-50 border border-copper-200 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4" x-data="{ copied: false }">
                             <div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-xs uppercase font-bold tracking-wider text-copper-600">Rekening Pembayaran</span>
+                                    <span class="text-xs uppercase font-bold tracking-wider text-copper-600">Rekening Pembayaran Resmi</span>
                                     <span class="text-[11px] px-2 py-0.5 rounded bg-copper-200/60 text-copper-800 font-medium">Transfer sesuai nominal di atas</span>
                                 </div>
                                 <p class="text-sm font-semibold text-gray-800 mt-1.5">
-                                    Bank BRI — <span class="font-mono text-base font-bold text-copper-700">053801071906503</span> (a.n. Ahyandi Hi Karim)
+                                    Bank BRI — <span class="font-mono text-base font-bold text-copper-700">0538 0107 2120 508</span> (a.n. Ruly Ardana Putra)
                                 </p>
                             </div>
-                            <button type="button" @click="navigator.clipboard.writeText('053801071906503'); copied = true; setTimeout(() => copied = false, 2000)" 
+                            <button type="button" @click="navigator.clipboard.writeText('053801072120508'); copied = true; setTimeout(() => copied = false, 2000)" 
                                     class="px-4 py-2 bg-white border border-copper-300 text-xs font-semibold rounded-xl hover:bg-copper-50 text-copper-700 transition shrink-0 flex items-center gap-1.5 shadow-sm">
                                 <i data-lucide="copy" class="w-3.5 h-3.5" x-show="!copied"></i>
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-green-600" x-show="copied" x-cloak></i>
@@ -254,14 +290,14 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- 8. Upload Foto KTA -->
                     <div class="pt-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                            8. Upload Foto KTA / KTP / Tanda Pengenal * (Maks. 2MB)
+                            8. Upload Foto KTA (Kartu Tanda Anggota Polri) * (Maks. 10MB)
                         </label>
                         <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <label class="w-full sm:flex-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-2xl hover:border-copper-500 transition cursor-pointer bg-gray-50/50">
+                            <label class="w-full sm:flex-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-2xl hover:border-copper-500 focus-within:border-copper-500 focus-within:ring-2 focus-within:ring-copper-500/20 transition cursor-pointer bg-gray-50/50">
                                 <i data-lucide="upload" class="w-6 h-6 text-gray-400 mb-2"></i>
-                                <span class="text-xs font-semibold text-gray-700" x-text="ktaFileName || 'Pilih foto KTA (JPG, PNG, WebP)'"></span>
-                                <span class="text-[10px] text-gray-400 mt-0.5">Maksimal 2 MB</span>
-                                <input type="file" accept="image/jpeg,image/png,image/webp" @change="handleKTAFile" class="hidden">
+                                <span class="text-xs font-semibold text-gray-700" x-text="ktaFileName || 'Pilih foto KTA Polri (JPG, PNG, WebP, PDF)'"></span>
+                                <span class="text-[10px] text-gray-400 mt-0.5">Pastikan foto KTA Polri terlihat jelas dan terbaca (maks. 10 MB)</span>
+                                <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" @change="handleKTAFile" class="sr-only">
                             </label>
                             <template x-if="ktaPreview">
                                 <div class="w-24 h-24 rounded-2xl overflow-hidden border border-gray-200 shrink-0">
@@ -274,14 +310,14 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- 9. Upload Bukti Transfer -->
                     <div class="pt-2">
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                            9. Upload Bukti Transfer Pembayaran * (Maks. 2MB)
+                            9. Upload Bukti Transfer Pembayaran * (Maks. 10MB)
                         </label>
                         <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <label class="w-full sm:flex-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-2xl hover:border-copper-500 transition cursor-pointer bg-gray-50/50">
+                            <label class="w-full sm:flex-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-2xl hover:border-copper-500 focus-within:border-copper-500 focus-within:ring-2 focus-within:ring-copper-500/20 transition cursor-pointer bg-gray-50/50">
                                 <i data-lucide="credit-card" class="w-6 h-6 text-gray-400 mb-2"></i>
-                                <span class="text-xs font-semibold text-gray-700" x-text="buktiFileName || 'Pilih foto bukti transfer (JPG, PNG, WebP)'"></span>
-                                <span class="text-[10px] text-gray-400 mt-0.5">Maksimal 2 MB</span>
-                                <input type="file" accept="image/jpeg,image/png,image/webp" @change="handleBuktiFile" class="hidden">
+                                <span class="text-xs font-semibold text-gray-700" x-text="buktiFileName || 'Pilih foto bukti transfer (JPG, PNG, WebP, PDF)'"></span>
+                                <span class="text-[10px] text-gray-400 mt-0.5">Maksimal 10 MB</span>
+                                <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" @change="handleBuktiFile" class="sr-only">
                             </label>
                             <template x-if="buktiPreview">
                                 <div class="w-24 h-24 rounded-2xl overflow-hidden border border-gray-200 shrink-0">
@@ -330,7 +366,7 @@ function registrationForm() {
             nrp: '',
             satuan: ''
         },
-        selectedKategori: ['Pistol Presisi 20M'],
+        selectedKategori: ['Pistol Presisi 20M (Umum POLRI)'],
         ktaFile: null,
         ktaFileName: '',
         ktaPreview: null,
@@ -357,25 +393,35 @@ function registrationForm() {
         handleKTAFile(e) {
             const file = e.target.files[0];
             if (!file) return;
-            if (file.size > 2 * 1024 * 1024) {
-                alert('Ukuran file KTA melebihi batas 2MB');
+            if (file.size > 10 * 1024 * 1024) {
+                this.errorMessage = 'Ukuran file KTA melebihi batas 10MB. Silakan pilih foto dengan ukuran lebih kecil.';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
+            }
+            if (this.ktaPreview) {
+                URL.revokeObjectURL(this.ktaPreview);
             }
             this.ktaFile = file;
             this.ktaFileName = file.name;
             this.ktaPreview = URL.createObjectURL(file);
+            this.errorMessage = null;
         },
 
         handleBuktiFile(e) {
             const file = e.target.files[0];
             if (!file) return;
-            if (file.size > 2 * 1024 * 1024) {
-                alert('Ukuran file bukti transfer melebihi batas 2MB');
+            if (file.size > 10 * 1024 * 1024) {
+                this.errorMessage = 'Ukuran file bukti transfer melebihi batas 10MB. Silakan pilih file dengan ukuran lebih kecil.';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
+            }
+            if (this.buktiPreview) {
+                URL.revokeObjectURL(this.buktiPreview);
             }
             this.buktiFile = file;
             this.buktiFileName = file.name;
             this.buktiPreview = URL.createObjectURL(file);
+            this.errorMessage = null;
         },
 
         formatRupiah(num) {
@@ -390,7 +436,7 @@ function registrationForm() {
                 return;
             }
             if (!this.ktaFile) {
-                this.errorMessage = 'Upload foto KTA / Tanda Pengenal wajib dilampirkan';
+                this.errorMessage = 'Upload foto KTA Polri wajib dilampirkan';
                 return;
             }
             if (!this.buktiFile) {
@@ -419,7 +465,7 @@ function registrationForm() {
                 const data = await res.json();
 
                 if (!res.ok || !data.success) {
-                    throw new Error(data.error || 'Gagal menyimpan pendaftaran');
+                    throw new Error(data.message || data.error || 'Gagal menyimpan pendaftaran');
                 }
 
                 this.successData = data;

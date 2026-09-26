@@ -18,33 +18,35 @@
                 <p class="text-sm text-gray-500 mt-2">17 — 18 Oktober 2026</p>
             </div>
             
-            <!-- Navigation -->
-            <div>
-                <h4 class="font-display font-semibold text-white mb-4">Navigasi</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="/" class="hover:text-copper-400 transition">Beranda</a></li>
-                    <li><a href="/daftar.php" class="hover:text-copper-400 transition">Pendaftaran</a></li>
-                    <li><a href="/live-score.php" class="hover:text-copper-400 transition">Live Score</a></li>
-                    <li><a href="/admin/" class="hover:text-copper-400 transition">Admin</a></li>
-                </ul>
-            </div>
-            
-            <!-- Location -->
-            <div>
-                <h4 class="font-display font-semibold text-white mb-4">Lokasi</h4>
-                <p class="text-sm text-gray-400">Lapangan Tembak Shooting House</p>
-                <p class="text-sm text-gray-400">Resimen I Pasukan Pelopor</p>
-                <p class="text-sm text-gray-400">Kedung Halang, Bogor</p>
+            <!-- Navigation & Location (Sejajar di Mobile) -->
+            <div class="grid grid-cols-2 gap-6 md:contents">
+                <!-- Navigation -->
+                <div>
+                    <h4 class="font-display font-semibold text-white mb-3 sm:mb-4">Navigasi</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="hover:text-copper-400 transition">Beranda</a></li>
+                        <li><a href="/daftar.php" class="hover:text-copper-400 transition">Pendaftaran</a></li>
+                        <li><a href="/live-score.php" class="hover:text-copper-400 transition">Live Score</a></li>
+                        <li><a href="/admin/" class="hover:text-copper-400 transition">Admin</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Location -->
+                <div>
+                    <h4 class="font-display font-semibold text-white mb-3 sm:mb-4">Lokasi</h4>
+                    <p class="text-sm text-gray-300 font-medium">Lapangan Tembak Resimen I Pasukan Pelopor</p>
+                    <p class="text-sm text-gray-400 mt-0.5">Kedunghalang, Bogor</p>
+                </div>
             </div>
             
             <!-- Contact -->
             <div>
                 <h4 class="font-display font-semibold text-white mb-4">Kontak Panitia</h4>
                 <ul class="space-y-2 text-xs sm:text-sm">
-                    <li><a href="https://wa.me/6282134651503" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Zyaldi (Pendaftaran) — 0821-3465-1503</a></li>
-                    <li><a href="https://wa.me/6285775015786" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Rully (Pendaftaran) — 0857-7501-5786</a></li>
-                    <li><a href="https://wa.me/6285283525761" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Ady (Materi & Teknis) — 0852-8352-5761</a></li>
-                    <li><a href="https://wa.me/6285272377704" target="_blank" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Huges (Ketua Pelaksana) — 0852-7237-7704</a></li>
+                    <li><a href="https://wa.me/6282134651503" target="_blank" rel="noopener noreferrer" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Zyaldi (Pendaftaran) — 0821-3465-1503</a></li>
+                    <li><a href="https://wa.me/6285775015786" target="_blank" rel="noopener noreferrer" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-emerald-500"></i>Briptu Rully (Pendaftaran) — 0857-7501-5786</a></li>
+                    <li><a href="https://wa.me/6285283525761" target="_blank" rel="noopener noreferrer" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Ady (Materi & Teknis) — 0852-8352-5761</a></li>
+                    <li><a href="https://wa.me/6285272377704" target="_blank" rel="noopener noreferrer" class="hover:text-copper-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-copper-400"></i>Briptu Huges Yustisio (Materi & Teknis) — 0852-7237-7704</a></li>
                 </ul>
             </div>
         </div>
@@ -69,5 +71,7 @@
         }
     });
 </script>
+<!-- Tactical Text Scramble & Sequential Decoder -->
+<script src="/assets/js/tactical-scramble.js?v=<?= filemtime(__DIR__ . '/../assets/js/tactical-scramble.js') ?? 2 ?>" defer></script>
 </body>
 </html>

@@ -43,6 +43,60 @@ require_once __DIR__ . '/includes/header.php';
                 </a>
             </div>
 
+        <?php elseif ($ticket['status'] === 'Rejected'): ?>
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-red-200 text-center shadow-lg">
+                <!-- Dual Logos in White Circles -->
+                <div class="flex justify-center items-center gap-2.5 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                    </div>
+                    <span class="text-gray-400 font-bold text-xs select-none">✕</span>
+                    <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                    </div>
+                </div>
+
+                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold uppercase tracking-wider inline-block">
+                    Status: Ditolak
+                </span>
+                <h2 class="font-display text-2xl font-bold text-gray-900 mt-4 mb-2">Pendaftaran Tidak Dapat Diverifikasi</h2>
+                <p class="text-sm text-gray-600 max-w-md mx-auto mb-4">
+                    Pendaftaran atas nama <strong><?= htmlspecialchars($ticket['nama']) ?></strong> (ID: <code class="font-mono text-copper-600 font-bold"><?= htmlspecialchars($ticket['registration_id']) ?></code>) belum dapat disetujui oleh panitia.
+                </p>
+
+                <?php if (!empty($ticket['admin_notes'])): ?>
+                    <div class="p-3.5 bg-red-50 border border-red-200 rounded-xl max-w-md mx-auto mb-6 text-left">
+                        <span class="text-xs font-bold text-red-800 block mb-1">Catatan Panitia:</span>
+                        <p class="text-xs text-red-700"><?= htmlspecialchars($ticket['admin_notes']) ?></p>
+                    </div>
+                <?php endif; ?>
+
+                <?php
+                $msgTemplateRejectZyaldi = "Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan perihal penolakan pendaftaran saya:\n- ID Registrasi: " . $ticket['registration_id'] . "\n- Nama Lengkap: " . $ticket['nama'] . "\n- Satuan: " . $ticket['satuan'] . "\n\nMohon petunjuk untuk perbaikan data/bukti transfer. Terima kasih.";
+                $msgTemplateRejectRully = "Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan perihal penolakan pendaftaran saya:\n- ID Registrasi: " . $ticket['registration_id'] . "\n- Nama Lengkap: " . $ticket['nama'] . "\n- Satuan: " . $ticket['satuan'] . "\n\nMohon petunjuk untuk perbaikan data/bukti transfer. Terima kasih.";
+                ?>
+                <div class="mt-4 mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl max-w-lg mx-auto text-left">
+                    <p class="text-xs text-emerald-900 mb-2 font-bold flex items-center gap-1.5">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
+                        Hubungi Seksi Pendaftaran untuk Klarifikasi / Perbaikan:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <a href="https://wa.me/6282134651503?text=<?= urlencode($msgTemplateRejectZyaldi) ?>" target="_blank" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Briptu Zyaldi (WA)
+                        </a>
+                        <a href="https://wa.me/6285775015786?text=<?= urlencode($msgTemplateRejectRully) ?>" target="_blank" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Briptu Rully (WA)
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <a href="/daftar.php" class="px-5 py-2.5 bg-copper-600 hover:bg-copper-700 text-white text-xs font-semibold rounded-xl transition">
+                        Daftar Ulang dengan Data Benar
+                    </a>
+                </div>
+            </div>
+
         <?php elseif ($ticket['status'] !== 'Verified'): ?>
             <div class="bg-white rounded-3xl p-6 sm:p-8 border border-amber-200 text-center shadow-lg">
                 <!-- Dual Logos in White Circles -->
@@ -66,8 +120,8 @@ require_once __DIR__ . '/includes/header.php';
                 </p>
 
                 <?php
-                $msgTemplateZyaldi = "Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: " . $ticket['registration_id'] . "\n• Nama Lengkap: " . $ticket['nama'] . "\n• Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
-                $msgTemplateRully = "Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n• ID Registrasi: " . $ticket['registration_id'] . "\n• Nama Lengkap: " . $ticket['nama'] . "\n• Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
+                $msgTemplateZyaldi = "Halo Panitia BDA Shooting Championship 2026 (Briptu Zyaldi - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n- ID Registrasi: " . $ticket['registration_id'] . "\n- Nama Lengkap: " . $ticket['nama'] . "\n- Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
+                $msgTemplateRully = "Halo Panitia BDA Shooting Championship 2026 (Briptu Rully - Seksi Pendaftaran),\n\nSaya ingin menanyakan status pendaftaran saya:\n- ID Registrasi: " . $ticket['registration_id'] . "\n- Nama Lengkap: " . $ticket['nama'] . "\n- Satuan: " . $ticket['satuan'] . "\n\nMohon konfirmasi dan informasinya. Terima kasih.";
                 ?>
                 <div class="mt-4 mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl max-w-lg mx-auto text-left">
                     <p class="text-xs text-emerald-900 mb-2 font-bold flex items-center gap-1.5">
@@ -132,7 +186,7 @@ require_once __DIR__ . '/includes/header.php';
                         </h1>
                         <p class="text-xs sm:text-sm text-copper-200/90 mt-1 flex items-center gap-1.5">
                             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-copper-400 shrink-0 inline"></i>
-                            <span>Resimen I Pasukan Pelopor — Kedung Halang, Bogor</span>
+                            <span>Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor</span>
                         </p>
                     </div>
                 </div>
@@ -140,7 +194,7 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Perforated Line Decoration -->
                 <div class="relative flex items-center justify-between px-4 py-2 bg-gray-100 border-y border-dashed border-gray-300">
                     <div class="w-6 h-6 -ml-7 rounded-full bg-gray-50 border-r border-gray-300"></div>
-                    <span class="text-[10px] sm:text-xs uppercase tracking-widest font-mono font-bold text-gray-500">PENGESAHAN RESMI &bull; LUNAS</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest font-mono font-bold text-copper-700">MELANGKAH - AKTIF - JELAS - UNGGUL</span>
                     <div class="w-6 h-6 -mr-7 rounded-full bg-gray-50 border-l border-gray-300"></div>
                 </div>
 
@@ -158,7 +212,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div class="text-center sm:text-left flex-1">
                             <span class="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-2">
-                                TERVERIFIKASI &bull; LUNAS
+                                VERIFIED
                             </span>
                             <h3 class="font-display text-2xl sm:text-3xl font-bold text-gray-900">
                                 <?= htmlspecialchars($ticket['nama']) ?>
@@ -178,14 +232,27 @@ require_once __DIR__ . '/includes/header.php';
                             <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">ID Registrasi</span>
                             <span class="font-mono font-bold text-copper-700 text-sm"><?= htmlspecialchars($ticket['registration_id']) ?></span>
                         </div>
+                        <?php
+                            $kategoriItems = array_filter(array_map('trim', preg_split('/[,+]/', $ticket['kategori'] ?? '')));
+                            if (empty($kategoriItems)) {
+                                $kategoriItems = [trim($ticket['kategori'] ?? '-')];
+                            }
+                        ?>
                         <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
-                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Kategori Lomba</span>
-                            <span class="font-bold text-gray-900"><?= htmlspecialchars($ticket['kategori']) ?></span>
+                            <span class="text-gray-400 block mb-1 text-[11px] uppercase tracking-wider font-semibold">Kategori Lomba</span>
+                            <ul class="space-y-1">
+                                <?php foreach ($kategoriItems as $item): ?>
+                                    <li class="font-bold text-gray-900 flex items-center gap-1.5 text-xs">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-copper-600 shrink-0"></span>
+                                        <span><?= htmlspecialchars($item) ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
                         <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
-                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Status Pembayaran</span>
+                            <span class="text-gray-400 block mb-0.5 text-[11px] uppercase tracking-wider font-semibold">Status Registrasi</span>
                             <span class="font-bold text-emerald-700 flex items-center gap-1">
-                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> LUNAS
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> VERIFIED
                             </span>
                         </div>
                         <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
@@ -256,9 +323,16 @@ require_once __DIR__ . '/includes/header.php';
 
 <style>
 @media print {
-    nav, footer, .print\:hidden { display: none !important; }
+    nav, footer, .print\:hidden, .h-16 { display: none !important; }
     body { background: white !important; color: black !important; }
     #ticket-print { box-shadow: none !important; border: 1px solid #ccc !important; }
+    .hero-gradient {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    @page {
+        margin: 10mm;
+    }
 }
 </style>
 

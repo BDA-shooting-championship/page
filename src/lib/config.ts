@@ -18,8 +18,8 @@ export const CONFIG = {
   // Info Pembayaran
   BANK_ACCOUNT: {
     bank: "BRI",
-    accountNumber: "053801071906503",
-    accountName: "Ahyandi Hi Karim",
+    accountNumber: "053801072120508",
+    accountName: "Ruly Ardana Putra",
   },
   
   // Kontak Panitia
