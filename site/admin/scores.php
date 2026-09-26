@@ -273,7 +273,27 @@ require_once __DIR__ . '/../includes/header.php';
                             <!-- Round Header -->
                             <div class="mb-4 text-center pb-2.5 border-b-2 border-copper-600 bg-white rounded-t-xl pt-2.5 shadow-sm">
                                 <h4 class="font-display font-bold text-gray-900 text-sm tracking-wide uppercase" x-text="round.name"></h4>
-                                <span class="text-[10px] text-gray-500 font-semibold" x-text="round.matches.length + ' Match'"></span>
+                                <div class="flex items-center justify-center gap-1.5 text-[10px] text-gray-500 font-semibold mt-0.5">
+                                    <span x-text="round.matches.length + ' Match'"></span>
+                                    <template x-if="round.matches.some(m => (m.participant_2_name || '').toLowerCase().includes('bye'))">
+                                        <span class="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold border border-amber-300">1 BYE</span>
+                                    </template>
+                                </div>
+                                <!-- Tombol Randomize Babak -->
+                                <template x-if="round.name !== 'Final' && round.name !== 'Perebutan Juara 3'">
+                                    <div class="mt-2 px-3">
+                                        <button type="button" @click="randomizeRound(round)" 
+                                                class="w-full py-1.5 px-2 bg-copper-600 hover:bg-copper-700 active:scale-95 text-white rounded-lg text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                            <span>🎲</span>
+                                            <span x-text="'Undi ' + round.name"></span>
+                                        </button>
+                                    </div>
+                                </template>
+                                <template x-if="round.name === 'Perebutan Juara 3' || round.name === 'Final'">
+                                    <div class="mt-2 text-[10px] text-copper-700 font-bold bg-copper-50 py-1 px-2 rounded-lg mx-3 border border-copper-200">
+                                        ⚡ Otomatis dari Hasil Semifinal
+                                    </div>
+                                </template>
                             </div>
 
                             <!-- Matches in Round -->
@@ -340,32 +360,45 @@ require_once __DIR__ . '/../includes/header.php';
                                             </div>
                                         </div>
 
-                                        <!-- Participant 2 Box -->
-                                        <div class="p-2.5 transition"
-                                             :class="isSlotWinner(match, 2) ? 'bg-emerald-50/80 border-emerald-200' : 'bg-white'">
-                                            <div class="flex items-center justify-between gap-1.5">
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center gap-1">
-                                                        <span class="text-[10px] font-bold text-gray-400 w-4">#2</span>
-                                                        <input type="text" list="duelingParticipantsList"
-                                                               x-model="match.participant_2_name"
-                                                               @change="onParticipantChange(match, 2); saveDuelingMatch(match)"
-                                                               placeholder="Nama Peserta 2..."
-                                                               class="w-full px-2 py-1 rounded border text-xs font-semibold focus:ring-1 focus:ring-copper-500"
-                                                               :class="isSlotWinner(match, 2) ? 'bg-emerald-100/60 border-emerald-400 text-emerald-950 font-bold' : 'bg-gray-50 border-gray-200 text-gray-800'">
-                                                    </div>
-                                                    <input type="text" x-model="match.participant_2_satuan" @change="saveDuelingMatch(match)"
-                                                           placeholder="Satuan / Kontingen..."
-                                                           class="w-full text-[10px] px-2 py-0.5 mt-0.5 rounded border border-transparent hover:border-gray-200 focus:border-gray-300 text-gray-500 bg-transparent">
+                                        <!-- Participant 2 Box / BYE Badge -->
+                                        <template x-if="(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                            <div class="p-2.5 bg-amber-50/80 border-t border-amber-200 text-center flex items-center justify-between">
+                                                <div class="flex items-center gap-1.5 text-amber-900 font-bold text-xs">
+                                                    <span>🎟️</span>
+                                                    <span>TIKET BYE (Lolos Otomatis)</span>
                                                 </div>
-                                                <button type="button" @click="setMatchWinner(match, 2)"
-                                                        class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
-                                                        :class="isSlotWinner(match, 2) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
-                                                        :title="isSlotWinner(match, 2) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
-                                                    <span class="text-[10px]" x-text="isSlotWinner(match, 2) ? 'MENANG' : 'Pilih'"></span>
-                                                </button>
+                                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">
+                                                    ✓ LOLOS
+                                                </span>
                                             </div>
-                                        </div>
+                                        </template>
+                                        <template x-if="!(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                            <div class="p-2.5 transition"
+                                                 :class="isSlotWinner(match, 2) ? 'bg-emerald-50/80 border-emerald-200' : 'bg-white'">
+                                                <div class="flex items-center justify-between gap-1.5">
+                                                    <div class="flex-1 min-w-0">
+                                                        <div class="flex items-center gap-1">
+                                                            <span class="text-[10px] font-bold text-gray-400 w-4">#2</span>
+                                                            <input type="text" list="duelingParticipantsList"
+                                                                   x-model="match.participant_2_name"
+                                                                   @change="onParticipantChange(match, 2); saveDuelingMatch(match)"
+                                                                   placeholder="Nama Peserta 2..."
+                                                                   class="w-full px-2 py-1 rounded border text-xs font-semibold focus:ring-1 focus:ring-copper-500"
+                                                                   :class="isSlotWinner(match, 2) ? 'bg-emerald-100/60 border-emerald-400 text-emerald-950 font-bold' : 'bg-gray-50 border-gray-200 text-gray-800'">
+                                                        </div>
+                                                        <input type="text" x-model="match.participant_2_satuan" @change="saveDuelingMatch(match)"
+                                                               placeholder="Satuan / Kontingen..."
+                                                               class="w-full text-[10px] px-2 py-0.5 mt-0.5 rounded border border-transparent hover:border-gray-200 focus:border-gray-300 text-gray-500 bg-transparent">
+                                                    </div>
+                                                    <button type="button" @click="setMatchWinner(match, 2)"
+                                                            class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                                            :class="isSlotWinner(match, 2) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
+                                                            :title="isSlotWinner(match, 2) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
+                                                        <span class="text-[10px]" x-text="isSlotWinner(match, 2) ? 'MENANG' : 'Pilih'"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
 
                                         <!-- Match Quick Actions Footer -->
                                         <div class="px-3 py-1.5 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-[10px]">
@@ -802,14 +835,13 @@ function adminScoresApp() {
 
         get bracketCapacityInfo() {
             const n = parseInt(this.bracketParticipantCount) || 2;
-            let p = 1;
-            while (p < n) { p *= 2; }
-            if (p < 4) p = 4;
-            const byes = p - n;
+            const r1Matches = Math.floor(n / 2);
+            const r1Byes = n % 2;
+            const byeText = r1Byes > 0 ? `, 1 Peserta BYE (lolos langsung)` : ', bagan genap tanpa BYE';
             return {
-                capacity: p,
-                byes: byes,
-                label: `Kapasitas: ${p} bagan (${n} peserta${byes > 0 ? `, ${byes} slot BYE otomatis` : ', bagan genap'})`
+                capacity: n,
+                byes: r1Byes,
+                label: `${n} Peserta: Babak 1 = ${r1Matches} Match${byeText}`
             };
         },
 
@@ -874,12 +906,12 @@ function adminScoresApp() {
 
         async generateTournamentBracket(size) {
             const count = parseInt(size) || 8;
-            if (!confirm(`Buat bagan turnamen eliminasi ${count} peserta? Bagan pertandingan sebelumnya akan digantikan secara otomatis.`)) return;
+            if (!confirm(`Buat bagan turnamen eliminasi ${count} peserta untuk kategori ${this.duelingCategory.toUpperCase()}? Bagan pertandingan sebelumnya akan digantikan secara otomatis.`)) return;
             try {
                 const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN },
-                    body: JSON.stringify({ action: 'generate_bracket', count: count, size: count, token: ADMIN_TOKEN })
+                    body: JSON.stringify({ action: 'generate_bracket', count: count, size: count, category: this.duelingCategory, token: ADMIN_TOKEN })
                 });
                 const data = await res.json();
                 if (data.success) {
@@ -894,13 +926,46 @@ function adminScoresApp() {
             }
         },
 
-        async resetTournamentBracket() {
-            if (!confirm('Yakin ingin mereset dan mengosongkan seluruh bagan pertandingan dueling plat?')) return;
+        async randomizeRound(round) {
+            if (!round || !round.order) return;
+            const isFirstRound = (round.order === 1);
+            const confirmMsg = isFirstRound
+                ? `Undi ulang pasangan partai untuk ${round.name}? Posisi peserta terdaftar akan diacak ulang.`
+                : `Undi partai untuk ${round.name}? Peserta yang sah lolos dari babak sebelumnya akan diacak berpasangan dan ditentukan siapa yang mendapat tiket BYE (jika ganjil).`;
+            
+            if (!confirm(confirmMsg)) return;
+
             try {
                 const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN },
-                    body: JSON.stringify({ action: 'reset_bracket', token: ADMIN_TOKEN })
+                    body: JSON.stringify({
+                        action: 'randomize_round',
+                        category: this.duelingCategory,
+                        round_order: round.order,
+                        token: ADMIN_TOKEN
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.showAlert(data.message, 'success');
+                    await this.fetchDuelingMatches();
+                } else {
+                    throw new Error(data.message || 'Gagal mengundi babak');
+                }
+            } catch (e) {
+                this.showAlert(e.message, 'error');
+                alert('Pemberitahuan: ' + e.message);
+            }
+        },
+
+        async resetTournamentBracket() {
+            if (!confirm(`Yakin ingin mereset dan mengosongkan seluruh bagan pertandingan dueling plat kategori ${this.duelingCategory.toUpperCase()}?`)) return;
+            try {
+                const res = await fetch('/api/scores-dueling.php?token=' + encodeURIComponent(ADMIN_TOKEN), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Token': ADMIN_TOKEN },
+                    body: JSON.stringify({ action: 'reset_bracket', category: this.duelingCategory, token: ADMIN_TOKEN })
                 });
                 const data = await res.json();
                 if (data.success) {

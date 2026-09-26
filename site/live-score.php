@@ -285,24 +285,37 @@ require_once __DIR__ . '/includes/header.php';
                                             </template>
                                         </div>
 
-                                        <!-- Participant 2 -->
-                                        <div class="p-2.5 flex items-center justify-between transition text-xs"
-                                             :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'bg-emerald-50 text-emerald-950 font-bold' : 'text-gray-800'">
-                                            <div class="truncate mr-2">
-                                                <div class="flex items-center gap-1">
-                                                    <span class="truncate" :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'font-bold text-emerald-900' : ''" x-text="match.participant_2_name || 'TBD'"></span>
-                                                </div>
-                                                <div class="text-[10px] text-gray-400 truncate" x-text="match.participant_2_satuan || '-'"></div>
-                                            </div>
-                                            <template x-if="match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)">
-                                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] tracking-wider shrink-0 border border-emerald-300">
-                                                    MENANG
+                                        <!-- Participant 2 / BYE Badge -->
+                                        <template x-if="(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                            <div class="p-2.5 bg-amber-50/70 border-t border-amber-200 flex items-center justify-between text-xs">
+                                                <span class="text-amber-800 font-bold flex items-center gap-1 text-[11px]">
+                                                    <span>🎟️</span>
+                                                    <span>TIKET BYE (Lolos Otomatis)</span>
                                                 </span>
-                                            </template>
-                                            <template x-if="match.match_status === 'finished' && (!match.winner_id || (match.winner_id !== match.participant_2_id && match.winner_id !== match.participant_2_name))">
-                                                <span class="text-[10px] text-gray-400 shrink-0">Kalah</span>
-                                            </template>
-                                        </div>
+                                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">
+                                                    ✓ LOLOS
+                                                </span>
+                                            </div>
+                                        </template>
+                                        <template x-if="!(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                            <div class="p-2.5 flex items-center justify-between transition text-xs"
+                                                 :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'bg-emerald-50 text-emerald-950 font-bold' : 'text-gray-800'">
+                                                <div class="truncate mr-2">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="truncate" :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'font-bold text-emerald-900' : ''" x-text="match.participant_2_name || 'TBD'"></span>
+                                                    </div>
+                                                    <div class="text-[10px] text-gray-400 truncate" x-text="match.participant_2_satuan || '-'"></div>
+                                                </div>
+                                                <template x-if="match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)">
+                                                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] tracking-wider shrink-0 border border-emerald-300">
+                                                        MENANG
+                                                    </span>
+                                                </template>
+                                                <template x-if="match.match_status === 'finished' && (!match.winner_id || (match.winner_id !== match.participant_2_id && match.winner_id !== match.participant_2_name))">
+                                                    <span class="text-[10px] text-gray-400 shrink-0">Kalah</span>
+                                                </template>
+                                            </div>
+                                        </template>
                                     </div>
                                 </template>
                             </div>
@@ -355,31 +368,47 @@ require_once __DIR__ . '/includes/header.php';
                                         </div>
                                     </div>
 
-                                    <!-- VS Divider -->
-                                    <div class="text-center my-1">
-                                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">&bull; VS &bull;</span>
-                                    </div>
-
-                                    <!-- Competitor 2 -->
-                                    <div class="flex justify-between items-center p-2.5 rounded-lg transition"
-                                         :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'bg-green-50 border border-green-300 font-bold' : 'bg-gray-50'">
-                                        <div class="truncate mr-2">
-                                            <div class="flex items-center gap-1.5">
-                                                <span class="font-bold text-sm text-gray-900 truncate" x-text="match.participant_2_name || 'TBD'"></span>
+                                    <!-- VS Divider or BYE indicator -->
+                                    <template x-if="(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                        <div class="mt-2 p-2.5 rounded-lg bg-amber-50/70 border border-amber-200 flex items-center justify-between text-xs">
+                                            <span class="text-amber-800 font-bold flex items-center gap-1.5 text-xs">
+                                                <span>🎟️</span>
+                                                <span>TIKET BYE (Lolos Otomatis ke Babak Berikutnya)</span>
+                                            </span>
+                                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
+                                                ✓ LOLOS
+                                            </span>
+                                        </div>
+                                    </template>
+                                    <template x-if="!(match.participant_2_name || '').toLowerCase().includes('bye')">
+                                        <div>
+                                            <!-- VS Divider -->
+                                            <div class="text-center my-1">
+                                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">&bull; VS &bull;</span>
                                             </div>
-                                            <span class="text-[11px] text-gray-500 block truncate" x-text="match.participant_2_satuan || '-'"></span>
+
+                                            <!-- Competitor 2 -->
+                                            <div class="flex justify-between items-center p-2.5 rounded-lg transition"
+                                                 :class="(match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)) ? 'bg-green-50 border border-green-300 font-bold' : 'bg-gray-50'">
+                                                <div class="truncate mr-2">
+                                                    <div class="flex items-center gap-1.5">
+                                                        <span class="font-bold text-sm text-gray-900 truncate" x-text="match.participant_2_name || 'TBD'"></span>
+                                                    </div>
+                                                    <span class="text-[11px] text-gray-500 block truncate" x-text="match.participant_2_satuan || '-'"></span>
+                                                </div>
+                                                <div class="text-right shrink-0">
+                                                    <template x-if="match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)">
+                                                        <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
+                                                            MENANG
+                                                        </span>
+                                                    </template>
+                                                    <template x-if="match.match_status === 'finished' && (!match.winner_id || (match.winner_id !== match.participant_2_id && match.winner_id !== match.participant_2_name))">
+                                                        <span class="text-xs text-gray-400">Kalah</span>
+                                                    </template>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="text-right shrink-0">
-                                            <template x-if="match.winner_id && (match.winner_id === match.participant_2_id || match.winner_id === match.participant_2_name)">
-                                                <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">
-                                                    MENANG
-                                                </span>
-                                            </template>
-                                            <template x-if="match.match_status === 'finished' && (!match.winner_id || (match.winner_id !== match.participant_2_id && match.winner_id !== match.participant_2_name))">
-                                                <span class="text-xs text-gray-400">Kalah</span>
-                                            </template>
-                                        </div>
-                                    </div>
+                                    </template>
 
                                 </div>
                             </template>
