@@ -7,12 +7,17 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 cors();
 
-// Authenticate via token or active admin session with 'peserta' permission
+// Authenticate via token or active admin session with 'peserta' or 'antrean' permission
 $token = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_GET['token'] ?? '';
 $isSessionAdmin = isAdminLoggedIn();
 
-if ($token !== ADMIN_TOKEN && !$isSessionAdmin) {
-    jsonResponse(['success' => false, 'error' => 'Unauthorized: Sesi admin tidak valid.'], 401);
+if ($token !== ADMIN_TOKEN) {
+    if (!$isSessionAdmin) {
+        jsonResponse(['success' => false, 'error' => 'Unauthorized: Sesi admin tidak valid.'], 401);
+    }
+    if (!hasPermission('peserta') && !hasPermission('antrean')) {
+        jsonResponse(['success' => false, 'error' => 'Akses ditolak: Akun Anda tidak memiliki izin untuk mengelola peserta.'], 403);
+    }
 }
 
 $method = $_SERVER['REQUEST_METHOD'];

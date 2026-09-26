@@ -55,5 +55,6 @@ try {
     ]);
 
 } catch (PDOException $e) {
-    jsonResponse(['success' => false, 'message' => 'Gagal mengambil data: ' . $e->getMessage()], 500);
+    error_log('Database error in eticket.php: ' . $e->getMessage());
+    jsonResponse(['success' => false, 'message' => 'Gagal mengambil data tiket'], 500);
 }

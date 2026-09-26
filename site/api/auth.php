@@ -92,7 +92,8 @@ if ($action === 'login' || ($method === 'POST' && empty($action) && isset($input
         ]);
 
     } catch (PDOException $e) {
-        jsonResponse(['success' => false, 'error' => 'Database error: ' . $e->getMessage()], 500);
+        error_log('Database error in auth.php: ' . $e->getMessage());
+        jsonResponse(['success' => false, 'error' => 'Terjadi kesalahan sistem pada database'], 500);
     }
 
 } elseif ($action === 'logout' || isset($_GET['logout'])) {

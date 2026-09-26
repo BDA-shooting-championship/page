@@ -14,6 +14,9 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
     requireAdmin();
+    if (isAdminLoggedIn() && !hasPermission('scores')) {
+        jsonResponse(['success' => false, 'error' => 'Akses ditolak: Akun Anda tidak memiliki izin untuk mengelola skor.'], 403);
+    }
 
     $db = getDB();
 
@@ -66,6 +69,9 @@ if ($method === 'GET') {
 
 } elseif ($method === 'POST') {
     requireAdmin();
+    if (isAdminLoggedIn() && !hasPermission('scores')) {
+        jsonResponse(['success' => false, 'error' => 'Akses ditolak: Akun Anda tidak memiliki izin untuk mengelola skor.'], 403);
+    }
 
     $input = json_decode(file_get_contents('php://input'), true);
 
