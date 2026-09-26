@@ -218,15 +218,8 @@ require_once __DIR__ . '/../includes/header.php';
                     <div class="flex flex-wrap items-center gap-2.5 shrink-0">
                         <div class="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-300">
                             <label class="text-xs font-bold text-gray-700 whitespace-nowrap">Jml Peserta:</label>
-                            <input type="number" min="2" max="256" x-model.number="bracketParticipantCount"
-                                   class="w-16 text-center py-1 rounded bg-white border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500">
-                            <div class="flex flex-wrap items-center gap-1 border-l border-gray-200 pl-2">
-                                <button type="button" @click="bracketParticipantCount = 8" :class="bracketParticipantCount === 8 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">8</button>
-                                <button type="button" @click="bracketParticipantCount = 16" :class="bracketParticipantCount === 16 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">16</button>
-                                <button type="button" @click="bracketParticipantCount = 32" :class="bracketParticipantCount === 32 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">32</button>
-                                <button type="button" @click="bracketParticipantCount = 64" :class="bracketParticipantCount === 64 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">64</button>
-                                <button type="button" @click="bracketParticipantCount = 128" :class="bracketParticipantCount === 128 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">128</button>
-                            </div>
+                            <input type="number" min="2" max="256" x-model.number="bracketParticipantCount" placeholder="Contoh: 16"
+                                   class="w-20 text-center py-1 rounded bg-white border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500">
                         </div>
 
                         <button type="button" @click="generateTournamentBracket(bracketParticipantCount)" 
