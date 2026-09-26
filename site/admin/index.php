@@ -820,17 +820,9 @@ include __DIR__ . '/../includes/header.php';
             <!-- Live Skor Control Header -->
             <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-copper-100 text-copper-800">
-                            Live Score Control Panel
-                        </span>
-                    </div>
-                    <h2 class="font-display text-xl sm:text-2xl font-bold text-gray-900 mt-1">
-                        Manajemen & Input Skor Langsung
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-gray-900">
+                        Manajemen &amp; Input Skor
                     </h2>
-                    <p class="text-xs text-gray-500 mt-0.5">
-                        Input langsung poin tembakan Presisi 20M (Seri 1–10 & X) dan update langsung bagan Dueling Plat.
-                    </p>
                 </div>
 
                 <div class="flex items-center flex-wrap gap-2.5">
@@ -875,11 +867,7 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- ===== SUBTAB 1: PRESISI 20M ===== -->
             <div x-show="scoresSubTab === 'presisi'" x-transition>
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                    <div class="text-xs text-gray-500">
-                        <p class="font-bold text-gray-800">Panduan Input Skor Ring Presisi 20M:</p>
-                        <p>Ketik jumlah peluru masuk pada masing-masing ring (10 s/d 1). <strong>Jumlah Masuk</strong> dan <strong>Nilai</strong> otomatis dihitung secara real-time. Nilai <strong>X</strong> tidak masuk dalam Nilai maupun Jumlah Masuk, namun menjadi penentu utama jika terjadi nilai sama. Klik <strong>Simpan</strong> untuk memperbarui skor.</p>
-                    </div>
+                <div class="flex items-center justify-end mb-4">
                     <button
                         type="button"
                         @click="syncVerifiedParticipants()"
@@ -1050,47 +1038,37 @@ include __DIR__ . '/../includes/header.php';
                             <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full" :class="duelingCategory === 'bda' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="duelingList.filter(m => m.category === 'bda').length"></span>
                         </button>
                     </div>
-                    <div class="text-xs font-semibold" :class="duelingCategory === 'umum' ? 'text-blue-700' : 'text-amber-700'">
-                        <span x-show="duelingCategory === 'umum'">Bagan &amp; Pertandingan Kelas Umum POLRI</span>
-                        <span x-show="duelingCategory === 'bda'">Bagan &amp; Pertandingan Khusus BDA Korbrimob POLRI</span>
-                    </div>
                 </div>
 
-                <!-- Tournament Bracket Maker Toolbar -->
-                <div class="bg-gradient-to-r from-copper-50 via-white to-amber-50 rounded-2xl shadow-sm p-5 border border-copper-200 mb-6">
+                <!-- Tournament Bracket Toolbar -->
+                <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-5 border border-gray-200 mb-6">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-copper-600 text-white uppercase tracking-wider">Tournament Bracket Maker</span>
-                                <span class="text-xs text-gray-500 font-semibold" x-text="filteredDuelingList.length + ' Match Terdaftar'"></span>
-                            </div>
-                            <h3 class="font-display text-lg font-bold text-gray-900 mt-1" x-text="'Bagan Turnamen Eliminasi Dueling Plat (' + (duelingCategory === 'bda' ? 'Khusus BDA Korbrimob' : 'Kelas Umum POLRI') + ')'"></h3>
-                            <p class="text-xs text-gray-600 mt-0.5">
-                                Input peserta &amp; tentukan pemenang <strong>langsung pada kotak bagan visual</strong>. Klik tombol 👑 <strong>Menang</strong> untuk langsung menaikkan pemenang ke babak berikutnya!
-                            </p>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-display text-lg font-bold text-gray-900" x-text="'Bagan Turnamen Dueling Plat (' + (duelingCategory === 'bda' ? 'Khusus BDA Korbrimob' : 'Kelas Umum POLRI') + ')'"></h3>
+                            <span class="text-xs text-gray-500 font-semibold" x-text="filteredDuelingList.length + ' Match'"></span>
                         </div>
 
                         <!-- Participant Count & Generator Controls -->
                         <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-                            <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-xl border border-gray-300 shadow-sm">
+                            <div class="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-300">
                                 <label class="text-xs font-bold text-gray-700 whitespace-nowrap">Jml Peserta:</label>
                                 <input type="number" min="2" max="256" x-model.number="bracketParticipantCount"
-                                       class="w-16 text-center py-1 rounded bg-gray-50 border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500">
+                                       class="w-16 text-center py-1 rounded bg-white border border-gray-300 text-xs font-mono font-bold focus:ring-1 focus:ring-copper-500">
                                 <div class="flex flex-wrap items-center gap-1 border-l border-gray-200 pl-2">
-                                    <button type="button" @click="bracketParticipantCount = 8" :class="bracketParticipantCount === 8 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">8</button>
-                                    <button type="button" @click="bracketParticipantCount = 16" :class="bracketParticipantCount === 16 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">16</button>
-                                    <button type="button" @click="bracketParticipantCount = 24" :class="bracketParticipantCount === 24 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 24 peserta (8 Pra-Eliminasi + 16 Besar)">24</button>
-                                    <button type="button" @click="bracketParticipantCount = 32" :class="bracketParticipantCount === 32 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">32</button>
-                                    <button type="button" @click="bracketParticipantCount = 55" :class="bracketParticipantCount === 55 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 55 peserta (23 Pra-Eliminasi + 32 Besar)">55</button>
-                                    <button type="button" @click="bracketParticipantCount = 64" :class="bracketParticipantCount === 64 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition">64</button>
-                                    <button type="button" @click="bracketParticipantCount = 67" :class="bracketParticipantCount === 67 ? 'bg-copper-600 text-white font-bold' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-1.5 py-0.5 rounded text-[11px] transition" title="Preset 67 peserta (3 Pra-Eliminasi + 64 Besar)">67</button>
+                                    <button type="button" @click="bracketParticipantCount = 8" :class="bracketParticipantCount === 8 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">8</button>
+                                    <button type="button" @click="bracketParticipantCount = 16" :class="bracketParticipantCount === 16 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">16</button>
+                                    <button type="button" @click="bracketParticipantCount = 24" :class="bracketParticipantCount === 24 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">24</button>
+                                    <button type="button" @click="bracketParticipantCount = 32" :class="bracketParticipantCount === 32 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">32</button>
+                                    <button type="button" @click="bracketParticipantCount = 55" :class="bracketParticipantCount === 55 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">55</button>
+                                    <button type="button" @click="bracketParticipantCount = 64" :class="bracketParticipantCount === 64 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">64</button>
+                                    <button type="button" @click="bracketParticipantCount = 67" :class="bracketParticipantCount === 67 ? 'bg-copper-600 text-white font-bold' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'" class="px-2 py-0.5 rounded text-[11px] transition">67</button>
                                 </div>
                             </div>
 
                             <button type="button" @click="generateTournamentBracket(bracketParticipantCount)" 
                                     class="px-4 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-xl font-bold text-xs shadow transition flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="git-merge" class="w-4 h-4"></i>
-                                <span x-text="'⚡ Buat Bagan ' + bracketParticipantCount + ' Peserta'"></span>
+                                <span x-text="'Buat Bagan ' + bracketParticipantCount + ' Peserta'"></span>
                             </button>
 
                             <button type="button" @click="resetTournamentBracket()" 
@@ -1098,38 +1076,27 @@ include __DIR__ . '/../includes/header.php';
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 <span>Reset</span>
                             </button>
-
-                            <div class="w-full flex items-center gap-2 mt-0.5">
-                                <span class="text-[11px] font-semibold text-copper-800 bg-copper-50 px-2.5 py-0.5 rounded-lg border border-copper-200 flex items-center gap-1">
-                                    <i data-lucide="info" class="w-3 h-3 text-copper-600"></i>
-                                    <span x-text="bracketCapacityInfo.label"></span>
-                                </span>
-                            </div>
                         </div>
                     </div>
 
                     <!-- View Mode Switcher -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-4 pt-3 border-t border-copper-100 text-xs">
+                    <div class="flex items-center justify-between gap-2 mt-4 pt-3 border-t border-gray-100 text-xs">
                         <div class="flex items-center gap-2">
-                            <span class="font-bold text-gray-700">Tampilan Mode Input:</span>
-                            <div class="inline-flex rounded-xl p-1 bg-gray-200/80 border border-gray-300">
+                            <span class="font-bold text-gray-700">Tampilan:</span>
+                            <div class="inline-flex rounded-xl p-1 bg-gray-100 border border-gray-200">
                                 <button type="button" @click="duelingAdminView = 'bracket'" 
                                         :class="duelingAdminView === 'bracket' ? 'bg-white shadow text-copper-700 font-bold' : 'text-gray-600 hover:text-gray-900'"
                                         class="px-3 py-1 text-xs rounded-lg transition flex items-center gap-1.5 cursor-pointer">
                                     <i data-lucide="git-merge" class="w-3.5 h-3.5"></i>
-                                    <span>Bagan Visual (Input Langsung)</span>
+                                    <span>Bagan Visual</span>
                                 </button>
                                 <button type="button" @click="duelingAdminView = 'table'" 
                                         :class="duelingAdminView === 'table' ? 'bg-white shadow text-copper-700 font-bold' : 'text-gray-600 hover:text-gray-900'"
                                         class="px-3 py-1 text-xs rounded-lg transition flex items-center gap-1.5 cursor-pointer">
                                     <i data-lucide="table" class="w-3.5 h-3.5"></i>
-                                    <span>Tabel Datar</span>
+                                    <span>Tabel</span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="text-[11px] text-gray-500 flex items-center gap-2">
-                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                            <span>Sistem eliminasi gugur adaptif: babak pra-eliminasi otomatis untuk peserta ganjil/non-pangkat 2 tanpa kartu dummy.</span>
                         </div>
                     </div>
                 </div>
@@ -1232,7 +1199,6 @@ include __DIR__ . '/../includes/header.php';
                                                             class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
                                                             :class="isSlotWinner(match, 1) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
                                                             :title="isSlotWinner(match, 1) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
-                                                        <span class="text-xs">👑</span>
                                                         <span class="text-[10px]" x-text="isSlotWinner(match, 1) ? 'MENANG' : 'Pilih'"></span>
                                                     </button>
                                                 </div>
@@ -1260,7 +1226,6 @@ include __DIR__ . '/../includes/header.php';
                                                             class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
                                                             :class="isSlotWinner(match, 2) ? 'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-300' : 'bg-gray-100 hover:bg-emerald-50 text-gray-500 hover:text-emerald-700 border border-gray-200'"
                                                             :title="isSlotWinner(match, 2) ? 'Pemenang (Klik untuk batalkan)' : 'Tentukan sebagai pemenang'">
-                                                        <span class="text-xs">👑</span>
                                                         <span class="text-[10px]" x-text="isSlotWinner(match, 2) ? 'MENANG' : 'Pilih'"></span>
                                                     </button>
                                                 </div>
@@ -1333,9 +1298,9 @@ include __DIR__ . '/../includes/header.php';
                                                     class="w-full px-2 py-1 rounded border border-gray-300 bg-gray-50 text-xs font-bold focus:ring-1 focus:ring-copper-500">
                                                 <option value="">-- Pilih Pemenang --</option>
                                                 <option :value="match.participant_1_id || match.participant_1_name" 
-                                                        x-text="match.participant_1_name ? '👑 ' + match.participant_1_name : 'Peserta 1'"></option>
+                                                        x-text="match.participant_1_name ? match.participant_1_name : 'Peserta 1'"></option>
                                                 <option :value="match.participant_2_id || match.participant_2_name" 
-                                                        x-text="match.participant_2_name ? '👑 ' + match.participant_2_name : 'Peserta 2'"></option>
+                                                        x-text="match.participant_2_name ? match.participant_2_name : 'Peserta 2'"></option>
                                             </select>
                                             <template x-if="match.next_match_id">
                                                 <div class="text-[10px] text-copper-600 font-semibold mt-0.5 flex items-center gap-0.5">

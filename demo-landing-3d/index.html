@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BDA Shooting Championship 2026 — 3D Antigravity Experience</title>
+    <meta name="description" content="Demo Landing Page 3D Interaktif Kejuaraan Menembak BDA Shooting Championship 2026. Dibangun dengan Alpine.js & Tailwind CSS.">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-bsc.png">
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+
+    <!-- Google Fonts: Oswald (Headings) & Inter (Body) & JetBrains Mono (Tech/HUD) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        copper: {
+                            50: '#fdf7f2',
+                            100: '#faeee2',
+                            200: '#f4dac2',
+                            300: '#ebbf96',
+                            400: '#e09a63',
+                            500: '#db6d20',
+                            600: '#c35516',
+                            700: '#a24115',
+                            800: '#833618',
+                            900: '#6b2f18',
+                        },
+                        tactical: {
+                            950: '#070a0e',
+                            900: '#0c1017',
+                            850: '#121722',
+                            800: '#171e2c',
+                            700: '#232d42',
+                            600: '#344260',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                        body: ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'float-slow': 'floatSlow 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
+                        'spin-slow': 'spin 30s linear infinite',
+                    },
+                    keyframes: {
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-14px) rotate(1.5deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js 3.x CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #070a0e;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        .font-display { font-family: 'Oswald', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Tactical Grid Background */
+        .tactical-grid {
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(219, 109, 32, 0.15) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+        }
+
+        /* 3D Preserves */
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c1017;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232d42;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #db6d20;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-copper-500 selection:text-white" x-data="antigravityMasterApp()">
+
+    <!-- Sound Synth & Audio Effects Notification Toast -->
+    <div x-show="toastMessage" 
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         class="fixed bottom-6 right-6 z-50 bg-tactical-800/90 backdrop-blur-md border border-copper-500/50 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm text-copper-100">
+        <span class="w-2.5 h-2.5 rounded-full bg-copper-400 animate-ping"></span>
+        <span x-text="toastMessage"></span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 backdrop-blur-xl bg-tactical-950/85 border-b border-tactical-800/80 px-4 lg:px-8 py-3.5 transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logos & Title -->
+            <div class="flex items-center gap-3.5">
+                <div class="flex items-center -space-x-2">
+                    <div class="w-10 h-10 rounded-full bg-white p-1 shadow-lg border border-copper-500/60 z-10 flex items-center justify-center shrink-0">
+                        <img src="./assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-white p-1 shadow-lg border border-copper-500/60 z-0 flex items-center justify-center shrink-0">
+                        <img src="./assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                    </div>
+                </div>
+                <div>
+                    <span class="text-[10px] tracking-widest text-copper-400 font-mono font-semibold uppercase block">KORBRIMOB POLRI</span>
+                    <h1 class="font-display text-base sm:text-lg font-bold text-white tracking-wider leading-none">BDA SHOOTING 2026</h1>
+                </div>
+            </div>
+
+            <!-- Quick Navigation & Audio Toggle -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <button @click="toggleAudio()" 
+                        class="p-2 sm:px-3 sm:py-1.5 rounded-lg border text-xs font-mono flex items-center gap-2 transition"
+                        :class="audioEnabled ? 'border-copper-500/50 bg-copper-500/10 text-copper-300' : 'border-tactical-700 bg-tactical-800 text-gray-400'">
+                    <span class="w-2 h-2 rounded-full" :class="audioEnabled ? 'bg-emerald-400 animate-pulse' : 'bg-gray-500'"></span>
+                    <span class="hidden sm:inline" x-text="audioEnabled ? 'AUDIO FX: ON' : 'AUDIO FX: MUTED'"></span>
+                </button>
+
+                <a href="#simulator" class="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-copper-400 transition">
+                    <span>Simulasi 3D</span>
+                </a>
+                <a href="#ticket" class="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-copper-400 transition">
+                    <span>Tiket Hologram</span>
+                </a>
+                <a href="#trophy" class="hidden md:inline-flex items-center gap-1.5 text-xs font-medium text-gray-300 hover:text-copper-400 transition">
+                    <span>Podium 3D</span>
+                </a>
+
+                <a href="#simulator" 
+                   class="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-500 hover:to-copper-400 text-white rounded-xl text-xs font-bold font-display tracking-wider shadow-lg shadow-copper-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0">
+                    COBA INTERAKTIF
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION: 3D ANTIGRAVITY BALLISTICS & FLOATING RETICLE -->
+    <header class="relative min-h-[92vh] flex items-center justify-center tactical-grid px-4 py-16 overflow-hidden"
+            @mousemove="handleHeroParallax($event)">
+
+        <!-- Antigravity Background Drifting Kinetic Particles (WebGL Canvas Simulation via Canvas API) -->
+        <canvas id="antigravityCanvas" class="absolute inset-0 pointer-events-none z-0 opacity-75"></canvas>
+
+        <!-- Ambient Optical Glows -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-copper-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+            
+            <!-- Realtime Telemetry HUD Tag -->
+            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-tactical-800/80 border border-copper-500/30 text-[11px] font-mono text-copper-300 mb-6 shadow-inner backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-copper-400 animate-ping"></span>
+                <span>ZERO-G BALLISTIC MODE</span>
+                <span class="text-tactical-600">|</span>
+                <span class="text-gray-300">RESIMEN I PASUKAN PELOPOR</span>
+            </div>
+
+            <!-- Main Title with Tactical Typography -->
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-wider text-white uppercase leading-none mb-4">
+                BDA SHOOTING <br class="hidden sm:inline">
+                <span class="bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500 bg-clip-text text-transparent">
+                    CHAMPIONSHIP 2026
+                </span>
+            </h1>
+
+            <p class="max-w-2xl text-gray-300 text-sm sm:text-base mb-8 leading-relaxed">
+                Pistol Presisi 20M &amp; Dueling Plat 15M (Umum POLRI &amp; Khusus BDA Korbrimob POLRI). 
+                Jelajahi arsitektur interaktif 3D generasi terbaru dengan teknologi <strong>Alpine.js</strong> dan <strong>Tailwind CSS</strong>.
+            </p>
+
+            <!-- 3D Kinetic Floating Chamber Widget -->
+            <div class="relative w-full max-w-md h-52 sm:h-64 my-2 flex items-center justify-center pointer-events-auto cursor-grab active:cursor-grabbing group"
+                 @mousedown="isDragging = true"
+                 @mouseup="isDragging = false"
+                 @mouseleave="isDragging = false"
+                 @mousemove="rotateChamber($event)"
+                 style="perspective: 1000px;">
+
+                <!-- Floating Cartridge & Optics 3D Container -->
+                <div class="relative w-64 h-44 rounded-2xl bg-tactical-900/90 border border-copper-500/40 p-4 shadow-2xl flex flex-col items-center justify-center transition-transform duration-150 ease-out preserve-3d"
+                     :style="chamberTransform">
+                    
+                    <!-- HUD Reticle Rings -->
+                    <div class="absolute inset-0 m-auto w-36 h-36 rounded-full border border-copper-500/30 border-dashed animate-spin-slow pointer-events-none"></div>
+                    <div class="absolute inset-0 m-auto w-24 h-24 rounded-full border border-copper-400/20 pointer-events-none"></div>
+                    <div class="absolute inset-x-8 top-1/2 h-[1px] bg-copper-500/30 pointer-events-none"></div>
+                    <div class="absolute inset-y-8 left-1/2 w-[1px] bg-copper-500/30 pointer-events-none"></div>
+
+                    <!-- 3D Brass Casing Silhouette (SVG Precision Geometry) -->
+                    <div class="relative z-10 animate-float-slow" style="transform: translateZ(40px);">
+                        <svg class="w-32 h-20 text-copper-400 drop-shadow-[0_10px_20px_rgba(219,109,32,0.4)]" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Bullet Ogive Head -->
+                            <path d="M140 40 C140 25, 120 22, 105 22 L105 58 C120 58, 140 55, 140 40 Z" fill="url(#bulletGradient)" />
+                            <!-- Casing Body -->
+                            <rect x="25" y="22" width="80" height="36" rx="2" fill="url(#casingGradient)" />
+                            <!-- Rim & Extractor Groove -->
+                            <rect x="18" y="20" width="7" height="40" rx="1.5" fill="url(#rimGradient)" />
+                            <rect x="12" y="24" width="6" height="32" fill="#5a3318" />
+                            <!-- Primer Pocket Base -->
+                            <rect x="8" y="22" width="4" height="36" rx="1" fill="#c35516" />
+
+                            <defs>
+                                <linearGradient id="bulletGradient" x1="105" y1="22" x2="140" y2="40" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#f59e0b" />
+                                    <stop offset="0.5" stop-color="#b45309" />
+                                    <stop offset="1" stop-color="#78350f" />
+                                </linearGradient>
+                                <linearGradient id="casingGradient" x1="25" y1="22" x2="25" y2="58" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#fde68a" />
+                                    <stop offset="0.3" stop-color="#d97706" />
+                                    <stop offset="0.7" stop-color="#92400e" />
+                                    <stop offset="1" stop-color="#451a03" />
+                                </linearGradient>
+                                <linearGradient id="rimGradient" x1="18" y1="20" x2="25" y2="60" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#fef3c7" />
+                                    <stop offset="1" stop-color="#78350f" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <!-- Antigravity Depth Shadow Tag -->
+                    <div class="mt-2 text-[10px] font-mono text-copper-300 font-semibold tracking-wider flex items-center gap-1.5" style="transform: translateZ(25px);">
+                        <i data-lucide="crosshair" class="w-3.5 h-3.5 text-copper-400"></i>
+                        <span>9×19mm PARABELLUM • ZERO-G DRIFT</span>
+                    </div>
+
+                    <div class="text-[9px] font-mono text-gray-500 mt-1" style="transform: translateZ(20px);">
+                        [Geser kursor untuk memutar 3D Cartridge]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
+                <a href="#simulator" 
+                   @click="playTriggerSound()"
+                   class="px-6 py-3.5 rounded-xl bg-copper-600 hover:bg-copper-500 text-white font-display text-sm font-bold tracking-wider shadow-xl shadow-copper-600/30 transition transform hover:-translate-y-1 flex items-center gap-2">
+                    <i data-lucide="target" class="w-4 h-4"></i>
+                    <span>UJI SIMULATOR PLAT 3D</span>
+                </a>
+
+                <a href="#ticket" 
+                   class="px-6 py-3.5 rounded-xl bg-tactical-800 hover:bg-tactical-700 text-gray-200 border border-tactical-700 font-display text-sm font-bold tracking-wider transition transform hover:-translate-y-1 flex items-center gap-2">
+                    <i data-lucide="badge-check" class="w-4 h-4 text-emerald-400"></i>
+                    <span>TIKET HOLOGRAFIK 3D</span>
+                </a>
+            </div>
+
+            <!-- Telemetry Bar -->
+            <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-4xl text-left">
+                <div class="bg-tactical-900/70 border border-tactical-800 p-3.5 rounded-xl">
+                    <span class="text-[10px] font-mono text-gray-400 block">TANGGAL EVENT</span>
+                    <span class="font-display text-base font-bold text-white tracking-wide">17-18 OKTOBER 2026</span>
+                </div>
+                <div class="bg-tactical-900/70 border border-tactical-800 p-3.5 rounded-xl">
+                    <span class="text-[10px] font-mono text-gray-400 block">LOKASI LAPANGAN</span>
+                    <span class="font-display text-base font-bold text-copper-400 tracking-wide">RESIMEN I PELOPOR</span>
+                </div>
+                <div class="bg-tactical-900/70 border border-tactical-800 p-3.5 rounded-xl">
+                    <span class="text-[10px] font-mono text-gray-400 block">KATEGORI KHUSUS BDA</span>
+                    <span class="font-display text-base font-bold text-emerald-400 tracking-wide">RP 100.000</span>
+                </div>
+                <div class="bg-tactical-900/70 border border-tactical-800 p-3.5 rounded-xl">
+                    <span class="text-[10px] font-mono text-gray-400 block">KATEGORI UMUM POLRI</span>
+                    <span class="font-display text-base font-bold text-white tracking-wide">RP 200.000</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SECTION 1: 3D DUELING PLAT 15M INTERACTIVE SIMULATOR -->
+    <section id="simulator" class="py-20 px-4 bg-tactical-950 border-t border-tactical-800/80 relative"
+             x-data="duelingSimulatorApp()">
+        
+        <div class="max-w-4xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-10">
+                <span class="text-xs font-mono font-semibold text-copper-400 tracking-widest uppercase block mb-1">
+                    INTERACTIVE TARGET MECHANICS
+                </span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-wider">
+                    3D DUELING PLAT 15M SIMULATOR
+                </h2>
+                <p class="text-sm text-gray-400 max-w-xl mx-auto mt-2">
+                    Rasakan sensasi menjatuhkan 5 plat baja berengsel dengan efek pantulan inersia 3D dan suara benturan baja sintetis.
+                </p>
+            </div>
+
+            <!-- Simulator Box -->
+            <div class="bg-tactical-900 border border-tactical-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                
+                <!-- Tactical Top Control Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-tactical-800">
+                    <div class="flex items-center gap-3">
+                        <div class="px-3 py-1 bg-tactical-950 border border-tactical-700 rounded-lg text-xs font-mono text-gray-300">
+                            JARAK: <span class="text-copper-400 font-bold">15 METER</span>
+                        </div>
+                        <div class="px-3 py-1 bg-tactical-950 border border-tactical-700 rounded-lg text-xs font-mono text-gray-300">
+                            WAKTU: <span class="text-amber-400 font-bold" x-text="timerFormatted">0.00 s</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button @click="resetPlates()" 
+                                class="px-4 py-2 rounded-xl bg-tactical-800 hover:bg-tactical-700 text-xs font-mono font-semibold text-white border border-tactical-700 transition flex items-center gap-1.5">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-copper-400"></i>
+                            <span>RESET PLAT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3D Target Stand Range -->
+                <div class="relative py-16 sm:py-24 my-6 bg-gradient-to-b from-tactical-950 via-tactical-900 to-tactical-950 rounded-2xl border border-tactical-800/80 px-4 flex justify-center items-end gap-3 sm:gap-8 overflow-hidden select-none"
+                     style="perspective: 900px;">
+                    
+                    <!-- Sand Berm Background Lines -->
+                    <div class="absolute inset-x-0 top-6 text-center pointer-events-none opacity-20">
+                        <span class="font-mono text-xs text-gray-500 tracking-widest">[ BERM IMPACT WALL • RESIMEN I PELOPOR ]</span>
+                    </div>
+
+                    <!-- Heavy Steel Mounting Rail -->
+                    <div class="absolute bottom-8 left-4 right-4 h-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 rounded shadow-2xl border-t border-gray-600"></div>
+
+                    <!-- 5 Steel Plates with 3D Fall Kinematics -->
+                    <template x-for="(plate, idx) in plates" :key="idx">
+                        <div class="relative flex flex-col items-center cursor-crosshair group"
+                             @click="shootPlate(idx)">
+                            
+                            <!-- Steel Plate Disc -->
+                            <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full border-4 shadow-2xl transition-all duration-300 ease-out flex items-center justify-center font-display font-bold text-sm sm:text-base select-none"
+                                 :class="plate.down ? 'border-gray-700 bg-gray-800 text-gray-600' : 'border-gray-300 bg-gradient-to-br from-gray-100 via-gray-300 to-gray-400 text-gray-900 hover:scale-105 active:scale-95 shadow-copper-500/20'"
+                                 :style="plate.down ? 'transform: rotateX(-88deg) translateY(10px); opacity: 0.25;' : 'transform: rotateX(0deg);'">
+                                <span x-text="idx + 1"></span>
+                            </div>
+
+                            <!-- Stand Leg -->
+                            <div class="w-3 h-14 sm:h-16 bg-gradient-to-r from-gray-700 via-gray-500 to-gray-700 rounded-b mt-[-2px] shadow-md"></div>
+
+                            <!-- Bullet Impact Spark Effect (Flash on Hit) -->
+                            <div x-show="plate.flash"
+                                 x-transition:leave="transition ease-out duration-300"
+                                 x-transition:leave-start="opacity-100 scale-125"
+                                 x-transition:leave-end="opacity-0 scale-150"
+                                 class="absolute -top-4 w-12 h-12 bg-amber-400/80 rounded-full blur-md pointer-events-none"></div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer Status & Game Results -->
+                <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-tactical-800 text-xs font-mono">
+                    <div class="text-gray-400">
+                        STATUS TEMBAKAN: 
+                        <span class="font-bold text-copper-400" x-text="`${downCount} / 5 PLAT JATUH`"></span>
+                    </div>
+
+                    <div x-show="isFinished" 
+                         x-transition 
+                         class="text-emerald-400 font-bold flex items-center gap-1.5 animate-pulse">
+                        <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                        <span x-text="`SUKSES! Semua plat tumbang dalam waktu ${timerFormatted}!`"></span>
+                    </div>
+
+                    <div class="text-gray-500 text-[11px]">
+                        *Klik plat untuk memicu dentang baja
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: 3D HOLOGRAPHIC SHOOTER ID CARD (E-TICKET) -->
+    <section id="ticket" class="py-20 px-4 bg-tactical-900/60 border-t border-tactical-800/80"
+             x-data="holographicCardApp()">
+        
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs font-mono font-semibold text-copper-400 tracking-widest uppercase block mb-1">
+                    ANTIGRAVITY PASS TECHNOLOGY
+                </span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-wider">
+                    3D HOLOGRAPHIC SHOOTER PASS
+                </h2>
+                <p class="text-sm text-gray-400 max-w-xl mx-auto mt-2">
+                    Uji coba ID Card &amp; E-Ticket resmi dengan kedalaman 3D berlapis (*layered translateZ*) yang merespons pergerakan kursor Anda.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Live Configuration Form -->
+                <div class="lg:col-span-5 bg-tactical-900 border border-tactical-800 rounded-3xl p-6 shadow-xl space-y-4">
+                    <h3 class="font-display text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-4 h-4 text-copper-400"></i>
+                        <span>Kustomisasi Data Kartu</span>
+                    </h3>
+                    <p class="text-xs text-gray-400">
+                        Ketik nama dan pilih kategori untuk melihat pembaruan data secara realtime di atas kartu 3D:
+                    </p>
+
+                    <div>
+                        <label class="block text-xs font-mono text-gray-300 mb-1.5">NAMA PENEMBAK</label>
+                        <input type="text" x-model="shooterName" 
+                               class="w-full bg-tactical-950 border border-tactical-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-copper-500 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-gray-300 mb-1.5">KESATUAN / CLUB</label>
+                        <input type="text" x-model="shooterUnit" 
+                               class="w-full bg-tactical-950 border border-tactical-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-copper-500 font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-gray-300 mb-1.5">KATEGORI TANDING</label>
+                        <select x-model="shooterCategory" 
+                                class="w-full bg-tactical-950 border border-tactical-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-copper-500 font-medium">
+                            <option value="Dueling Plat 15M (Khusus BDA)">Dueling Plat 15M (Khusus BDA)</option>
+                            <option value="Pistol Presisi 20M (Umum POLRI)">Pistol Presisi 20M (Umum POLRI)</option>
+                            <option value="Dueling Plat 15M (Umum POLRI)">Dueling Plat 15M (Umum POLRI)</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-2">
+                        <button @click="flipCard()" 
+                                class="w-full py-2.5 rounded-xl bg-tactical-800 hover:bg-tactical-700 text-copper-300 border border-tactical-700 text-xs font-mono font-semibold flex items-center justify-center gap-2 transition">
+                            <i data-lucide="flip-horizontal" class="w-4 h-4"></i>
+                            <span>BALIK KARTU (SISI BELAKANG)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3D Holographic Card Viewport -->
+                <div class="lg:col-span-7 flex justify-center items-center py-6"
+                     @mousemove="handleCardMove($event)"
+                     @mouseleave="handleCardLeave()"
+                     style="perspective: 1200px;">
+
+                    <!-- Card Body with 3D Transform -->
+                    <div class="relative w-full max-w-sm sm:max-w-md h-[460px] rounded-3xl bg-gradient-to-br from-tactical-900 via-tactical-850 to-tactical-950 p-6 sm:p-7 border border-copper-500/50 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-transform duration-100 ease-out select-none preserve-3d"
+                         :style="cardTransformStyle">
+
+                        <!-- Holographic Specular Glare (Reflective Sheen) -->
+                        <div class="pointer-events-none absolute inset-0 rounded-3xl transition-opacity duration-200"
+                             :style="glareStyle"></div>
+
+                        <!-- FRONT SIDE -->
+                        <div x-show="!isFlipped" class="h-full flex flex-col justify-between preserve-3d">
+                            
+                            <!-- Top Bar (Z: 30px) -->
+                            <div class="flex items-center justify-between border-b border-tactical-700/80 pb-4"
+                                 style="transform: translateZ(35px);">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-full bg-white p-1 shadow-md border border-copper-400 shrink-0">
+                                        <img src="./assets/logo-championship.png" alt="BSC 2026" class="w-full h-full object-contain">
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] font-mono tracking-widest text-copper-400 font-bold uppercase block">OFFICIAL E-PASS</span>
+                                        <h4 class="text-sm font-bold text-white font-display tracking-wider">BDA CHAMPIONSHIP 2026</h4>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-md">
+                                    VERIFIED
+                                </span>
+                            </div>
+
+                            <!-- Shooter Identification (Z: 50px) -->
+                            <div class="my-4 space-y-3" style="transform: translateZ(50px);">
+                                <div>
+                                    <span class="text-[10px] font-mono text-gray-400 block">NAMA LENGKAP PENEMBAK</span>
+                                    <h3 class="text-xl font-bold text-white font-display tracking-wider uppercase truncate" x-text="shooterName"></h3>
+                                </div>
+
+                                <div>
+                                    <span class="text-[10px] font-mono text-gray-400 block">KESATUAN / ASAL</span>
+                                    <p class="text-xs font-semibold text-gray-200 truncate" x-text="shooterUnit"></p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2.5 pt-2">
+                                    <div class="bg-tactical-950/80 border border-tactical-700 p-2.5 rounded-xl">
+                                        <span class="text-[9px] font-mono text-gray-400 block">NO. PESERTA</span>
+                                        <span class="text-copper-400 font-mono font-bold text-sm tracking-wider">BSC-075</span>
+                                    </div>
+                                    <div class="bg-tactical-950/80 border border-tactical-700 p-2.5 rounded-xl">
+                                        <span class="text-[9px] font-mono text-gray-400 block">KATEGORI</span>
+                                        <span class="text-gray-200 font-semibold text-xs truncate block" x-text="shooterCategory"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Bar & Hologram Security Ribbon (Z: 65px) -->
+                            <div class="border-t border-tactical-700/80 pt-3 flex items-center justify-between"
+                                 style="transform: translateZ(65px);">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-white p-0.5 rounded shadow">
+                                        <img src="./assets/qr-bda-shooting-championship.png" alt="QR" class="w-full h-full object-contain">
+                                    </div>
+                                    <div>
+                                        <span class="text-[9px] font-mono text-gray-400 block">SECURE REGISTRATION</span>
+                                        <span class="text-[10px] font-mono text-copper-300 font-bold">BDA-750-BOGOR</span>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-mono text-gray-500">17-18 OKT 2026</span>
+                            </div>
+
+                        </div>
+
+                        <!-- BACK SIDE (FLIPPED) -->
+                        <div x-show="isFlipped" class="h-full flex flex-col justify-between preserve-3d" style="transform: rotateY(180deg);">
+                            <div class="border-b border-tactical-700/80 pb-3" style="transform: translateZ(30px);">
+                                <span class="text-[10px] font-mono text-copper-400 block">SAFETY &amp; RULES INSTRUCTION</span>
+                                <h4 class="text-sm font-bold text-white font-display">TATA TERTIB LAPANGAN TEMBAK</h4>
+                            </div>
+
+                            <div class="space-y-2 text-[11px] text-gray-300 leading-relaxed my-auto" style="transform: translateZ(45px);">
+                                <p class="flex items-start gap-1.5">
+                                    <span class="text-copper-400 font-bold">•</span>
+                                    <span>Wajib membawa KTA &amp; senjata sesuai standar regulasi kejuaraan.</span>
+                                </p>
+                                <p class="flex items-start gap-1.5">
+                                    <span class="text-copper-400 font-bold">•</span>
+                                    <span>Hadir 30 menit sebelum gelombang menembak dimulai.</span>
+                                </p>
+                                <p class="flex items-start gap-1.5">
+                                    <span class="text-copper-400 font-bold">•</span>
+                                    <span>Tunjukkan E-Ticket ini di meja verifikasi panitia.</span>
+                                </p>
+                            </div>
+
+                            <div class="border-t border-tactical-700/80 pt-3 text-center" style="transform: translateZ(30px);">
+                                <span class="text-[10px] font-mono text-emerald-400 font-bold block">KEDUNGHALANG RANGE • RESIMEN I PELOPOR</span>
+                                <span class="text-[9px] font-mono text-gray-500">PANITIA BDA SHOOTING CHAMPIONSHIP</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: 3D TROPHY & PODIUM SHOWCASE -->
+    <section id="trophy" class="py-20 px-4 bg-tactical-950 border-t border-tactical-800/80 relative"
+             x-data="{ activeTab: 'presisi' }">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs font-mono font-semibold text-copper-400 tracking-widest uppercase block mb-1">
+                    HONOR &amp; GLORY
+                </span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-wider">
+                    PODIUM &amp; TOTAL HADIAH KEJUARAAN
+                </h2>
+                <p class="text-sm text-gray-400 max-w-xl mx-auto mt-2">
+                    Memperebutkan Piala Bergilir, Piala Tetap, Medali Emas/Perak/Perunggu, serta Total Hadiah Uang Tunai.
+                </p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex p-1 rounded-xl bg-tactical-900 border border-tactical-800">
+                    <button @click="activeTab = 'presisi'" 
+                            class="px-5 py-2 rounded-lg text-xs font-mono font-bold transition"
+                            :class="activeTab === 'presisi' ? 'bg-copper-600 text-white shadow' : 'text-gray-400 hover:text-white'">
+                        PISTOL PRESISI 20M
+                    </button>
+                    <button @click="activeTab = 'dueling'" 
+                            class="px-5 py-2 rounded-lg text-xs font-mono font-bold transition"
+                            :class="activeTab === 'dueling' ? 'bg-copper-600 text-white shadow' : 'text-gray-400 hover:text-white'">
+                        DUELING PLAT 15M
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3D Podium Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end" style="perspective: 1000px;">
+                
+                <!-- JUARA 2 (PERAK) -->
+                <div class="bg-tactical-900/80 border border-tactical-800 rounded-3xl p-6 text-center shadow-xl transition-transform duration-300 hover:-translate-y-2 order-2 md:order-1"
+                     style="transform: rotateY(4deg);">
+                    <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-slate-300 text-gray-900 font-display font-bold text-xl flex items-center justify-center shadow-lg shadow-slate-300/20">
+                        2
+                    </div>
+                    <span class="text-xs font-mono font-bold text-slate-300 uppercase block">JUARA II (PERAK)</span>
+                    <h4 class="font-display text-xl font-bold text-white mt-1">UANG TUNAI + TROPHY</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-mono">Piagam Penghargaan &amp; Medali Perak</p>
+                </div>
+
+                <!-- JUARA 1 (EMAS) - ELEVATED CENTER -->
+                <div class="bg-gradient-to-b from-tactical-850 to-tactical-900 border-2 border-copper-500 rounded-3xl p-8 text-center shadow-2xl transition-transform duration-300 hover:-translate-y-3 order-1 md:order-2 md:-translate-y-4"
+                     style="transform: translateZ(40px);">
+                    <div class="inline-block px-3 py-1 bg-copper-500/20 text-copper-300 text-[10px] font-mono font-bold rounded-full mb-3 border border-copper-500/40">
+                        JUARA UTAMA
+                    </div>
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 text-gray-950 font-display font-bold text-2xl flex items-center justify-center shadow-xl shadow-amber-500/30 animate-pulse">
+                        1
+                    </div>
+                    <span class="text-xs font-mono font-bold text-amber-400 uppercase block">JUARA I (EMAS)</span>
+                    <h4 class="font-display text-2xl font-bold text-white mt-1">UANG TUNAI + TROPHY BERGILIR</h4>
+                    <p class="text-xs text-gray-300 mt-2 font-mono">Piagam Kehormatan &amp; Medali Emas</p>
+                </div>
+
+                <!-- JUARA 3 (PERUNGGU) -->
+                <div class="bg-tactical-900/80 border border-tactical-800 rounded-3xl p-6 text-center shadow-xl transition-transform duration-300 hover:-translate-y-2 order-3"
+                     style="transform: rotateY(-4deg);">
+                    <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-amber-700 text-white font-display font-bold text-xl flex items-center justify-center shadow-lg shadow-amber-700/20">
+                        3
+                    </div>
+                    <span class="text-xs font-mono font-bold text-amber-600 uppercase block">JUARA III (PERUNGGU)</span>
+                    <h4 class="font-display text-xl font-bold text-white mt-1">UANG TUNAI + TROPHY</h4>
+                    <p class="text-xs text-gray-400 mt-2 font-mono">Piagam Penghargaan &amp; Medali Perunggu</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-tactical-950 border-t border-tactical-800 py-12 px-4 text-center text-xs text-gray-500 font-mono">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <div class="flex items-center justify-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-white p-1">
+                    <img src="./assets/logo-bda.png" class="w-full h-full object-contain">
+                </div>
+                <div class="w-8 h-8 rounded-full bg-white p-1">
+                    <img src="./assets/logo-championship.png" class="w-full h-full object-contain">
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm font-semibold font-display tracking-wider">
+                BDA SHOOTING CHAMPIONSHIP 2026 — RESIMEN I PASUKAN PELOPOR
+            </p>
+            <p>
+                Arsitektur 3D Interaktif menggunakan <strong>Alpine.js 3.x</strong> &amp; <strong>Tailwind CSS</strong>.
+            </p>
+            <p class="text-[11px] text-gray-600">
+                &copy; 2026 Leting BDA 750 Korbrimob POLRI. Seluruh hak cipta dilindungi.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC WITH ALPINE.JS & WEB AUDIO SYNTHESIZER -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            // Re-initialize Lucide Icons when Alpine binds
+            setTimeout(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, 100);
+        });
+
+        // 1. MASTER APP
+        function antigravityMasterApp() {
+            return {
+                audioEnabled: true,
+                toastMessage: null,
+                isDragging: false,
+                chamberRotX: 0,
+                chamberRotY: 0,
+
+                init() {
+                    this.initAntigravityCanvas();
+                    // Audio unlock listener for mobile browsers
+                    document.addEventListener('click', () => {
+                        this.ensureAudioContext();
+                    }, { once: true });
+                },
+
+                showToast(msg) {
+                    this.toastMessage = msg;
+                    setTimeout(() => { this.toastMessage = null; }, 3000);
+                },
+
+                toggleAudio() {
+                    this.audioEnabled = !this.audioEnabled;
+                    this.showToast(this.audioEnabled ? 'Audio Efek Diaktifkan' : 'Audio Efek Dibisukan');
+                },
+
+                ensureAudioContext() {
+                    if (!window._audioCtx && this.audioEnabled) {
+                        window._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (window._audioCtx && window._audioCtx.state === 'suspended') {
+                        window._audioCtx.resume();
+                    }
+                },
+
+                playTriggerSound() {
+                    if (!this.audioEnabled) return;
+                    this.ensureAudioContext();
+                    try {
+                        const ctx = window._audioCtx;
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(450, ctx.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.12);
+                        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start();
+                        osc.stop(ctx.currentTime + 0.12);
+                    } catch(e) {}
+                },
+
+                handleHeroParallax(e) {
+                    if (this.isDragging) return;
+                    const cx = window.innerWidth / 2;
+                    const cy = window.innerHeight / 2;
+                    this.chamberRotY = ((e.clientX - cx) / cx) * 20;
+                    this.chamberRotX = ((e.clientY - cy) / cy) * -20;
+                },
+
+                rotateChamber(e) {
+                    if (!this.isDragging) return;
+                    this.chamberRotY += e.movementX * 0.5;
+                    this.chamberRotX -= e.movementY * 0.5;
+                },
+
+                get chamberTransform() {
+                    return `transform: rotateX(${this.chamberRotX}deg) rotateY(${this.chamberRotY}deg);`;
+                },
+
+                // Background Ambient Particles in Zero-G
+                initAntigravityCanvas() {
+                    const canvas = document.getElementById('antigravityCanvas');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    let width = canvas.width = window.innerWidth;
+                    let height = canvas.height = window.innerHeight;
+
+                    window.addEventListener('resize', () => {
+                        width = canvas.width = window.innerWidth;
+                        height = canvas.height = window.innerHeight;
+                    });
+
+                    const particles = Array.from({ length: 45 }, () => ({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 2 + 0.7,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: -Math.random() * 0.6 - 0.2, // Floats upward (antigravity)
+                        alpha: Math.random() * 0.6 + 0.2,
+                        glow: Math.random() > 0.6
+                    }));
+
+                    function loop() {
+                        ctx.clearRect(0, 0, width, height);
+                        particles.forEach(p => {
+                            p.x += p.vx;
+                            p.y += p.vy;
+
+                            if (p.y < 0) {
+                                p.y = height + 10;
+                                p.x = Math.random() * width;
+                            }
+                            if (p.x < 0) p.x = width;
+                            if (p.x > width) p.x = 0;
+
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                            ctx.fillStyle = p.glow 
+                                ? `rgba(219, 109, 32, ${p.alpha})` 
+                                : `rgba(226, 232, 240, ${p.alpha * 0.5})`;
+                            ctx.fill();
+                        });
+                        requestAnimationFrame(loop);
+                    }
+                    loop();
+                }
+            }
+        }
+
+        // 2. DUELING STEEL PLATES SIMULATOR
+        function duelingSimulatorApp() {
+            return {
+                plates: [
+                    { down: false, flash: false },
+                    { down: false, flash: false },
+                    { down: false, flash: false },
+                    { down: false, flash: false },
+                    { down: false, flash: false },
+                ],
+                startTime: null,
+                elapsedSeconds: 0,
+                timerInterval: null,
+                isFinished: false,
+
+                get downCount() {
+                    return this.plates.filter(p => p.down).length;
+                },
+
+                get timerFormatted() {
+                    return (this.elapsedSeconds).toFixed(2) + ' s';
+                },
+
+                shootPlate(idx) {
+                    if (this.plates[idx].down) return;
+
+                    // Start timer on first shot
+                    if (!this.startTime) {
+                        this.startTime = Date.now();
+                        this.timerInterval = setInterval(() => {
+                            this.elapsedSeconds = (Date.now() - this.startTime) / 1000;
+                        }, 50);
+                    }
+
+                    this.plates[idx].down = true;
+                    this.plates[idx].flash = true;
+                    setTimeout(() => { this.plates[idx].flash = false; }, 200);
+
+                    this.playSteelImpactSound();
+
+                    // Check if all plates down
+                    if (this.downCount === 5) {
+                        clearInterval(this.timerInterval);
+                        this.isFinished = true;
+                        this.playVictorySound();
+                    }
+                },
+
+                resetPlates() {
+                    clearInterval(this.timerInterval);
+                    this.startTime = null;
+                    this.elapsedSeconds = 0;
+                    this.isFinished = false;
+                    this.plates.forEach(p => {
+                        p.down = false;
+                        p.flash = false;
+                    });
+                    this.playResetSound();
+                },
+
+                // High-Frequency Resonant Steel Clang (Synthesis)
+                playSteelImpactSound() {
+                    try {
+                        const ctx = window._audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                        const now = ctx.currentTime;
+
+                        // Metallic Bell Ring 1
+                        const osc1 = ctx.createOscillator();
+                        const gain1 = ctx.createGain();
+                        osc1.type = 'triangle';
+                        osc1.frequency.setValueAtTime(840, now);
+                        osc1.frequency.exponentialRampToValueAtTime(140, now + 0.4);
+                        gain1.gain.setValueAtTime(0.5, now);
+                        gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                        osc1.connect(gain1);
+                        gain1.connect(ctx.destination);
+                        osc1.start(now);
+                        osc1.stop(now + 0.4);
+
+                        // Metallic High Overtone Ring 2
+                        const osc2 = ctx.createOscillator();
+                        const gain2 = ctx.createGain();
+                        osc2.type = 'sine';
+                        osc2.frequency.setValueAtTime(1920, now);
+                        gain2.gain.setValueAtTime(0.3, now);
+                        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                        osc2.connect(gain2);
+                        gain2.connect(ctx.destination);
+                        osc2.start(now);
+                        osc2.stop(now + 0.3);
+                    } catch(e) {}
+                },
+
+                playResetSound() {
+                    try {
+                        const ctx = window._audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                        const now = ctx.currentTime;
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(220, now);
+                        osc.frequency.exponentialRampToValueAtTime(440, now + 0.15);
+                        gain.gain.setValueAtTime(0.2, now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.15);
+                    } catch(e) {}
+                },
+
+                playVictorySound() {
+                    try {
+                        const ctx = window._audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                        [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                            const now = ctx.currentTime + (i * 0.1);
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            osc.type = 'triangle';
+                            osc.frequency.setValueAtTime(freq, now);
+                            gain.gain.setValueAtTime(0.3, now);
+                            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.start(now);
+                            osc.stop(now + 0.25);
+                        });
+                    } catch(e) {}
+                }
+            }
+        }
+
+        // 3. 3D HOLOGRAPHIC CARD APP
+        function holographicCardApp() {
+            return {
+                shooterName: 'Bripka Ruly Ardana Putra',
+                shooterUnit: 'Sat Brimob Polda Jabar',
+                shooterCategory: 'Dueling Plat 15M (Khusus BDA)',
+                isFlipped: false,
+                cardRotX: 0,
+                cardRotY: 0,
+                glareX: 50,
+                glareY: 50,
+                glareOpacity: 0,
+
+                flipCard() {
+                    this.isFlipped = !this.isFlipped;
+                },
+
+                handleCardMove(e) {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    this.cardRotY = ((x / rect.width) - 0.5) * 32;
+                    this.cardRotX = ((y / rect.height) - 0.5) * -32;
+
+                    this.glareX = (x / rect.width) * 100;
+                    this.glareY = (y / rect.height) * 100;
+                    this.glareOpacity = 0.45;
+                },
+
+                handleCardLeave() {
+                    this.cardRotX = 0;
+                    this.cardRotY = 0;
+                    this.glareOpacity = 0;
+                },
+
+                get cardTransformStyle() {
+                    const baseRot = this.isFlipped ? 180 : 0;
+                    return `transform: rotateX(${this.cardRotX}deg) rotateY(${this.cardRotY + baseRot}deg);`;
+                },
+
+                get glareStyle() {
+                    return `background: radial-gradient(circle at ${this.glareX}% ${this.glareY}%, rgba(219,109,32,0.45) 0%, rgba(255,255,255,0.12) 25%, transparent 65%); opacity: ${this.glareOpacity};`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
