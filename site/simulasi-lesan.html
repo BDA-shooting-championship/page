@@ -29,12 +29,16 @@
         }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts & CDN Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Lucide Icons (Deferred Minified Bundle) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 
     <style>
         body { 
@@ -75,11 +79,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2.5">
                 <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white p-1 shadow-md border border-gray-200 flex items-center justify-center">
-                    <img src="/assets/logo-bda.png" alt="Logo BDA" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                    <picture>
+                        <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA" class="w-full h-full object-contain" width="36" height="36" loading="eager" decoding="async" onerror="this.style.display='none'">
+                    </picture>
                 </div>
                 <span class="text-copper-500 font-bold text-xs select-none">✕</span>
                 <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white p-1 shadow-md border border-gray-200 flex items-center justify-center">
-                    <img src="/assets/logo-championship.png" alt="Logo BSC" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                    <picture>
+                        <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC" class="w-full h-full object-contain" width="36" height="36" loading="eager" decoding="async" onerror="this.style.display='none'">
+                    </picture>
                 </div>
                 <div>
                     <h1 class="font-display text-sm sm:text-base font-bold text-white tracking-wide leading-tight">SIMULASI MENEMBAK PRESISI 25M</h1>

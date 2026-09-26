@@ -6,11 +6,17 @@
             <div class="md:col-span-1">
                 <div class="flex items-center gap-2.5 mb-4">
                     <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center shadow-md">
-                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                            <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="40" height="40" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="font-display font-bold text-xs sm:text-sm text-copper-400 select-none">X</span>
                     <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center shadow-md">
-                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                            <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="40" height="40" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="font-display font-bold text-lg text-copper-400 ml-1">BSC 2026</span>
                 </div>

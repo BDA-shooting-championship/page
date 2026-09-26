@@ -113,11 +113,17 @@ include __DIR__ . '/../includes/header.php';
             <div class="text-center mb-8">
                 <div class="flex justify-center items-center gap-3 mb-4">
                     <div class="w-16 h-16 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center">
-                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-12 w-12 object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                            <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="h-12 w-12 object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="text-gray-400 font-bold text-sm">✕</span>
                     <div class="w-16 h-16 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center">
-                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-12 w-12 object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                            <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="h-12 w-12 object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                 </div>
                 <h1 class="font-display text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Admin Dashboard</h1>
@@ -193,7 +199,10 @@ include __DIR__ . '/../includes/header.php';
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-gray-200">
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-sm border border-gray-200 flex items-center justify-center shrink-0">
-                    <img src="/assets/logo-bda.png" alt="BDA" class="h-9 w-9 object-contain">
+                    <picture>
+                        <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                        <img src="/assets/logo-bda.png" alt="BDA" class="h-9 w-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                    </picture>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">

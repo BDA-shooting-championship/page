@@ -15,6 +15,14 @@ $currentPage = $currentPage ?? '';
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/favicon-192.png">
     
+    <!-- Performance Preconnect & DNS-Prefetch -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -38,12 +46,10 @@ $currentPage = $currentPage ?? '';
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Lucide Icons (Deferred Minified Bundle for Instant First Paint) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
     
     <!-- Force Light Mode Only -->
     <script>
@@ -53,7 +59,16 @@ $currentPage = $currentPage ?? '';
     
     <style>
         [x-cloak] { display: none !important; }
-        body { font-family: 'Inter', sans-serif; }
+        html {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+        }
         .font-display { font-family: 'Oswald', sans-serif; }
         .target-pattern { 
             background-image: radial-gradient(circle, rgba(219,109,32,0.05) 1px, transparent 1px);
@@ -65,6 +80,10 @@ $currentPage = $currentPage ?? '';
         .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+        .section-lazy {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 650px;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 font-body" x-data="{ mobileMenu: false }">
@@ -76,11 +95,17 @@ $currentPage = $currentPage ?? '';
             <!-- Logo with X in the middle -->
             <a href="/" class="flex items-center gap-2 sm:gap-2.5">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white p-0.5 shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
-                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                    <picture>
+                        <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="40" height="40" loading="eager" decoding="async">
+                    </picture>
                 </div>
                 <span class="font-display font-bold text-xs sm:text-sm text-copper-600 select-none">X</span>
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white p-0.5 shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
-                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                    <picture>
+                        <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="40" height="40" loading="eager" decoding="async">
+                    </picture>
                 </div>
                 <div class="flex flex-col ml-1">
                     <span class="font-display font-bold text-base leading-tight text-copper-600">BSC 2026</span>

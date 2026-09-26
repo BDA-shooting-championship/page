@@ -14,7 +14,10 @@ require_once __DIR__ . '/includes/header.php';
         <!-- 1. Organizer Badge with White Canvas for BDA Logo -->
         <div class="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold text-white mb-3 shadow-lg">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white p-1 shadow-md border border-white/80 flex items-center justify-center shrink-0">
-                <img src="/assets/logo-bda.png" alt="Logo BDA" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                <picture>
+                    <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                    <img src="/assets/logo-bda.png" alt="Logo BDA" class="w-full h-full object-contain" width="36" height="36" loading="eager" decoding="async" onerror="this.style.display='none'">
+                </picture>
             </div>
             <span class="tracking-wide uppercase text-[11px] font-bold text-copper-200">Brigade Diraya Adikara (BDA) 750</span>
         </div>
@@ -35,7 +38,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="relative group">
                 <!-- Outer Reticle Ring (Clockwise Rotation 50s) with Degree Ticks -->
                 <div class="absolute -inset-8 sm:-inset-11 md:-inset-14 pointer-events-none flex items-center justify-center">
-                    <svg class="w-full h-full text-copper-400/35 animate-[spin_50s_linear_infinite]" viewBox="0 0 200 200" fill="none">
+                    <svg class="w-full h-full text-copper-400/35 animate-[spin_50s_linear_infinite]" style="will-change: transform; transform: translateZ(0);" viewBox="0 0 200 200" fill="none">
                         <circle cx="100" cy="100" r="94" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 8" />
                         <circle cx="100" cy="100" r="88" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 10" opacity="0.6" />
                         <!-- Degree ticks -->
@@ -53,7 +56,7 @@ require_once __DIR__ . '/includes/header.php';
 
                 <!-- Inner Crosshair Reticle Ring (Counter-Clockwise Rotation 30s) -->
                 <div class="absolute -inset-4 sm:-inset-6 md:-inset-8 pointer-events-none flex items-center justify-center">
-                    <svg class="w-full h-full text-amber-400/30 animate-[spin_30s_linear_infinite_reverse]" viewBox="0 0 200 200" fill="none">
+                    <svg class="w-full h-full text-amber-400/30 animate-[spin_30s_linear_infinite_reverse]" style="will-change: transform; transform: translateZ(0);" viewBox="0 0 200 200" fill="none">
                         <circle cx="100" cy="100" r="82" stroke="currentColor" stroke-width="1" stroke-dasharray="24 16" />
                         <line x1="100" y1="14" x2="100" y2="28" stroke="currentColor" stroke-width="1.5" />
                         <line x1="100" y1="172" x2="100" y2="186" stroke="currentColor" stroke-width="1.5" />
@@ -70,9 +73,17 @@ require_once __DIR__ . '/includes/header.php';
                      :style="'transform: perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(' + (isHovered ? '1.04, 1.04, 1.04' : '1, 1, 1') + ')'"
                      @mouseenter="isHovered = true"
                      @mouseleave="isHovered = false">
-                    <img src="/assets/logo-championship.png" 
-                         alt="Logo BDA Shooting Championship 2026" 
-                         class="w-full h-full object-contain drop-shadow-xl select-none pointer-events-none">
+                    <picture>
+                        <source srcset="/assets/logo-championship.webp" type="image/webp">
+                        <img src="/assets/logo-championship.png" 
+                             alt="Logo BDA Shooting Championship 2026" 
+                             class="w-full h-full object-contain drop-shadow-xl select-none pointer-events-none"
+                             width="384"
+                             height="384"
+                             fetchpriority="high"
+                             loading="eager"
+                             decoding="async">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -186,18 +197,24 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- About Section (Tight Padding) -->
-<section id="tentang" class="py-8 md:py-10 bg-gray-50">
+<!-- About Section (Tight Padding & Lazy Rendering) -->
+<section id="tentang" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <!-- Centered Dual Logos with X -->
             <div class="flex items-center justify-center gap-2.5 mb-3">
                 <div class="w-11 h-11 rounded-full bg-white p-1 shadow-sm border border-gray-200 flex items-center justify-center shrink-0">
-                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                    <picture>
+                        <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="44" height="44" loading="lazy" decoding="async">
+                    </picture>
                 </div>
                 <span class="font-display font-bold text-xs sm:text-sm text-copper-600 select-none">X</span>
                 <div class="w-11 h-11 rounded-full bg-white p-1 shadow-sm border border-gray-200 flex items-center justify-center shrink-0">
-                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                    <picture>
+                        <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="44" height="44" loading="lazy" decoding="async">
+                    </picture>
                 </div>
             </div>
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Tentang Kejuaraan</span>
@@ -242,7 +259,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Categories Section (Tight Padding) -->
-<section id="kategori" class="py-8 md:py-10 bg-white">
+<section id="kategori" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Detail Pertandingan</span>
@@ -399,7 +416,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Prizes Section -->
-<section id="hadiah" class="py-8 md:py-10 bg-gray-50">
+<section id="hadiah" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Penghargaan Resmi</span>
@@ -509,7 +526,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Schedule Section (Tight Padding) -->
-<section id="jadwal" class="py-8 md:py-10 bg-white">
+<section id="jadwal" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Rundown Acara Resmi</span>
@@ -672,7 +689,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Rules Section (Accordion, Tight Padding) -->
-<section id="juknis" class="py-8 md:py-10 bg-gray-50">
+<section id="juknis" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Petunjuk Teknis Resmi</span>
@@ -778,7 +795,7 @@ require_once __DIR__ . '/includes/header.php';
 <?php require_once __DIR__ . '/includes/simulasi-section.php'; ?>
 
 <!-- Contact & Payment Section (Tight Padding) -->
-<section id="kontak" class="py-8 md:py-10 bg-white">
+<section id="kontak" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Informasi & Bantuan</span>
@@ -874,6 +891,8 @@ function heroLogoTilt() {
         tiltY: 0,
         isHovered: false,
         handleMouseMove(e) {
+            // Skip expensive 3D tilt calculation on touch/mobile screens to maintain 60-120fps
+            if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
             const rect = e.currentTarget.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;

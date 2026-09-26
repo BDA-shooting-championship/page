@@ -13,11 +13,17 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Dual Logos in White Circle Badges with X -->
                 <div class="flex justify-center items-center gap-3 mb-4">
                     <div class="w-14 h-14 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                            <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="56" height="56" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="text-gray-400 font-bold text-xs select-none">✕</span>
                     <div class="w-14 h-14 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                            <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="56" height="56" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                 </div>
 

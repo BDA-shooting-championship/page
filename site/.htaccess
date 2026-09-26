@@ -13,7 +13,7 @@ RewriteRule ^(.*)$ $1 [R=204,L]
 Options -Indexes
 
 # Default index
-DirectoryIndex index.php index.html
+DirectoryIndex index.php
 
 # Block script execution in uploads directory
 <IfModule mod_rewrite.c>

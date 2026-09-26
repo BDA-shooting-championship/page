@@ -48,11 +48,17 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Dual Logos in White Circles -->
                 <div class="flex justify-center items-center gap-2.5 mb-4">
                     <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                            <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="text-gray-400 font-bold text-xs select-none">✕</span>
                     <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                            <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                 </div>
 
@@ -102,11 +108,17 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Dual Logos in White Circles -->
                 <div class="flex justify-center items-center gap-2.5 mb-4">
                     <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                            <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                     <span class="text-gray-400 font-bold text-xs select-none">✕</span>
                     <div class="w-12 h-12 rounded-full bg-white p-1.5 shadow-md border border-gray-100 flex items-center justify-center shrink-0">
-                        <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                        <picture>
+                            <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                            <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="48" height="48" loading="lazy" decoding="async">
+                        </picture>
                     </div>
                 </div>
 
@@ -159,11 +171,17 @@ require_once __DIR__ . '/includes/header.php';
                         <!-- Dual Logos wrapped in White Circles -->
                         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
                             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white p-1.5 shadow-md border border-white/20 flex items-center justify-center shrink-0">
-                                <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain">
+                                <picture>
+                                    <source srcset="/assets/logo-bda-sm.webp" type="image/webp">
+                                    <img src="/assets/logo-bda.png" alt="Logo BDA 750" class="w-full h-full object-contain" width="56" height="56" loading="lazy" decoding="async">
+                                </picture>
                             </div>
                             <span class="text-white/60 font-bold text-xs select-none">✕</span>
                             <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white p-1.5 shadow-md border border-white/20 flex items-center justify-center shrink-0">
-                                <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain">
+                                <picture>
+                                    <source srcset="/assets/logo-championship-sm.webp" type="image/webp">
+                                    <img src="/assets/logo-championship.png" alt="Logo BSC 2026" class="w-full h-full object-contain" width="56" height="56" loading="lazy" decoding="async">
+                                </picture>
                             </div>
                         </div>
 
