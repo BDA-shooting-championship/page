@@ -36,11 +36,11 @@ require_once __DIR__ . '/includes/header.php';
         <!-- 4. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
         <div class="flex justify-center items-center mb-6" x-data="heroLogoTilt()" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
             <div class="relative group">
-                <!-- 1. Outer Azimuth Degree Ring (Clockwise Rotation 26s) -->
+                <!-- Outermost Rotating Reticle Ring (Clockwise Rotation 24s) -->
                 <div class="absolute -inset-8 sm:-inset-11 md:-inset-14 pointer-events-none flex items-center justify-center">
-                    <svg class="w-full h-full text-copper-400/60 animate-ring-outer-cw" viewBox="0 0 200 200" fill="none">
+                    <svg class="w-full h-full text-copper-400/75 animate-ring-outer-cw" viewBox="0 0 200 200" fill="none">
                         <circle cx="100" cy="100" r="95" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 8" />
-                        <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 10" opacity="0.6" />
+                        <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 10" opacity="0.7" />
                         <!-- Degree ticks -->
                         <line x1="100" y1="2" x2="100" y2="10" stroke="currentColor" stroke-width="2" />
                         <line x1="100" y1="190" x2="100" y2="198" stroke="currentColor" stroke-width="2" />
@@ -51,36 +51,6 @@ require_once __DIR__ . '/includes/header.php';
                         <text x="186" y="101.5" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">090°</text>
                         <text x="100" y="188" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">180°</text>
                         <text x="14" y="101.5" fill="currentColor" font-size="4.5" text-anchor="middle" font-family="monospace">270°</text>
-                    </svg>
-                </div>
-
-                <!-- 2. Mid Crosshair Reticle Ring (Counter-Clockwise Rotation 16s) -->
-                <div class="absolute -inset-5 sm:-inset-7 md:-inset-9 pointer-events-none flex items-center justify-center">
-                    <svg class="w-full h-full text-amber-400/75 animate-ring-crosshair-ccw" viewBox="0 0 200 200" fill="none">
-                        <circle cx="100" cy="100" r="86" stroke="currentColor" stroke-width="1.4" stroke-dasharray="16 12 4 12" />
-                        <line x1="100" y1="12" x2="100" y2="24" stroke="currentColor" stroke-width="2" />
-                        <line x1="100" y1="176" x2="100" y2="188" stroke="currentColor" stroke-width="2" />
-                        <line x1="12" y1="100" x2="24" y2="100" stroke="currentColor" stroke-width="2" />
-                        <line x1="176" y1="100" x2="188" y2="100" stroke="currentColor" stroke-width="2" />
-                        <!-- Corner Cross Ticks (45 deg) -->
-                        <line x1="38" y1="38" x2="46" y2="46" stroke="currentColor" stroke-width="1.5" />
-                        <line x1="162" y1="38" x2="154" y2="46" stroke="currentColor" stroke-width="1.5" />
-                        <line x1="38" y1="162" x2="46" y2="154" stroke="currentColor" stroke-width="1.5" />
-                        <line x1="162" y1="162" x2="154" y2="154" stroke="currentColor" stroke-width="1.5" />
-                    </svg>
-                </div>
-
-                <!-- 3. Immediate Tactical Orbit Ring (Directly Hugging Logo Circle - Fast Clockwise 12s) -->
-                <div class="absolute -inset-2.5 sm:-inset-3.5 md:-inset-4 pointer-events-none flex items-center justify-center z-10">
-                    <svg class="w-full h-full text-amber-300 animate-ring-tactical-cw" viewBox="0 0 200 200" fill="none">
-                        <!-- High-contrast Segmented Orbital Ring -->
-                        <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="2.5" stroke-dasharray="32 16" stroke-linecap="round" />
-                        <circle cx="100" cy="100" r="80" stroke="#ea580c" stroke-width="1" stroke-dasharray="8 8" opacity="0.7" />
-                        <!-- 4 Glowing Tracker Nodes at 4 Cardinals -->
-                        <circle cx="100" cy="20" r="3.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5" />
-                        <circle cx="180" cy="100" r="3.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5" />
-                        <circle cx="100" cy="180" r="3.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5" />
-                        <circle cx="20" cy="100" r="3.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5" />
                     </svg>
                 </div>
 
@@ -891,26 +861,8 @@ require_once __DIR__ . '/includes/header.php';
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-@keyframes reticleRotateCCW {
-    0% { transform: rotate(360deg); }
-    100% { transform: rotate(0deg); }
-}
-@keyframes ringOrbitPulse {
-    0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.45)); }
-    50% { opacity: 1; filter: drop-shadow(0 0 14px rgba(228, 136, 64, 0.85)); }
-}
-.animate-ring-tactical-cw {
-    animation: reticleRotateCW 12s linear infinite, ringOrbitPulse 3s ease-in-out infinite;
-    transform-origin: center center;
-    will-change: transform;
-}
-.animate-ring-crosshair-ccw {
-    animation: reticleRotateCCW 16s linear infinite;
-    transform-origin: center center;
-    will-change: transform;
-}
 .animate-ring-outer-cw {
-    animation: reticleRotateCW 26s linear infinite;
+    animation: reticleRotateCW 24s linear infinite;
     transform-origin: center center;
     will-change: transform;
 }
