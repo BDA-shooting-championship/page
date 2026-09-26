@@ -13,6 +13,7 @@ bash_script = (
     "rm -rf /tmp/bda_deploy && "
     "git clone --depth 1 https://github.com/BDA-shooting-championship/page.git /tmp/bda_deploy && "
     f"cp -rf /tmp/bda_deploy/site/* {REMOTE_DOC_ROOT}/ && "
+    f"cp -f /tmp/bda_deploy/site/.htaccess {REMOTE_DOC_ROOT}/.htaccess && "
     "rm -rf /tmp/bda_deploy && "
     "echo DEPLOY_SUCCESSFUL_2026"
 )
@@ -53,13 +54,17 @@ try:
     with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
         html = resp.read().decode('utf-8', errors='ignore')
     rule5_ok = "khusus untuk kategori Dueling Plat 15M (Khusus BDA Korbrimob POLRI)" in html
-    logo_ok = "logo-championship.png" in html
+    logo_ok = "logo-championship.webp" in html
+    lucide_ok = "lucide.min.js" in html
+    lazy_ok = "section-lazy" in html
     print(f"HTTP Status: {resp.status}")
     print(f"Rule 5 (100k khusus BDA) present: {rule5_ok}")
-    print(f"Logo BSC 2026 present: {logo_ok}")
-    if rule5_ok:
+    print(f"WebP Logo present: {logo_ok}")
+    print(f"Deferred Lucide present: {lucide_ok}")
+    print(f"Mobile Lazy Sections present: {lazy_ok}")
+    if rule5_ok and logo_ok and lucide_ok:
         print("\n>>> LIVE DEPLOYMENT CONFIRMED PASSING ON PRODUCTION SERVER! <<<")
     else:
-        print("\n>>> Warning: content not yet visible on HTTP response. <<<")
+        print("\n>>> Warning: Some optimizations not yet reflected in HTTP response. <<<")
 except Exception as e:
     print(f"Verification error: {e}")
