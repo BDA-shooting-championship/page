@@ -379,7 +379,7 @@ function registrationForm() {
 
         get totalBiaya() {
             return this.selectedKategori.reduce((sum, kat) => {
-                return sum + (kat.toLowerCase().includes('bda') ? 100000 : 200000);
+                return sum + (kat.includes('Khusus BDA') ? 100000 : 200000);
             }, 0);
         },
 

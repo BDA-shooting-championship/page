@@ -743,7 +743,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 5 ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open === 5" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1.5 border-t border-gray-100 pt-2.5">
-                    <p>&bull; Biaya: <strong>Rp 200.000 per kategori (Umum POLRI)</strong> dan <strong>Rp 100.000 (Khusus Letting BDA 750)</strong>.</p>
+                    <p>&bull; Biaya pendaftaran: <strong>Rp 200.000 per kategori</strong> (Pistol Presisi 20M &amp; Dueling Plat 15M Umum POLRI) dan <strong>Rp 100.000 khusus untuk kategori Dueling Plat 15M (Khusus BDA Korbrimob POLRI)</strong>.</p>
                     <p>&bull; Transfer ke rekening resmi: <strong>Bank BRI 0538 0107 2120 508</strong> a.n. <strong>Ruly Ardana Putra</strong>.</p>
                     <p>&bull; Lampirkan bukti transfer saat pengisian formulir pendaftaran online.</p>
                 </div>
