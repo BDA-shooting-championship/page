@@ -724,7 +724,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 3 ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open === 3" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-1.5 border-t border-gray-100 pt-2.5">
-                    <p>&bull; Seragam pertandingan: <strong>Pakaian Dinas Olahraga (PDO)</strong> atau <strong>Tactical</strong>, bersepatu.</p>
+                    <p>&bull; Seragam pertandingan: <strong>PDO</strong> atau <strong>Tactical</strong>, bersepatu.</p>
                     <p>&bull; Perlengkapan membawa senjata: <strong>Sabuk / belt dan holster</strong> standar yang aman.</p>
                     <p>&bull; Wajib mengenakan kacamata pelindung (<em>safety glasses</em>) dan pelindung telinga (<em>earmuff / earplug</em>) selama di area menembak.</p>
                 </div>
