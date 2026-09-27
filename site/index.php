@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/header.php';
     <!-- Ambient Glow -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-copper-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 text-center">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 md:pt-12 pb-8 sm:pb-12 text-center">
         <!-- 1. Organizer Badge with White Canvas for BDA Logo -->
         <div class="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold text-white mb-3 shadow-lg">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white p-1 shadow-md border border-white/80 flex items-center justify-center shrink-0">
@@ -139,8 +139,22 @@ require_once __DIR__ . '/includes/header.php';
 
     </div>
 
-    <!-- Decorative bottom divider -->
-    <div class="h-4 bg-gradient-to-b from-transparent to-white"></div>
+    <!-- Professional Eased Gradient Transition to Section 1 (#tentang) -->
+    <div class="relative w-full pointer-events-none overflow-hidden">
+        <!-- Smooth multi-stop gradient from dark hero into #f9fafb -->
+        <div class="h-28 sm:h-36 md:h-44 w-full" style="background: linear-gradient(180deg, 
+            transparent 0%, 
+            rgba(15, 30, 55, 0.4) 20%, 
+            rgba(22, 33, 62, 0.7) 40%, 
+            rgba(51, 65, 85, 0.35) 65%, 
+            rgba(249, 250, 251, 0.85) 90%, 
+            #f9fafb 100%
+        );"></div>
+        <!-- Sleek Tactical Copper Accent Hairline at the transition seam -->
+        <div class="absolute bottom-0 inset-x-0 flex items-center justify-center">
+            <div class="w-full max-w-4xl h-[1.5px] bg-gradient-to-r from-transparent via-copper-400/50 to-transparent"></div>
+        </div>
+    </div>
 </section>
 
 <!-- About Section (Tight Padding & Lazy Rendering) -->
