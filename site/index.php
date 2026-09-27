@@ -112,35 +112,34 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
-        <!-- 7. Keterangan Lainnya: Waktu, Tempat, Hadiah -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto pt-2 text-left">
-            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
-                    <i data-lucide="calendar" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Waktu Pelaksanaan</p>
-                    <p class="text-xs sm:text-sm font-bold text-white">17 — 18 Oktober 2026</p>
-                </div>
+        <!-- 7. Tanggal Pelaksanaan & Countdown Panel -->
+        <div class="max-w-md mx-auto pt-2" x-data="countdown()" x-init="start()">
+            <!-- Tanggal Pelaksanaan di atas Countdown -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-semibold text-copper-300 mb-3 backdrop-blur-sm shadow-sm">
+                <i data-lucide="calendar" class="w-4 h-4 text-copper-400"></i>
+                <span>17 — 18 Oktober 2026</span>
             </div>
 
-            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
-                    <i data-lucide="map-pin" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Tempat</p>
-                    <p class="text-xs sm:text-sm font-bold text-white">Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor</p>
-                </div>
-            </div>
-
-            <div class="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-copper-400/30 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-copper-500/20 flex items-center justify-center text-copper-400 shrink-0">
-                    <i data-lucide="trophy" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <p class="text-[10px] text-copper-300 uppercase tracking-wider font-semibold">Total Hadiah</p>
-                    <p class="text-xs sm:text-sm font-bold text-white">Jutaan Rupiah + Tropi</p>
+            <!-- Countdown Cards -->
+            <div class="bg-black/30 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-white/15 shadow-xl">
+                <p class="text-[11px] font-semibold text-gray-300 uppercase tracking-wider mb-2.5">Hitung Mundur Menuju Hari-H</p>
+                <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
+                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
+                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="days">0</span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Hari</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
+                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="hours">0</span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Jam</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
+                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="minutes">0</span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Menit</p>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
+                        <span class="font-display text-2xl sm:text-4xl font-bold text-amber-300" x-text="seconds">0</span>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Detik</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,41 +148,6 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Decorative bottom divider -->
     <div class="h-4 bg-gradient-to-b from-transparent to-white"></div>
-</section>
-
-<!-- Countdown Section (Tight Padding with Ambient Radar Sweep) -->
-<section class="py-6 md:py-8 bg-white border-b border-gray-100 relative overflow-hidden" x-data="countdown()" x-init="start()">
-    <!-- Ambient Radar Sweep -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 pointer-events-none opacity-10">
-        <div class="w-full h-full rounded-full border border-copper-500/40 animate-radar-sweep bg-gradient-to-tr from-copper-500/15 via-transparent to-transparent"></div>
-    </div>
-
-    <div class="relative max-w-4xl mx-auto px-4 text-center">
-        <div class="flex items-center justify-center gap-2 mb-2">
-            <i data-lucide="timer" class="w-4 h-4 text-copper-600"></i>
-            <h2 class="font-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-gray-900" data-scramble>Hitung Mundur Menuju Hari-H</h2>
-        </div>
-        <p class="text-xs text-gray-500 mb-4">17 — 18 Oktober 2026 &bull; Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor</p>
-        
-        <div class="grid grid-cols-4 gap-3 sm:gap-4 max-w-md mx-auto">
-            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="days">0</span>
-                <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Hari</p>
-            </div>
-            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="hours">0</span>
-                <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Jam</p>
-            </div>
-            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="minutes">0</span>
-                <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Menit</p>
-            </div>
-            <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm">
-                <span class="font-display text-2xl sm:text-4xl font-bold text-copper-600" x-text="seconds">0</span>
-                <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Detik</p>
-            </div>
-        </div>
-    </div>
 </section>
 
 <!-- About Section (Tight Padding & Lazy Rendering) -->
@@ -755,26 +719,71 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
-            <!-- Download Document Card Banner -->
-            <div class="mt-4 p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-3.5 text-left">
-                    <div class="w-11 h-11 rounded-xl bg-copper-50 border border-copper-200 flex items-center justify-center text-copper-600 shrink-0">
-                        <i data-lucide="file-text" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-display font-bold text-sm sm:text-base text-gray-900">Buku Petunjuk Teknis Lengkap (PDF)</h4>
-                        <p class="text-xs text-gray-500">Unduh dokumen resmi Petunjuk Teknis BDA Shooting Championship 2026.</p>
+            <!-- Rule 6: Tempat & Lokasi Pertandingan -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+                <button @click="open = open === 6 ? null : 6" class="w-full flex items-center justify-between p-3.5 text-left font-semibold hover:bg-gray-50 transition text-sm">
+                    <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-copper-500"></i> Tempat &amp; Lokasi Pertandingan</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-gray-500" :class="open === 6 ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open === 6" x-transition class="px-4 pb-3.5 text-xs text-gray-600 space-y-2 border-t border-gray-100 pt-2.5">
+                    <p>&bull; <strong>Tempat:</strong> Lapangan Tembak Resimen I Pasukan Pelopor, Kedunghalang, Bogor.</p>
+                    <p>&bull; Navigasi dan rute perjalanan menuju lokasi pertandingan dapat diakses langsung via Google Maps.</p>
+                    <div class="pt-1">
+                        <a href="https://maps.app.goo.gl/Yu9CHBdxc85ddAuR7" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-copper-600 hover:bg-copper-700 text-white rounded-lg font-bold text-xs shadow-sm shadow-copper-600/20 transition hover:scale-105 active:scale-95">
+                            <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                            <span>Buka di Google Maps</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
                     </div>
                 </div>
-                <a
-                    href="/JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
-                    download="JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
-                    target="_blank"
-                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-copper-600 hover:bg-copper-700 text-white rounded-xl text-xs font-bold shadow-md shadow-copper-600/20 transition shrink-0 hover:scale-105 active:scale-95"
-                >
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>Download PDF Resmi</span>
-                </a>
+            </div>
+
+            <!-- Quick Location & Document Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-4">
+                <!-- Location Card -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 shadow-sm flex flex-col justify-between gap-3 text-left">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-copper-50 border border-copper-200 flex items-center justify-center text-copper-600 shrink-0">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900">Lokasi Lapangan Tembak</h4>
+                            <p class="text-xs text-gray-500">Resimen I Pasukan Pelopor, Kedunghalang, Bogor.</p>
+                        </div>
+                    </div>
+                    <a
+                        href="https://maps.app.goo.gl/Yu9CHBdxc85ddAuR7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-900 hover:bg-gray-800 text-white rounded-xl text-xs font-bold transition shadow-sm hover:scale-[1.02] active:scale-95"
+                    >
+                        <i data-lucide="map" class="w-4 h-4 text-copper-400"></i>
+                        <span>Buka di Google Maps</span>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <!-- Download Document Card Banner -->
+                <div class="p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 shadow-sm flex flex-col justify-between gap-3 text-left">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-copper-50 border border-copper-200 flex items-center justify-center text-copper-600 shrink-0">
+                            <i data-lucide="file-text" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900">Buku Petunjuk Teknis Lengkap (PDF)</h4>
+                            <p class="text-xs text-gray-500">Unduh dokumen resmi Petunjuk Teknis BDA Shooting Championship 2026.</p>
+                        </div>
+                    </div>
+                    <a
+                        href="/JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
+                        download="JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-copper-600 hover:bg-copper-700 text-white rounded-xl text-xs font-bold shadow-md shadow-copper-600/20 transition hover:scale-[1.02] active:scale-95"
+                    >
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span>Download PDF Resmi</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
