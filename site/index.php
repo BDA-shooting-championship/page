@@ -23,13 +23,13 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- 2. Main Headline -->
-        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-3">
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-1 sm:mb-1.5">
             <span data-scramble>BDA SHOOTING</span><br>
             <span data-scramble class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">CHAMPIONSHIP 2026</span>
         </h1>
 
         <!-- 3. Tanggal Pelaksanaan -->
-        <p class="font-display text-xl sm:text-2xl md:text-3xl text-copper-300 font-bold uppercase tracking-wider mb-6">
+        <p class="font-display text-base sm:text-lg md:text-xl text-copper-300 font-bold uppercase tracking-widest mb-4 sm:mb-5">
             17 — 18 Oktober 2026
         </p>
 
@@ -103,11 +103,11 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
-        <!-- 6. Klik Petunjuk Teknis -->
+        <!-- 6. Petunjuk Teknis -->
         <div class="mb-6">
             <a href="#juknis" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm text-copper-300 hover:text-white transition font-medium group">
                 <i data-lucide="file-text" class="w-4 h-4 text-copper-400 group-hover:scale-110 transition"></i>
-                <span>Klik Petunjuk Teknis</span>
+                <span>Petunjuk Teknis</span>
                 <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-copper-400 group-hover:translate-y-0.5 transition"></i>
             </a>
         </div>
