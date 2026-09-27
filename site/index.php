@@ -115,7 +115,7 @@ require_once __DIR__ . '/includes/header.php';
         <!-- 7. Box Countdown -->
         <div class="max-w-md mx-auto pt-2" x-data="countdown()" x-init="start()">
             <div class="bg-black/30 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-white/15 shadow-xl">
-                <p class="font-display text-lg sm:text-xl font-bold text-copper-300 uppercase tracking-widest mb-2.5">COUNTDOWN</p>
+                <p class="font-display text-lg sm:text-xl font-bold text-copper-300 uppercase tracking-widest mb-2.5" data-scramble>COUNTDOWN</p>
                 <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
                     <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
                         <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="days">0</span>
@@ -175,7 +175,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
                     <i data-lucide="crosshair" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">3 Kategori / Kelas Lomba</h3>
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>3 Kategori / Kelas Lomba</h3>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">
                     Pistol Presisi 20M Umum, Dueling Plat 15M Umum POLRI, dan Dueling Plat Khusus BDA Korbrimob.
                 </p>
@@ -185,7 +185,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
                     <i data-lucide="trophy" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Hadiah Uang Tunai</h3>
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>Hadiah Uang Tunai</h3>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">
                     Uang tunai Juara I, II, dan III per kategori + Tropi + Sertifikat penghargaan resmi.
                 </p>
@@ -195,7 +195,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="w-12 h-12 rounded-xl bg-copper-100 flex items-center justify-center mb-3 text-copper-600 mx-auto">
                     <i data-lucide="shield-check" class="w-6 h-6"></i>
                 </div>
-                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center">Peserta Kejuaraan</h3>
+                <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>Peserta Kejuaraan</h3>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">
                     Terbuka untuk anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.
                 </p>
@@ -223,7 +223,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <span class="inline-block px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider mb-1">Kelas Individu</span>
-                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors">Pistol Presisi 20M</h3>
+                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors uppercase" data-scramble>Pistol Presisi 20M</h3>
                             <p class="text-[11px] text-gray-500 font-semibold">Umum (POLRI)</p>
                         </div>
                     </div>
@@ -273,7 +273,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <span class="inline-block px-2 py-0.5 rounded bg-red-100 text-red-800 text-[10px] font-bold uppercase tracking-wider mb-1">Kelas Individu</span>
-                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors">Dueling Plat 15M</h3>
+                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors uppercase" data-scramble>Dueling Plat 15M</h3>
                             <p class="text-[11px] text-gray-500 font-semibold">Umum (POLRI)</p>
                         </div>
                     </div>
@@ -320,7 +320,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <span class="inline-block px-2 py-0.5 rounded bg-amber-500 text-white text-[10px] font-extrabold uppercase tracking-wider mb-1 shadow-sm">Khusus Letting BDA 750</span>
-                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors">Dueling Plat 15M</h3>
+                            <h3 class="font-display text-lg font-bold text-gray-900 group-hover:text-copper-600 transition-colors uppercase" data-scramble>Dueling Plat 15M</h3>
                             <p class="text-[11px] text-copper-700 font-bold">BDA Korbrimob POLRI</p>
                         </div>
                     </div>
@@ -376,7 +376,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-gray-100">
                     <div>
                         <span class="px-3 py-1 rounded-full bg-copper-100 text-copper-800 text-[11px] font-bold uppercase tracking-wider">Kelas Umum (POLRI)</span>
-                        <h3 class="font-display text-xl font-bold text-gray-900 mt-1.5">Pistol Presisi 20M &amp; Dueling Plat 15M (Umum)</h3>
+                        <h3 class="font-display text-xl font-bold text-gray-900 mt-1.5 uppercase" data-scramble>Pistol Presisi 20M &amp; Dueling Plat 15M (Umum)</h3>
                     </div>
                     <span class="text-xs text-gray-500 font-medium">Berlaku untuk masing-masing cabang lomba umum</span>
                 </div>
@@ -426,7 +426,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-amber-200/60">
                     <div>
                         <span class="px-3 py-1 rounded-full bg-amber-500 text-white text-[11px] font-extrabold uppercase tracking-wider shadow-sm">Khusus Letting BDA 750</span>
-                        <h3 class="font-display text-xl font-bold text-gray-900 mt-1.5">Dueling Plat 15M (Khusus BDA Korbrimob POLRI)</h3>
+                        <h3 class="font-display text-xl font-bold text-gray-900 mt-1.5 uppercase" data-scramble>Dueling Plat 15M (Khusus BDA Korbrimob POLRI)</h3>
                     </div>
                     <span class="text-xs text-amber-900 font-semibold">Khusus kategori letting BDA se-Korbrimob Polri</span>
                 </div>
@@ -486,7 +486,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="px-2.5 py-1 bg-amber-600 text-white rounded-lg font-display font-bold text-xs uppercase tracking-wider shadow-sm shadow-amber-600/20">TM</span>
-                        <h3 class="font-display font-bold text-base text-gray-900">Minggu, 4 Okt 2026</h3>
+                        <h3 class="font-display font-bold text-base text-gray-900 uppercase" data-scramble>Minggu, 4 Okt 2026</h3>
                     </div>
                     <div class="mb-3 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-50 border border-amber-200/60 text-amber-800 text-[10px] font-medium">
                         <i data-lucide="calendar-clock" class="w-3 h-3 text-amber-600 shrink-0"></i>
@@ -522,7 +522,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="px-2.5 py-1 bg-blue-600 text-white rounded-lg font-display font-bold text-xs uppercase tracking-wider shadow-sm shadow-blue-600/20">Uji Coba</span>
-                        <h3 class="font-display font-bold text-base text-gray-900">Kamis, 15 Okt 2026</h3>
+                        <h3 class="font-display font-bold text-base text-gray-900 uppercase" data-scramble>Kamis, 15 Okt 2026</h3>
                     </div>
                     <div class="mb-3 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200/60 text-blue-800 text-[10px] font-medium">
                         <i data-lucide="clock" class="w-3 h-3 text-blue-600 shrink-0"></i>
@@ -558,7 +558,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="px-2.5 py-1 bg-copper-600 text-white rounded-lg font-display font-bold text-xs uppercase tracking-wider shadow-sm shadow-copper-600/20">Hari ke-1</span>
-                        <h3 class="font-display font-bold text-base text-gray-900">Sabtu, 17 Okt 2026</h3>
+                        <h3 class="font-display font-bold text-base text-gray-900 uppercase" data-scramble>Sabtu, 17 Okt 2026</h3>
                     </div>
                     <ul class="space-y-2 text-xs text-gray-700">
                         <li class="pb-1.5 border-b border-gray-200/80">
@@ -599,7 +599,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg font-display font-bold text-xs uppercase tracking-wider shadow-sm shadow-emerald-600/20">Hari ke-2</span>
-                        <h3 class="font-display font-bold text-base text-gray-900">Minggu, 18 Okt 2026</h3>
+                        <h3 class="font-display font-bold text-base text-gray-900 uppercase" data-scramble>Minggu, 18 Okt 2026</h3>
                     </div>
                     <ul class="space-y-2 text-xs text-gray-700">
                         <li class="pb-1.5 border-b border-gray-200/80">
@@ -740,7 +740,7 @@ require_once __DIR__ . '/includes/header.php';
                             <i data-lucide="map-pin" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900">Lokasi Lapangan Tembak</h4>
+                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900 uppercase" data-scramble>Lokasi Lapangan Tembak</h4>
                             <p class="text-xs text-gray-500">Resimen I Pasukan Pelopor, Kedunghalang, Bogor.</p>
                         </div>
                     </div>
@@ -763,7 +763,7 @@ require_once __DIR__ . '/includes/header.php';
                             <i data-lucide="file-text" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900">Buku Petunjuk Teknis Lengkap (PDF)</h4>
+                            <h4 class="font-display font-bold text-sm sm:text-base text-gray-900 uppercase" data-scramble>Buku Petunjuk Teknis Lengkap (PDF)</h4>
                             <p class="text-xs text-gray-500">Unduh dokumen resmi Petunjuk Teknis BDA Shooting Championship 2026.</p>
                         </div>
                     </div>

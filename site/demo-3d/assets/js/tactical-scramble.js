@@ -4,17 +4,19 @@
  *
  * Efek: 
  * - Seluruh kalimat yang di-scramble menggunakan HURUF KAPITAL (Uppercase).
+ * - Karakter acak HANYA menggunakan HURUF KAPITAL A-Z (pure uppercase letters).
  * - Warna karakter scrambled SAMA dengan warna normal kata tersebut (inherit alami tanpa pewarnaan buatan).
  * - Scramble berjalan per kata secara paralel/independen (bukan per baris/kalimat) sehingga cepat dan tidak menunggu lama.
- * - Karakter acak HANYA menggunakan 0-9 dan A-Z (alfanumerik murni tanpa simbol).
  * - Berhenti berurutan per huruf dari kata membentuk kata (left-to-right sequential per-word).
+ * - Re-trigger Otomatis: Jika kata/judul scroll keluar layar lalu muncul kembali (scroll up / scroll down),
+ *   animasi scramble akan dimainkan ulang secara otomatis.
  */
 
 (function () {
     'use strict';
 
-    // Karakter acak HANYA huruf kapital A-Z dan angka 0-9
-    const ALPHANUMERIC_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    // Karakter acak HANYA huruf kapital A-Z
+    const CAPITAL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     class TacticalScrambleElement {
         constructor(el, options = {}) {
@@ -32,25 +34,42 @@
             }
 
             this.options = Object.assign({
-                chars: ALPHANUMERIC_CHARS,
+                chars: CAPITAL_LETTERS,
                 initialScrambleFrames: 5,  // frame acak cepat sebelum huruf pertama tiap kata mengunci (~140ms)
                 staggerFrames: 1.6,        // jeda frame antar huruf yang mengunci dalam satu kata (~45ms)
                 fpsInterval: 1000 / 35,    // kecepatan flip glif acak (~35fps)
             }, options);
 
             this.isRunning = false;
+            this.hasStarted = false;
+            this.hasExited = false;
+            this.lastStartTime = 0;
             this.rafId = null;
         }
 
         start() {
-            if (this.isRunning) return;
             if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 // Fallback aksesibilitas OS jika pengguna memilih tanpa animasi
                 this.el.innerText = this.rawText;
                 return;
             }
 
+            const now = performance.now();
+            if (this.lastStartTime && (now - this.lastStartTime < 350)) {
+                return;
+            }
+            this.lastStartTime = now;
+
+            if (this.isRunning) {
+                if (this.rafId) {
+                    cancelAnimationFrame(this.rafId);
+                    this.rafId = null;
+                }
+                this.isRunning = false;
+            }
+
             this.isRunning = true;
+            this.hasStarted = true;
 
             // Pisahkan teks menjadi kata-kata dan pertahankan spasi
             const chunks = this.rawText.split(/(\s+)/);
@@ -107,6 +126,14 @@
                     if (renderedWidth > 0) {
                         wordSpan.style.minWidth = `${renderedWidth}px`;
                     }
+
+                    // Segera acak karakter huruf kapital dari frame 0
+                    charsInWord.forEach((_, charIndexInWord) => {
+                        const entry = charEntries[charEntries.length - charsInWord.length + charIndexInWord];
+                        if (entry && entry.isAlphaNum) {
+                            entry.charSpan.textContent = this.options.chars[Math.floor(Math.random() * this.options.chars.length)];
+                        }
+                    });
                 }
             });
 
@@ -140,8 +167,7 @@
                                 entry.charSpan.textContent = entry.targetChar;
                             }
                         } else {
-                            // Fase acak cepat: pilih karakter random murni dari 0-9 dan A-Z
-                            // Warna scrambled sama dengan warna normal kata (tanpa override style.color)
+                            // Fase acak cepat: pilih karakter random murni HANYA DARI HURUF KAPITAL (A-Z)
                             allResolved = false;
                             const randomGlyph = this.options.chars[Math.floor(Math.random() * this.options.chars.length)];
                             entry.charSpan.textContent = randomGlyph;
@@ -195,27 +221,35 @@
                 }
             });
 
-            const observer = new IntersectionObserver((entries, obs) => {
+            // IntersectionObserver: mendeteksi elemen saat masuk dan keluar layar
+            // Saat scroll keluar (tidak muncul di layar), hasExited = true
+            // Saat scroll masuk kembali (scroll up / scroll down), scramble dimainkan lagi!
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        let instance = this.instances.get(el);
-                        if (!instance) {
-                            instance = new TacticalScrambleElement(el);
-                            this.instances.set(el, instance);
-                        }
-                        instance.start();
+                    const el = entry.target;
+                    let instance = this.instances.get(el);
+                    if (!instance) {
+                        instance = new TacticalScrambleElement(el);
+                        this.instances.set(el, instance);
+                    }
 
-                        // Jalankan 1x saat scroll masuk layar
-                        const retrigger = el.getAttribute('data-scramble-repeat') === 'true';
-                        if (!retrigger) {
-                            obs.unobserve(el);
+                    if (entry.isIntersecting) {
+                        // Elemen muncul di layar
+                        if (!instance.hasStarted || instance.hasExited) {
+                            instance.hasExited = false;
+                            instance.start();
+                        }
+                    } else {
+                        // Elemen keluar dari layar (tidak muncul di layar)
+                        instance.hasExited = true;
+                        if (instance.isRunning) {
+                            instance.finish();
                         }
                     }
                 });
             }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -40px 0px'
+                threshold: 0.1,
+                rootMargin: '0px'
             });
 
             elements.forEach(el => observer.observe(el));
