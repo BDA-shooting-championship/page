@@ -23,17 +23,12 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- 2. Main Headline -->
-        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-1 sm:mb-1.5">
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-5 sm:mb-6">
             <span data-scramble>BDA SHOOTING</span><br>
             <span data-scramble class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">CHAMPIONSHIP 2026</span>
         </h1>
 
-        <!-- 3. Tanggal Pelaksanaan -->
-        <p class="font-display text-base sm:text-lg md:text-xl text-copper-300 font-bold uppercase tracking-widest mb-4 sm:mb-5">
-            17 — 18 Oktober 2026
-        </p>
-
-        <!-- 4. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
+        <!-- 3. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
         <div class="flex justify-center items-center mb-6" x-data="heroLogoTilt()" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
             <div class="relative group">
                 <!-- Outermost Rotating Reticle Ring (Clockwise Rotation 24s) -->
@@ -77,64 +72,100 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
 
-        <!-- 5. Tombol Daftar dan Live Skor Sejajar dengan Tactical HUD Micro-Interactions -->
-        <div class="flex flex-row justify-center items-center gap-3 sm:gap-4 mb-3">
-            <!-- Tombol Daftar dengan HUD Corner Brackets -->
-            <a href="/daftar.php" class="relative group px-6 sm:px-8 py-3 bg-gradient-to-r from-copper-600 to-copper-500 hover:from-copper-700 hover:to-copper-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-copper-600/30 flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5 overflow-hidden">
-                <!-- Tactical Corner Locks -->
-                <span class="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
-                <span class="absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
-                <span class="absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
-                <span class="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-amber-300 opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"></span>
-                
-                <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
-                <span class="tracking-wide">Daftar</span>
-            </a>
+        <!-- 4. Badges Tanggal & Lokasi (Sesuai Desain Gambar) -->
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-4 sm:mt-5 mb-5 sm:mb-6 px-1">
+            <!-- Badge Tanggal -->
+            <div class="flex items-center gap-1.5 border border-white/15 bg-black/60 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-mono text-[10px] sm:text-xs tracking-[0.12em] text-gray-200 backdrop-blur-md shadow-sm">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                <span class="font-bold">17 — 18 OKTOBER 2026</span>
+            </div>
 
-            <!-- Tombol Live Skor dengan Real-time Radar Beacon -->
-            <a href="/live-score.php" class="relative group px-5 sm:px-7 py-3 bg-white/10 hover:bg-white/15 border border-white/20 hover:border-copper-400/50 text-white font-semibold rounded-xl transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 text-sm hover:-translate-y-0.5 shadow-sm">
-                <!-- Radar Beacon Indicator -->
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-copper-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-copper-500"></span>
-                </span>
-                <i data-lucide="crosshair" class="w-4 h-4 text-copper-400 group-hover:rotate-45 transition-transform duration-300"></i>
-                <span class="tracking-wide">Live Skor</span>
+            <!-- Badge Lokasi (Klik ke Google Maps) -->
+            <a href="https://maps.app.goo.gl/Yu9CHBdxc85ddAuR7" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center gap-1.5 border border-white/15 hover:border-amber-400/50 bg-black/60 hover:bg-black/80 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-mono text-[10px] sm:text-xs tracking-[0.12em] text-gray-200 hover:text-white backdrop-blur-md transition-all duration-200 shadow-sm"
+               title="Buka Lokasi di Google Maps">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform shrink-0"></i>
+                <span class="font-bold">KEDUNGHALANG, BOGOR</span>
             </a>
         </div>
 
-        <!-- 6. Petunjuk Teknis -->
-        <div class="mb-6">
-            <a href="#juknis" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm text-copper-300 hover:text-white transition font-medium group">
-                <i data-lucide="file-text" class="w-4 h-4 text-copper-400 group-hover:scale-110 transition"></i>
-                <span>Petunjuk Teknis</span>
-                <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-copper-400 group-hover:translate-y-0.5 transition"></i>
-            </a>
-        </div>
+        <!-- 5. Countdown Box Tactical (Sesuai Desain Gambar) -->
+        <div class="w-full max-w-sm sm:max-w-md mx-auto mb-5 sm:mb-6" x-data="countdown()" x-init="start()">
+            <!-- Subheader -->
+            <p class="text-center font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.35em] text-gray-400 uppercase mb-2.5">
+                — COUNTDOWN HARI-H —
+            </p>
 
-        <!-- 7. Box Countdown -->
-        <div class="max-w-md mx-auto pt-2" x-data="countdown()" x-init="start()">
-            <div class="bg-black/30 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-white/15 shadow-xl">
-                <p class="font-display text-lg sm:text-xl font-bold text-copper-300 uppercase tracking-widest mb-2.5" data-scramble>COUNTDOWN</p>
-                <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
-                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="days">0</span>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Hari</p>
-                    </div>
-                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="hours">0</span>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Jam</p>
-                    </div>
-                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                        <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="minutes">0</span>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Menit</p>
-                    </div>
-                    <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
-                        <span class="font-display text-2xl sm:text-4xl font-bold text-amber-300" x-text="seconds">0</span>
-                        <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mt-0.5">Detik</p>
-                    </div>
+            <!-- 4 Tactical Cards -->
+            <div class="grid grid-cols-4 gap-2 sm:gap-2.5 text-center">
+                <!-- Hari -->
+                <div class="relative border border-white/15 bg-[#0e1017]/90 backdrop-blur-md px-1.5 py-3 sm:py-3.5 rounded-sm shadow-lg overflow-hidden">
+                    <span class="absolute left-0 top-0 h-2.5 w-2.5 border-l-2 border-t-2 border-amber-400/90 pointer-events-none"></span>
+                    <span class="absolute bottom-0 right-0 h-2.5 w-2.5 border-b-2 border-r-2 border-amber-400/90 pointer-events-none"></span>
+                    
+                    <p class="font-mono text-2xl sm:text-3xl font-extrabold text-white tabular-nums tracking-tight" x-text="days">00</p>
+                    <p class="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mt-1">HARI</p>
+                </div>
+
+                <!-- Jam -->
+                <div class="relative border border-white/15 bg-[#0e1017]/90 backdrop-blur-md px-1.5 py-3 sm:py-3.5 rounded-sm shadow-lg overflow-hidden">
+                    <span class="absolute left-0 top-0 h-2.5 w-2.5 border-l-2 border-t-2 border-amber-400/90 pointer-events-none"></span>
+                    <span class="absolute bottom-0 right-0 h-2.5 w-2.5 border-b-2 border-r-2 border-amber-400/90 pointer-events-none"></span>
+                    
+                    <p class="font-mono text-2xl sm:text-3xl font-extrabold text-white tabular-nums tracking-tight" x-text="hours">00</p>
+                    <p class="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mt-1">JAM</p>
+                </div>
+
+                <!-- Menit -->
+                <div class="relative border border-white/15 bg-[#0e1017]/90 backdrop-blur-md px-1.5 py-3 sm:py-3.5 rounded-sm shadow-lg overflow-hidden">
+                    <span class="absolute left-0 top-0 h-2.5 w-2.5 border-l-2 border-t-2 border-amber-400/90 pointer-events-none"></span>
+                    <span class="absolute bottom-0 right-0 h-2.5 w-2.5 border-b-2 border-r-2 border-amber-400/90 pointer-events-none"></span>
+                    
+                    <p class="font-mono text-2xl sm:text-3xl font-extrabold text-white tabular-nums tracking-tight" x-text="minutes">00</p>
+                    <p class="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mt-1">MENIT</p>
+                </div>
+
+                <!-- Detik -->
+                <div class="relative border border-white/15 bg-[#0e1017]/90 backdrop-blur-md px-1.5 py-3 sm:py-3.5 rounded-sm shadow-lg overflow-hidden">
+                    <span class="absolute left-0 top-0 h-2.5 w-2.5 border-l-2 border-t-2 border-amber-400/90 pointer-events-none"></span>
+                    <span class="absolute bottom-0 right-0 h-2.5 w-2.5 border-b-2 border-r-2 border-amber-400/90 pointer-events-none"></span>
+                    
+                    <p class="font-mono text-2xl sm:text-3xl font-extrabold text-white tabular-nums tracking-tight" x-text="seconds">00</p>
+                    <p class="font-mono text-[9px] sm:text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mt-1">DETIK</p>
                 </div>
             </div>
+        </div>
+
+        <!-- 6. Tombol Aksi Hero Full-Width Stacked (Sesuai Desain Gambar) -->
+        <div class="w-full max-w-sm sm:max-w-md mx-auto flex flex-col gap-2.5 sm:gap-3 mb-6">
+            <!-- Tombol Daftar Sekarang (Solid Gold/Amber) -->
+            <a href="/daftar.php" 
+               class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#f0b23e] hover:bg-[#ffd97e] text-[#060709] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(240,178,62,0.3)] hover:shadow-[0_0_45px_rgba(240,178,62,0.5)] transition-all duration-300">
+                <span>DAFTAR SEKARANG</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#060709] stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </a>
+
+            <!-- Tombol Live Skor (Dark with Red Pulsing Beacon & Radar Arcs) -->
+            <a href="/live-score.php" 
+               class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#060709]/85 hover:bg-[#060709] border border-white/20 hover:border-[#f0b23e] text-white hover:text-[#f0b23e] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm backdrop-blur-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md">
+                <span class="inline-flex items-center gap-1 text-red-500 font-mono text-sm leading-none shrink-0">
+                    <span class="opacity-70 animate-pulse font-bold">(</span>
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                    </span>
+                    <span class="opacity-70 animate-pulse font-bold">)</span>
+                </span>
+                <span>LIVE SKOR</span>
+            </a>
+        </div>
+
+        <!-- 7. Scroll Down Indicator (Sesuai Desain Gambar) -->
+        <div class="flex justify-center pt-2 sm:pt-3 pb-2">
+            <a href="#tentang" class="group flex flex-col items-center gap-1 text-gray-400 hover:text-[#f0b23e] transition-colors cursor-pointer select-none">
+                <span class="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold">SCROLL</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform animate-bounce"></i>
+            </a>
         </div>
 
     </div>
@@ -156,6 +187,69 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 </section>
+
+<!-- Tactical Moving Police Line / Caution Marquee Tape -->
+<div class="relative w-full overflow-hidden z-20 -my-3.5 sm:-my-4 select-none">
+    <div class="relative -rotate-[1.2deg] scale-[1.06] border-y-2 border-[#060709] bg-[#f0b23e] py-2.5 sm:py-3 shadow-[0_10px_35px_rgba(240,178,62,0.35)] overflow-hidden">
+        <div class="flex w-max animate-police-line">
+            <!-- Track A -->
+            <div class="flex items-center shrink-0">
+                <?php
+                $policeItems = [
+                    'DUELING PLAT 15M',
+                    'PISTOL PRESISI 20M',
+                    'BDA750',
+                    '17 - 18 OKTOBER 2026',
+                    'KEDUNGHALANG - BOGOR',
+                    'RESIMEN I PASPELOPOR'
+                ];
+                for ($cycle = 0; $cycle < 2; $cycle++):
+                    foreach ($policeItems as $item):
+                ?>
+                    <span class="flex items-center gap-5 sm:gap-6 pr-5 sm:pr-6">
+                        <span class="whitespace-nowrap font-display text-sm sm:text-base font-extrabold tracking-wider text-[#060709]"><?= htmlspecialchars($item) ?></span>
+                        <svg class="w-4 h-4 shrink-0 text-[#060709]/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                            <line x1="12" y1="1" x2="12" y2="4"></line>
+                            <line x1="12" y1="20" x2="12" y2="23"></line>
+                            <line x1="1" y1="12" x2="4" y2="12"></line>
+                            <line x1="20" y1="12" x2="23" y2="12"></line>
+                        </svg>
+                    </span>
+                <?php 
+                    endforeach;
+                endfor; 
+                ?>
+            </div>
+
+            <!-- Track B (Duplicate for Seamless Infinite Marquee Loop) -->
+            <div class="flex items-center shrink-0" aria-hidden="true">
+                <?php
+                for ($cycle = 0; $cycle < 2; $cycle++):
+                    foreach ($policeItems as $item):
+                ?>
+                    <span class="flex items-center gap-5 sm:gap-6 pr-5 sm:pr-6">
+                        <span class="whitespace-nowrap font-display text-sm sm:text-base font-extrabold tracking-wider text-[#060709]"><?= htmlspecialchars($item) ?></span>
+                        <svg class="w-4 h-4 shrink-0 text-[#060709]/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                            <line x1="12" y1="1" x2="12" y2="4"></line>
+                            <line x1="12" y1="20" x2="12" y2="23"></line>
+                            <line x1="1" y1="12" x2="4" y2="12"></line>
+                            <line x1="20" y1="12" x2="23" y2="12"></line>
+                        </svg>
+                    </span>
+                <?php 
+                    endforeach;
+                endfor; 
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- About Section (Tight Padding & Lazy Rendering) -->
 <section id="tentang" class="section-lazy py-8 md:py-10 bg-gray-50">
@@ -889,6 +983,19 @@ require_once __DIR__ . '/includes/header.php';
 .animate-radar-sweep {
     animation: radarSweep 14s linear infinite;
 }
+@keyframes policeLineMarquee {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+.animate-police-line {
+    display: flex;
+    width: max-content;
+    animation: policeLineMarquee 26s linear infinite;
+    will-change: transform;
+}
+.animate-police-line:hover {
+    animation-play-state: paused;
+}
 @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after {
         animation-duration: 0.01ms !important;
@@ -923,7 +1030,7 @@ function heroLogoTilt() {
 
 function countdown() {
     return {
-        days: 0, hours: 0, minutes: 0, seconds: 0,
+        days: '00', hours: '00', minutes: '00', seconds: '00',
         target: new Date('2026-10-17T07:00:00+07:00').getTime(),
         start() {
             this.update();
@@ -932,10 +1039,10 @@ function countdown() {
         update() {
             const now = Date.now();
             const diff = Math.max(0, this.target - now);
-            this.days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            this.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            this.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            this.seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            this.days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            this.hours = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            this.minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            this.seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
         }
     }
 }
