@@ -90,7 +90,7 @@ require_once __DIR__ . '/includes/header.php';
         <div id="hero-countdown-box" class="w-full max-w-sm sm:max-w-md mx-auto mb-5 sm:mb-6" x-data="countdown()" x-init="start()">
             <!-- Subheader -->
             <p class="text-center font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.35em] text-gray-400 uppercase mb-2.5">
-                — COUNTDOWN HARI-H —
+                — COUNTDOWN —
             </p>
 
             <!-- 4 Tactical Cards -->
@@ -182,11 +182,10 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<!-- Tactical Moving Police Line / Caution Marquee Tape (Clear & Crisp, Tanpa Terpotong) -->
-<div class="relative w-full overflow-hidden z-20 -my-2.5 sm:-my-3 select-none">
-    <div class="relative -rotate-[1deg] w-[106%] -ml-[3%] border-y-[3px] border-[#060709] bg-[#f0b23e] py-3 sm:py-3.5 shadow-[0_12px_35px_rgba(0,0,0,0.5)]">
-        <div class="flex w-max animate-police-line">
-            <!-- Track A -->
+<!-- Tactical Moving Police Line / Caution Marquee Tape (Flush Full-Bleed, Tanpa Terpotong) -->
+<div class="relative w-full z-20 select-none overflow-hidden border-y-[3px] border-[#060709] bg-[#f0b23e] py-3 sm:py-3.5 shadow-[0_10px_25px_rgba(0,0,0,0.35)]">
+    <div class="flex w-max animate-police-line">
+        <!-- Track A -->
             <div class="flex items-center shrink-0">
                 <?php
                 $policeItems = [
@@ -240,7 +239,6 @@ require_once __DIR__ . '/includes/header.php';
                     endforeach;
                 endfor; 
                 ?>
-            </div>
         </div>
     </div>
 </div>
@@ -739,14 +737,10 @@ require_once __DIR__ . '/includes/header.php';
 <!-- Rules Section (Accordion, Tight Padding) -->
 <section id="juknis" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-7 sm:mb-8">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100/70 border border-copper-200 text-xs sm:text-sm font-bold uppercase tracking-widest text-copper-700 mb-2">
-                <i data-lucide="book-open" class="w-3.5 h-3.5 text-copper-600"></i>
-                Buku Regulasi &amp; Panduan Resmi
-            </span>
-            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 uppercase tracking-tight" data-scramble>PETUNJUK TEKNIS</h2>
-            <p class="text-sm sm:text-base font-bold text-copper-600 uppercase tracking-wider mt-1.5">Peraturan &amp; Persyaratan Pertandingan</p>
-            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-2">
+        <div class="text-center mb-8">
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Regulasi &amp; Panduan</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Petunjuk Teknis</h2>
+            <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed">
                 Panduan resmi pelaksanaan pertandingan, regulasi senjata, perlengkapan, dan sistem penilaian BDA Shooting Championship 2026.
             </p>
         </div>
@@ -1157,73 +1151,67 @@ function heroEngine() {
                 const actionBox = document.getElementById('hero-action-box');
                 const scrollEl = document.getElementById('hero-scroll-box');
 
-                // Floor grid: ujung hero atas (y = 0) sampai ujung hero bawah (y = height)
-                const focalLength = 380;
-                const vpy = -height * 0.35; // Vanishing point virtual horizon di atas hero
-                const zNear = 38;
-                const floorY = (height - vpy) * ((focalLength + zNear) / focalLength);
-                const zFar = Math.max(zNear + 200, ((height - vpy) * (focalLength + zNear) / (-vpy)) - focalLength);
+                // 1. Atas grid hanya sampai logo (vanishing point di titik tengah logo)
+                let horizonY = height * 0.36;
+                if (logoBox) {
+                    horizonY = cy; // Vanishing point tepat di balik logo
+                }
 
+                // 2. Batas bawah grid sampai ujung bawah hero
+                const gridBottomY = height;
+                const gridSpan = Math.max(60, gridBottomY - horizonY);
+                const floorY = gridSpan * 1.10;
+
+                const focalLength = 380;
                 const parallaxX = (this.tiltY / 9) * 25;
                 const parallaxY = (-this.tiltX / 9) * 20;
 
                 // -------------------------------------------------------------
-                // A. SYNTHWAVE / RETROWAVE FLOOR GRID (Full-bleed Hero: Top to Bottom)
+                // A. SYNTHWAVE / RETROWAVE FLOOR GRID (Dari Logo sampai Ujung Bawah Hero)
                 // -------------------------------------------------------------
                 gridZOffset = (gridZOffset + gridSpeed) % gridSpacing;
 
                 ctx.save();
                 ctx.beginPath();
-                ctx.rect(0, 0, width, height);
+                ctx.rect(0, horizonY, width, Math.max(10, gridBottomY - horizonY));
                 ctx.clip();
 
-                // Top Ambient Horizon Glow
-                const horizonGrad = ctx.createRadialGradient(
-                    cx + parallaxX * 0.25, 0, 10,
-                    cx + parallaxX * 0.25, 0, width * 0.75
-                );
-                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.25)');
-                horizonGrad.addColorStop(0.4, 'rgba(228, 85, 22, 0.08)');
-                horizonGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = horizonGrad;
-                ctx.fillRect(0, 0, width, Math.min(260, height * 0.35));
-
-                // Perspective Longitudinal Lines (Fanning out from top to bottom)
+                // Perspective Longitudinal Lines (Fanning out from vanishing point behind logo)
                 const lineCount = Math.floor(width / 45) + 6;
-                const lineSpacingX = 85;
+                const lineSpacingX = 75;
                 ctx.lineWidth = 1.1;
 
                 for (let i = -lineCount; i <= lineCount; i++) {
                     const worldX = i * lineSpacingX;
-                    const pFar = project(worldX + parallaxX * 0.35, floorY, zFar, focalLength, cx, vpy);
-                    const pNear = project(worldX + parallaxX * 0.55, floorY, zNear, focalLength, cx, vpy);
+                    const pFar = project(worldX + parallaxX * 0.4, floorY, gridMaxZ, focalLength, cx, horizonY);
+                    const pNear = project(worldX + parallaxX * 0.4, floorY, 35, focalLength, cx, horizonY);
 
                     if (pFar.visible && pNear.visible) {
                         const lineGrad = ctx.createLinearGradient(pFar.x, pFar.y, pNear.x, pNear.y);
-                        lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.08)');
-                        lineGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.20)');
-                        lineGrad.addColorStop(0.7, 'rgba(240, 178, 62, 0.35)');
-                        lineGrad.addColorStop(1, 'rgba(228, 85, 22, 0.50)');
+                        lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.03)');
+                        lineGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.22)');
+                        lineGrad.addColorStop(1, 'rgba(228, 85, 22, 0.55)');
                         ctx.strokeStyle = lineGrad;
 
                         ctx.beginPath();
-                        ctx.moveTo(pFar.x, Math.max(0, pFar.y));
-                        ctx.lineTo(pNear.x, Math.min(height, pNear.y));
+                        ctx.moveTo(pFar.x, pFar.y);
+                        ctx.lineTo(pNear.x, pNear.y);
                         ctx.stroke();
                     }
                 }
 
-                // Transverse Horizontal Lines (Scrolling smoothly from top y=0 to bottom y=height)
-                for (let z = zFar - ((zFar - gridZOffset) % gridSpacing); z >= zNear; z -= gridSpacing) {
-                    const pL = project(-1600 + parallaxX * 0.45, floorY, z, focalLength, cx, vpy);
-                    const pR = project(1600 + parallaxX * 0.45, floorY, z, focalLength, cx, vpy);
+                // Transverse Horizontal Lines (Scrolling forward towards camera)
+                for (let z = gridZOffset; z <= gridMaxZ; z += gridSpacing) {
+                    if (z < 35) continue;
+                    const pL = project(-1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
+                    const pR = project(1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
 
                     if (pL.visible && pR.visible) {
-                        const depthRatio = 1 - ((z - zNear) / (zFar - zNear));
-                        const alpha = Math.max(0.04, Math.min(0.55, Math.pow(depthRatio, 1.25) * 0.58));
+                        const depthRatio = 1 - (z / gridMaxZ);
+                        const alpha = Math.max(0, Math.min(0.62, Math.pow(depthRatio, 1.3) * 0.68));
 
                         ctx.strokeStyle = `rgba(240, 178, 62, ${alpha.toFixed(3)})`;
-                        ctx.lineWidth = 0.9 + (depthRatio * 1.1);
+                        ctx.lineWidth = 1 + (depthRatio * 1.2);
                         ctx.beginPath();
                         ctx.moveTo(pL.x, pL.y);
                         ctx.lineTo(pR.x, pR.y);
@@ -1231,6 +1219,7 @@ function heroEngine() {
                     }
                 }
 
+                // CATATAN: Garis pada batas atas grid ditiadakan sesuai permintaan user
                 ctx.restore();
 
                 // -------------------------------------------------------------
