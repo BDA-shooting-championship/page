@@ -481,28 +481,31 @@ include __DIR__ . '/../includes/header.php';
                         <span>Filter Kategori:</span>
                     </span>
                     <button type="button" @click="antreanCategoryFilter = 'all'; filterRegistrations()"
-                            :class="antreanCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            :class="antreanCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm ring-2 ring-gray-900/20' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
                         <span>Semua Kategori</span>
-                        <span class="text-[10px] px-1.5 py-0.2 rounded-full" :class="antreanCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="registrations.length"></span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="antreanCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'" x-text="antreanCountAll"></span>
                     </button>
                     <button type="button" @click="antreanCategoryFilter = 'presisi'; filterRegistrations()"
-                            :class="antreanCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
+                            :class="antreanCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm ring-2 ring-blue-500/30' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="antreanCategoryFilter === 'presisi' ? 'bg-blue-200' : 'bg-blue-500'"></span>
                         <span>Presisi 20M (Umum)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="antreanCategoryFilter === 'presisi' ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-800'" x-text="antreanCountPresisi"></span>
                     </button>
                     <button type="button" @click="antreanCategoryFilter = 'dueling_umum'; filterRegistrations()"
-                            :class="antreanCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
+                            :class="antreanCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm ring-2 ring-purple-500/30' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="antreanCategoryFilter === 'dueling_umum' ? 'bg-purple-200' : 'bg-purple-500'"></span>
                         <span>Dueling Plat (Umum)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="antreanCategoryFilter === 'dueling_umum' ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-800'" x-text="antreanCountDuelingUmum"></span>
                     </button>
                     <button type="button" @click="antreanCategoryFilter = 'dueling_bda'; filterRegistrations()"
-                            :class="antreanCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
+                            :class="antreanCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm ring-2 ring-amber-500/30' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="antreanCategoryFilter === 'dueling_bda' ? 'bg-amber-200' : 'bg-amber-500'"></span>
                         <span>Dueling Plat (Khusus BDA)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="antreanCategoryFilter === 'dueling_bda' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900'" x-text="antreanCountDuelingBda"></span>
                     </button>
                 </div>
             </div>
@@ -540,15 +543,15 @@ include __DIR__ . '/../includes/header.php';
                                     </td>
                                     <td class="py-3 px-3 hidden lg:table-cell text-gray-700" x-text="reg.satuan"></td>
                                     <td class="py-3 px-3 hidden lg:table-cell">
-                                        <ul class="space-y-1 list-none p-0 m-0">
+                                        <div class="flex flex-col gap-1 items-start">
                                             <template x-for="item in formatKategoriList(reg.kategori)" :key="item">
-                                                <li class="flex items-center gap-1.5 text-xs font-semibold text-gray-800">
-                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0"
-                                                          :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-gray-400')"></span>
+                                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-semibold border shadow-xs"
+                                                      :class="getKategoriBadgeClass(item)">
+                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="getKategoriDotClass(item)"></span>
                                                     <span x-text="item"></span>
-                                                </li>
+                                                </span>
                                             </template>
-                                        </ul>
+                                        </div>
                                     </td>
                                     <td class="py-3 px-3 text-center">
                                         <span
@@ -667,28 +670,31 @@ include __DIR__ . '/../includes/header.php';
                         <span>Filter Kategori:</span>
                     </span>
                     <button type="button" @click="pesertaCategoryFilter = 'all'; filterPeserta()"
-                            :class="pesertaCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+                            :class="pesertaCategoryFilter === 'all' ? 'bg-gray-900 text-white font-bold shadow-sm ring-2 ring-gray-900/20' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
                         <span>Semua Peserta</span>
-                        <span class="text-[10px] px-1.5 py-0.2 rounded-full" :class="pesertaCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-600'" x-text="registrations.filter(r => (r.status||'').toLowerCase() === 'verified').length"></span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="pesertaCategoryFilter === 'all' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'" x-text="pesertaCountAll"></span>
                     </button>
                     <button type="button" @click="pesertaCategoryFilter = 'presisi'; filterPeserta()"
-                            :class="pesertaCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
+                            :class="pesertaCategoryFilter === 'presisi' ? 'bg-blue-600 text-white font-bold shadow-sm ring-2 ring-blue-500/30' : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="pesertaCategoryFilter === 'presisi' ? 'bg-blue-200' : 'bg-blue-500'"></span>
                         <span>Presisi 20M (Umum)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="pesertaCategoryFilter === 'presisi' ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-800'" x-text="pesertaCountPresisi"></span>
                     </button>
                     <button type="button" @click="pesertaCategoryFilter = 'dueling_umum'; filterPeserta()"
-                            :class="pesertaCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
+                            :class="pesertaCategoryFilter === 'dueling_umum' ? 'bg-purple-600 text-white font-bold shadow-sm ring-2 ring-purple-500/30' : 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="pesertaCategoryFilter === 'dueling_umum' ? 'bg-purple-200' : 'bg-purple-500'"></span>
                         <span>Dueling Plat (Umum)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="pesertaCategoryFilter === 'dueling_umum' ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-800'" x-text="pesertaCountDuelingUmum"></span>
                     </button>
                     <button type="button" @click="pesertaCategoryFilter = 'dueling_bda'; filterPeserta()"
-                            :class="pesertaCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
+                            :class="pesertaCategoryFilter === 'dueling_bda' ? 'bg-amber-600 text-white font-bold shadow-sm ring-2 ring-amber-500/30' : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'"
                             class="px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span class="w-2 h-2 rounded-full" :class="pesertaCategoryFilter === 'dueling_bda' ? 'bg-amber-200' : 'bg-amber-500'"></span>
                         <span>Dueling Plat (Khusus BDA)</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full font-bold" :class="pesertaCategoryFilter === 'dueling_bda' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900'" x-text="pesertaCountDuelingBda"></span>
                     </button>
                 </div>
             </div>
@@ -725,15 +731,15 @@ include __DIR__ . '/../includes/header.php';
                                         <div class="text-[11px] text-gray-500" x-text="p.satuan"></div>
                                     </td>
                                     <td class="py-3 px-3">
-                                        <ul class="space-y-1 list-none p-0 m-0">
+                                        <div class="flex flex-col gap-1 items-start">
                                             <template x-for="item in formatKategoriList(p.kategori)" :key="item">
-                                                <li class="flex items-center gap-1.5 text-xs font-semibold text-gray-800">
-                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0"
-                                                          :class="item.toLowerCase().includes('presisi') ? 'bg-blue-600' : (item.toLowerCase().includes('dueling') ? 'bg-purple-600' : 'bg-gray-400')"></span>
+                                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-semibold border shadow-xs"
+                                                      :class="getKategoriBadgeClass(item)">
+                                                    <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="getKategoriDotClass(item)"></span>
                                                     <span x-text="item"></span>
-                                                </li>
+                                                </span>
                                             </template>
-                                        </ul>
+                                        </div>
                                     </td>
                                     <td class="py-3 px-3 hidden lg:table-cell text-xs">
                                         <div class="font-mono text-gray-800" x-text="p.telepon"></div>
@@ -2629,7 +2635,7 @@ function adminDashboard() {
             };
         },
 
-        filterRegistrations() {
+        get antreanBaseList() {
             let res = [...this.registrations];
             if (this.statusFilter !== 'all') {
                 res = res.filter(r => (r.status || '').toLowerCase() === this.statusFilter.toLowerCase());
@@ -2637,15 +2643,81 @@ function adminDashboard() {
                 // Sembunyikan yang sudah dikonfirmasi (Verified) dari antrean pendaftar secara default
                 res = res.filter(r => (r.status || '').toLowerCase() !== 'verified');
             }
+            return res;
+        },
+
+        get verifiedPesertaList() {
+            return this.registrations.filter(r => (r.status || '').toLowerCase() === 'verified');
+        },
+
+        get antreanCountAll() {
+            return this.antreanBaseList.length;
+        },
+        get antreanCountPresisi() {
+            return this.antreanBaseList.filter(r => this.matchesCategory(r.kategori, 'presisi')).length;
+        },
+        get antreanCountDuelingUmum() {
+            return this.antreanBaseList.filter(r => this.matchesCategory(r.kategori, 'dueling_umum')).length;
+        },
+        get antreanCountDuelingBda() {
+            return this.antreanBaseList.filter(r => this.matchesCategory(r.kategori, 'dueling_bda')).length;
+        },
+
+        get pesertaCountAll() {
+            return this.verifiedPesertaList.length;
+        },
+        get pesertaCountPresisi() {
+            return this.verifiedPesertaList.filter(r => this.matchesCategory(r.kategori, 'presisi')).length;
+        },
+        get pesertaCountDuelingUmum() {
+            return this.verifiedPesertaList.filter(r => this.matchesCategory(r.kategori, 'dueling_umum')).length;
+        },
+        get pesertaCountDuelingBda() {
+            return this.verifiedPesertaList.filter(r => this.matchesCategory(r.kategori, 'dueling_bda')).length;
+        },
+
+        matchesCategory(kat, filter) {
+            if (!filter || filter === 'all') return true;
+            if (!kat) return false;
+            const list = this.formatKategoriList(kat);
+            if (filter === 'presisi') {
+                return list.some(k => k.toLowerCase().includes('presisi'));
+            }
+            if (filter === 'dueling_umum') {
+                return list.some(k => k.toLowerCase().includes('dueling') && !k.toLowerCase().includes('bda'));
+            }
+            if (filter === 'dueling_bda') {
+                return list.some(k => k.toLowerCase().includes('bda'));
+            }
+            return true;
+        },
+
+        getKategoriBadgeClass(item) {
+            const l = String(item).toLowerCase();
+            if (l.includes('bda')) {
+                return 'bg-amber-50 text-amber-900 border-amber-300';
+            }
+            if (l.includes('dueling')) {
+                return 'bg-purple-50 text-purple-900 border-purple-300';
+            }
+            if (l.includes('presisi')) {
+                return 'bg-blue-50 text-blue-900 border-blue-300';
+            }
+            return 'bg-gray-50 text-gray-800 border-gray-300';
+        },
+
+        getKategoriDotClass(item) {
+            const l = String(item).toLowerCase();
+            if (l.includes('bda')) return 'bg-amber-500';
+            if (l.includes('dueling')) return 'bg-purple-500';
+            if (l.includes('presisi')) return 'bg-blue-500';
+            return 'bg-gray-400';
+        },
+
+        filterRegistrations() {
+            let res = this.antreanBaseList;
             if (this.antreanCategoryFilter !== 'all') {
-                const cf = this.antreanCategoryFilter;
-                res = res.filter(r => {
-                    const k = (r.kategori || '').toLowerCase();
-                    if (cf === 'presisi') return k.includes('presisi');
-                    if (cf === 'dueling_bda') return k.includes('bda');
-                    if (cf === 'dueling_umum') return k.includes('dueling') && (k.includes('umum') || !k.includes('bda'));
-                    return true;
-                });
+                res = res.filter(r => this.matchesCategory(r.kategori, this.antreanCategoryFilter));
             }
             if (this.searchQuery.trim()) {
                 const q = this.searchQuery.toLowerCase().trim();
@@ -2661,16 +2733,9 @@ function adminDashboard() {
         },
 
         filterPeserta() {
-            let res = this.registrations.filter(r => (r.status || '').toLowerCase() === 'verified');
+            let res = this.verifiedPesertaList;
             if (this.pesertaCategoryFilter !== 'all') {
-                const cf = this.pesertaCategoryFilter;
-                res = res.filter(r => {
-                    const k = (r.kategori || '').toLowerCase();
-                    if (cf === 'presisi') return k.includes('presisi');
-                    if (cf === 'dueling_bda') return k.includes('bda');
-                    if (cf === 'dueling_umum') return k.includes('dueling') && (k.includes('umum') || !k.includes('bda'));
-                    return true;
-                });
+                res = res.filter(r => this.matchesCategory(r.kategori, this.pesertaCategoryFilter));
             }
             if (this.pesertaSearch.trim()) {
                 const q = this.pesertaSearch.toLowerCase().trim();
@@ -2731,6 +2796,7 @@ function adminDashboard() {
                 const idx = this.registrations.findIndex(r => r.registration_id === updated.registration_id);
                 if (idx !== -1) {
                     this.registrations[idx] = updated;
+                    this.registrations = [...this.registrations];
                 }
 
                 this.calculateStats();
@@ -2771,6 +2837,7 @@ function adminDashboard() {
                 const idx = this.registrations.findIndex(r => r.registration_id === updated.registration_id);
                 if (idx !== -1) {
                     this.registrations[idx] = updated;
+                    this.registrations = [...this.registrations];
                 }
 
                 this.calculateStats();
@@ -2839,6 +2906,7 @@ function adminDashboard() {
                 const idx = this.registrations.findIndex(r => r.registration_id === updated.registration_id);
                 if (idx !== -1) {
                     this.registrations[idx] = updated;
+                    this.registrations = [...this.registrations];
                 }
 
                 this.calculateStats();
