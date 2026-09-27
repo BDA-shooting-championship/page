@@ -1157,103 +1157,79 @@ function heroEngine() {
                 const actionBox = document.getElementById('hero-action-box');
                 const scrollEl = document.getElementById('hero-scroll-box');
 
-                // Floor grid bagian atas: kurang lebih ujung atas countdown
-                let horizonY = height * 0.45;
-                if (countdownEl) {
-                    const cdRect = countdownEl.getBoundingClientRect();
-                    horizonY = Math.max(20, (cdRect.top - canvasRect.top) - 8);
-                }
-
-                // Floor grid bagian bawah: antara live skor (action buttons) dengan scroll
-                let gridBottomY = height * 0.90;
-                if (actionBox && scrollEl) {
-                    const abRect = actionBox.getBoundingClientRect();
-                    const scRect = scrollEl.getBoundingClientRect();
-                    const btnBottom = abRect.bottom - canvasRect.top;
-                    const scTop = scRect.top - canvasRect.top;
-                    gridBottomY = (btnBottom + scTop) / 2;
-                } else if (actionBox) {
-                    gridBottomY = (actionBox.getBoundingClientRect().bottom - canvasRect.top) + 20;
-                }
-
+                // Floor grid: ujung hero atas (y = 0) sampai ujung hero bawah (y = height)
                 const focalLength = 380;
+                const vpy = -height * 0.35; // Vanishing point virtual horizon di atas hero
+                const zNear = 38;
+                const floorY = (height - vpy) * ((focalLength + zNear) / focalLength);
+                const zFar = Math.max(zNear + 200, ((height - vpy) * (focalLength + zNear) / (-vpy)) - focalLength);
+
                 const parallaxX = (this.tiltY / 9) * 25;
                 const parallaxY = (-this.tiltX / 9) * 20;
 
                 // -------------------------------------------------------------
-                // A. SYNTHWAVE / RETROWAVE FLOOR GRID (Rolling towards horizon)
+                // A. SYNTHWAVE / RETROWAVE FLOOR GRID (Full-bleed Hero: Top to Bottom)
                 // -------------------------------------------------------------
                 gridZOffset = (gridZOffset + gridSpeed) % gridSpacing;
 
                 ctx.save();
                 ctx.beginPath();
-                ctx.rect(0, horizonY - 2, width, Math.max(10, gridBottomY - horizonY + 4));
+                ctx.rect(0, 0, width, height);
                 ctx.clip();
 
-                // Horizon Ambient Glow at vanishing point
+                // Top Ambient Horizon Glow
                 const horizonGrad = ctx.createRadialGradient(
-                    cx + parallaxX * 0.3, horizonY, 5,
-                    cx + parallaxX * 0.3, horizonY, width * 0.65
+                    cx + parallaxX * 0.25, 0, 10,
+                    cx + parallaxX * 0.25, 0, width * 0.75
                 );
-                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.32)');
-                horizonGrad.addColorStop(0.35, 'rgba(228, 85, 22, 0.12)');
+                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.25)');
+                horizonGrad.addColorStop(0.4, 'rgba(228, 85, 22, 0.08)');
                 horizonGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
                 ctx.fillStyle = horizonGrad;
-                ctx.fillRect(0, horizonY - 15, width, 140);
+                ctx.fillRect(0, 0, width, Math.min(260, height * 0.35));
 
-                const gridSpan = Math.max(60, gridBottomY - horizonY);
-                const floorY = gridSpan * 1.12;
-
-                // Perspective Longitudinal Lines (Fanning out from vanishing point)
+                // Perspective Longitudinal Lines (Fanning out from top to bottom)
                 const lineCount = Math.floor(width / 45) + 6;
-                const lineSpacingX = 75;
+                const lineSpacingX = 85;
                 ctx.lineWidth = 1.1;
 
                 for (let i = -lineCount; i <= lineCount; i++) {
                     const worldX = i * lineSpacingX;
-                    const pFar = project(worldX + parallaxX * 0.4, floorY, gridMaxZ, focalLength, cx, horizonY);
-                    const pNear = project(worldX + parallaxX * 0.4, floorY, 35, focalLength, cx, horizonY);
+                    const pFar = project(worldX + parallaxX * 0.35, floorY, zFar, focalLength, cx, vpy);
+                    const pNear = project(worldX + parallaxX * 0.55, floorY, zNear, focalLength, cx, vpy);
 
                     if (pFar.visible && pNear.visible) {
                         const lineGrad = ctx.createLinearGradient(pFar.x, pFar.y, pNear.x, pNear.y);
-                        lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.02)');
-                        lineGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.25)');
-                        lineGrad.addColorStop(1, 'rgba(228, 85, 22, 0.55)');
+                        lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.08)');
+                        lineGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.20)');
+                        lineGrad.addColorStop(0.7, 'rgba(240, 178, 62, 0.35)');
+                        lineGrad.addColorStop(1, 'rgba(228, 85, 22, 0.50)');
                         ctx.strokeStyle = lineGrad;
 
                         ctx.beginPath();
-                        ctx.moveTo(pFar.x, pFar.y);
-                        ctx.lineTo(pNear.x, pNear.y);
+                        ctx.moveTo(pFar.x, Math.max(0, pFar.y));
+                        ctx.lineTo(pNear.x, Math.min(height, pNear.y));
                         ctx.stroke();
                     }
                 }
 
-                // Transverse Horizontal Lines (Scrolling forward towards camera)
-                for (let z = gridZOffset; z <= gridMaxZ; z += gridSpacing) {
-                    if (z < 35) continue;
-                    const pL = project(-1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
-                    const pR = project(1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
+                // Transverse Horizontal Lines (Scrolling smoothly from top y=0 to bottom y=height)
+                for (let z = zFar - ((zFar - gridZOffset) % gridSpacing); z >= zNear; z -= gridSpacing) {
+                    const pL = project(-1600 + parallaxX * 0.45, floorY, z, focalLength, cx, vpy);
+                    const pR = project(1600 + parallaxX * 0.45, floorY, z, focalLength, cx, vpy);
 
                     if (pL.visible && pR.visible) {
-                        const depthRatio = 1 - (z / gridMaxZ);
-                        const alpha = Math.max(0, Math.min(0.65, Math.pow(depthRatio, 1.3) * 0.7));
+                        const depthRatio = 1 - ((z - zNear) / (zFar - zNear));
+                        const alpha = Math.max(0.04, Math.min(0.55, Math.pow(depthRatio, 1.25) * 0.58));
 
                         ctx.strokeStyle = `rgba(240, 178, 62, ${alpha.toFixed(3)})`;
-                        ctx.lineWidth = 1 + (depthRatio * 1.2);
+                        ctx.lineWidth = 0.9 + (depthRatio * 1.1);
                         ctx.beginPath();
                         ctx.moveTo(pL.x, pL.y);
                         ctx.lineTo(pR.x, pR.y);
                         ctx.stroke();
                     }
                 }
-
-                // Horizon Seam Line
-                ctx.beginPath();
-                ctx.moveTo(0, horizonY);
-                ctx.lineTo(width, horizonY);
-                ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
 
                 ctx.restore();
 
