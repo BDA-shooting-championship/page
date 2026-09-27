@@ -34,8 +34,12 @@ $currentPage = $currentPage ?? '';
                         bronze: { 50:'#f9f5f0', 100:'#f0e6d5', 200:'#e0ccaa', 300:'#ccab78', 400:'#ba8f54', 500:'#a87a3c', 600:'#8f6230', 700:'#754d29', 800:'#624027', 900:'#533824' },
                     },
                     fontFamily: {
-                        display: ['Oswald', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
+                        display: ['Teko', 'sans-serif'],
+                        body: ['Rajdhani', 'sans-serif'],
+                        mono: ['Chakra Petch', 'monospace'],
+                        hud: ['Chakra Petch', 'monospace'],
+                        teko: ['Teko', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
                     }
                 }
             }
@@ -45,8 +49,8 @@ $currentPage = $currentPage ?? '';
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Design fonts from /lp: Teko, Rajdhani, Chakra Petch) -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Rajdhani:wght@400;500;600;700&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons (Deferred Minified Bundle for Instant First Paint) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -66,10 +70,10 @@ $currentPage = $currentPage ?? '';
             -webkit-text-size-adjust: 100%;
         }
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
         }
-        .font-display { font-family: 'Oswald', sans-serif; }
+        .font-display { font-family: 'Teko', sans-serif; letter-spacing: 0.02em; }
         .target-pattern { 
             background-image: radial-gradient(circle, rgba(219,109,32,0.05) 1px, transparent 1px);
             background-size: 30px 30px;

@@ -630,7 +630,7 @@ function drawRingNumbers(text, radius, scale, color) {
     const cy = targetCenter.y;
     const offset = 7 * scale;
     const fontSize = Math.max(9, 10 * scale);
-    tCtx.font = `600 ${fontSize}px 'Oswald', sans-serif`;
+    tCtx.font = `600 ${fontSize}px 'Teko', 'Oswald', sans-serif`;
     tCtx.textAlign = 'center';
     tCtx.textBaseline = 'middle';
     tCtx.fillText(text, cx, cy - radius + offset);
