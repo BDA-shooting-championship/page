@@ -4,13 +4,18 @@ $currentPage = 'home';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Section with Requested Flow & White Canvas Logo -->
-<section class="relative hero-gradient text-white overflow-hidden">
-    <div class="absolute inset-0 target-pattern opacity-25"></div>
-    <!-- Ambient Glow -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-copper-500/15 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Hero Section with 2.5D Canvas, Synthwave Floor Grid, Particle System & Gyro Parallax -->
+<section id="hero-section" class="relative hero-gradient text-white overflow-hidden" x-data="heroEngine()" x-init="initEngine()" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
+    <!-- 2.5D Interactive FX Canvas: Synthwave Floor Grid + Dust Particle System + 3D Target Reticle Vectors -->
+    <canvas id="hero-fx-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+    
+    <div class="absolute inset-0 target-pattern opacity-15 pointer-events-none"></div>
+    <!-- Horizon Line & Retrowave Horizon Glow behind the grid -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute bottom-0 inset-x-0 h-96 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+    </div>
 
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 md:pt-12 pb-8 sm:pb-12 text-center">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 md:pt-12 pb-8 sm:pb-12 text-center">
         <!-- 1. Organizer Badge with White Canvas for BDA Logo -->
         <div class="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold text-white mb-3 shadow-lg">
             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white p-1 shadow-md border border-white/80 flex items-center justify-center shrink-0">
@@ -28,8 +33,8 @@ require_once __DIR__ . '/includes/header.php';
             <span data-scramble class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">CHAMPIONSHIP 2026</span>
         </h1>
 
-        <!-- 3. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
-        <div class="flex justify-center items-center mb-6" x-data="heroLogoTilt()" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
+        <!-- 3. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion (Parallax Depth: Pointer + Gyroscope) -->
+        <div class="flex justify-center items-center mb-6">
             <div class="relative group">
                 <!-- Outermost Rotating Reticle Ring (Clockwise Rotation 24s) -->
                 <div class="absolute -inset-8 sm:-inset-11 md:-inset-14 pointer-events-none flex items-center justify-center">
@@ -52,9 +57,10 @@ require_once __DIR__ . '/includes/header.php';
                 <!-- Soft Glow Behind White Canvas -->
                 <div class="absolute -inset-4 bg-gradient-to-r from-copper-500/40 via-amber-400/35 to-copper-600/40 rounded-full blur-2xl opacity-80 group-hover:opacity-100 transition duration-700 pointer-events-none"></div>
 
-                <!-- White Canvas Container for Logo with 3D Parallax Tilt -->
-                <div class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-white shadow-2xl p-5 sm:p-7 md:p-8 flex items-center justify-center border-4 sm:border-8 border-copper-400/60 ring-4 sm:ring-8 ring-white/20 transition-transform duration-200 will-change-transform cursor-pointer"
-                     :style="'transform: perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(' + (isHovered ? '1.04, 1.04, 1.04' : '1, 1, 1') + ')'"
+                <!-- White Canvas Container for Logo with 3D Parallax Tilt (Pointer + Gyroscope) -->
+                <div id="hero-logo-canvas-box"
+                     class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-white shadow-2xl p-5 sm:p-7 md:p-8 flex items-center justify-center border-4 sm:border-8 border-copper-400/60 ring-4 sm:ring-8 ring-white/20 transition-transform duration-100 ease-out will-change-transform cursor-pointer"
+                     :style="'transform: perspective(1000px) rotateX(' + tiltX.toFixed(2) + 'deg) rotateY(' + tiltY.toFixed(2) + 'deg) translate3d(' + (tiltY * 0.8).toFixed(1) + 'px, ' + (-tiltX * 0.8).toFixed(1) + 'px, 0)'"
                      @mouseenter="isHovered = true"
                      @mouseleave="isHovered = false">
                     <picture>
@@ -72,21 +78,12 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
 
-        <!-- 4. Badges Tanggal & Lokasi (Sesuai Desain Gambar) -->
-        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-4 sm:mt-5 mb-5 sm:mb-6 px-1">
-            <!-- Badge Tanggal -->
-            <div class="flex items-center gap-1.5 border border-white/15 bg-black/60 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-mono text-[10px] sm:text-xs tracking-[0.12em] text-gray-200 backdrop-blur-md shadow-sm">
+        <!-- 4. Badge Tanggal Pelaksanaan (Lokasi Dihilangkan Sesuai Permintaan) -->
+        <div class="flex items-center justify-center mt-4 sm:mt-5 mb-5 sm:mb-6 px-1">
+            <div class="flex items-center gap-2 border border-white/15 bg-black/60 px-3.5 py-1.5 rounded-lg font-mono text-[11px] sm:text-xs tracking-[0.15em] text-gray-200 backdrop-blur-md shadow-sm">
                 <i data-lucide="calendar" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
                 <span class="font-bold">17 — 18 OKTOBER 2026</span>
             </div>
-
-            <!-- Badge Lokasi (Klik ke Google Maps) -->
-            <a href="https://maps.app.goo.gl/Yu9CHBdxc85ddAuR7" target="_blank" rel="noopener noreferrer" 
-               class="group flex items-center gap-1.5 border border-white/15 hover:border-amber-400/50 bg-black/60 hover:bg-black/80 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-mono text-[10px] sm:text-xs tracking-[0.12em] text-gray-200 hover:text-white backdrop-blur-md transition-all duration-200 shadow-sm"
-               title="Buka Lokasi di Google Maps">
-                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform shrink-0"></i>
-                <span class="font-bold">KEDUNGHALANG, BOGOR</span>
-            </a>
         </div>
 
         <!-- 5. Countdown Box Tactical (Sesuai Desain Gambar) -->
@@ -1006,26 +1003,372 @@ require_once __DIR__ . '/includes/header.php';
 </style>
 
 <script>
-function heroLogoTilt() {
+function heroEngine() {
     return {
         tiltX: 0,
         tiltY: 0,
+        targetTiltX: 0,
+        targetTiltY: 0,
         isHovered: false,
-        handleMouseMove(e) {
-            // Skip expensive 3D tilt calculation on touch/mobile screens to maintain 60-120fps
-            if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            this.tiltX = (-y / (rect.height / 2) * 7).toFixed(2);
-            this.tiltY = (x / (rect.width / 2) * 7).toFixed(2);
+        animFrameId: null,
+
+        initEngine() {
+            this.initCanvas();
+            this.initGyroscope();
         },
+
+        handleMouseMove(e) {
+            const section = document.getElementById('hero-section');
+            if (!section) return;
+            const rect = section.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            this.targetTiltY = nx * 9;
+            this.targetTiltX = -ny * 9;
+        },
+
         handleMouseLeave() {
-            this.tiltX = 0;
-            this.tiltY = 0;
-            this.isHovered = false;
+            this.targetTiltX = 0;
+            this.targetTiltY = 0;
+        },
+
+        initGyroscope() {
+            const handleOrientation = (e) => {
+                if (e.gamma === null || e.beta === null) return;
+                const gamma = Math.max(-40, Math.min(40, e.gamma));
+                const beta = Math.max(-40, Math.min(40, e.beta - 32));
+                this.targetTiltY = (gamma / 40) * 12;
+                this.targetTiltX = (-beta / 40) * 12;
+            };
+
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                const triggerPermission = () => {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(perm => {
+                            if (perm === 'granted') {
+                                window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+                            }
+                        })
+                        .catch(() => {});
+                    window.removeEventListener('click', triggerPermission);
+                    window.removeEventListener('touchstart', triggerPermission);
+                };
+                window.addEventListener('click', triggerPermission, { once: true });
+                window.addEventListener('touchstart', triggerPermission, { once: true });
+            } else if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+            }
+        },
+
+        initCanvas() {
+            const canvas = document.getElementById('hero-fx-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            let width = 0, height = 0;
+            let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            const resize = () => {
+                const rect = canvas.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+            };
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            // 1. Perspective Projection Function: project(x,y,z) with focalLength
+            const project = (x, y, z, focalLength, cx, cy) => {
+                if (z <= -focalLength + 1) return { x: cx, y: cy, scale: 0, visible: false };
+                const scale = focalLength / (focalLength + z);
+                return {
+                    x: cx + x * scale,
+                    y: cy + y * scale,
+                    scale: scale,
+                    visible: true
+                };
+            };
+
+            // 2. Initialize Particle System (Floating dust & embers with twinkle)
+            const particleCount = 65;
+            const particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: (Math.random() - 0.5) * 900,
+                    y: (Math.random() - 0.5) * 1000,
+                    z: Math.random() * 700 + 40,
+                    size: Math.random() * 2 + 1.2,
+                    speedY: Math.random() * 0.45 + 0.25,
+                    twinkleSpeed: Math.random() * 2.5 + 1.2,
+                    phase: Math.random() * Math.PI * 2,
+                    baseAlpha: Math.random() * 0.45 + 0.35,
+                    color: Math.random() > 0.3 ? 'amber' : 'white'
+                });
+            }
+
+            // 3. Grid Variables (Synthwave / Retrowave Floor Grid)
+            let gridZOffset = 0;
+            const gridSpacing = 50;
+            const gridMaxZ = 750;
+            const gridSpeed = 0.85;
+
+            // Pause when offscreen to preserve battery
+            let isVisible = true;
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    isVisible = entries[0].isIntersecting;
+                }, { threshold: 0.05 });
+                observer.observe(canvas);
+            }
+
+            let lastTime = performance.now();
+            let reticleAngle = 0;
+
+            const render = (now) => {
+                this.animFrameId = requestAnimationFrame(render);
+                if (!isVisible) return;
+
+                const dt = Math.min((now - lastTime) / 1000, 0.1);
+                lastTime = now;
+
+                // Smooth tilt interpolation (lerp)
+                this.tiltX += (this.targetTiltX - this.tiltX) * 0.08;
+                this.tiltY += (this.targetTiltY - this.tiltY) * 0.08;
+
+                ctx.save();
+                ctx.scale(dpr, dpr);
+                ctx.clearRect(0, 0, width, height);
+
+                const logoBox = document.getElementById('hero-logo-canvas-box');
+                let cx = width / 2;
+                let cy = height * 0.36;
+                let baseR = Math.min(width * 0.32, 185);
+                if (logoBox) {
+                    const lRect = logoBox.getBoundingClientRect();
+                    const cRect = canvas.getBoundingClientRect();
+                    cx = (lRect.left + lRect.width / 2) - cRect.left;
+                    cy = (lRect.top + lRect.height / 2) - cRect.top;
+                    baseR = Math.max(lRect.width / 2, 100);
+                }
+
+                const horizonY = Math.max(height * 0.58, cy + baseR * 1.18);
+                const focalLength = 380;
+
+                const parallaxX = (this.tiltY / 9) * 25;
+                const parallaxY = (-this.tiltX / 9) * 20;
+
+                // -------------------------------------------------------------
+                // A. SYNTHWAVE / RETROWAVE FLOOR GRID (Rolling towards horizon)
+                // -------------------------------------------------------------
+                gridZOffset = (gridZOffset + gridSpeed) % gridSpacing;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(0, horizonY - 10, width, height - (horizonY - 10));
+                ctx.clip();
+
+                // Horizon Ambient Glow at vanishing point
+                const horizonGrad = ctx.createRadialGradient(
+                    cx + parallaxX * 0.3, horizonY, 5,
+                    cx + parallaxX * 0.3, horizonY, width * 0.65
+                );
+                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.28)');
+                horizonGrad.addColorStop(0.35, 'rgba(228, 85, 22, 0.12)');
+                horizonGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = horizonGrad;
+                ctx.fillRect(0, horizonY - 20, width, 140);
+
+                const floorY = 160;
+
+                // Perspective Longitudinal Lines (Fanning out from vanishing point)
+                const lineCount = Math.floor(width / 45) + 6;
+                const lineSpacingX = 75;
+                ctx.lineWidth = 1.1;
+
+                for (let i = -lineCount; i <= lineCount; i++) {
+                    const worldX = i * lineSpacingX;
+                    const pFar = project(worldX + parallaxX * 0.4, floorY, gridMaxZ, focalLength, cx, horizonY);
+                    const pNear = project(worldX + parallaxX * 0.4, floorY, 35, focalLength, cx, horizonY);
+
+                    if (pFar.visible && pNear.visible) {
+                        const lineGrad = ctx.createLinearGradient(pFar.x, pFar.y, pNear.x, pNear.y);
+                        lineGrad.addColorStop(0, 'rgba(245, 158, 11, 0.02)');
+                        lineGrad.addColorStop(0.3, 'rgba(245, 158, 11, 0.25)');
+                        lineGrad.addColorStop(1, 'rgba(228, 85, 22, 0.55)');
+                        ctx.strokeStyle = lineGrad;
+
+                        ctx.beginPath();
+                        ctx.moveTo(pFar.x, pFar.y);
+                        ctx.lineTo(pNear.x, pNear.y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Transverse Horizontal Lines (Scrolling forward towards camera)
+                for (let z = gridZOffset; z <= gridMaxZ; z += gridSpacing) {
+                    if (z < 35) continue;
+                    const pL = project(-1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
+                    const pR = project(1400 + parallaxX * 0.4, floorY, z, focalLength, cx, horizonY);
+
+                    if (pL.visible && pR.visible) {
+                        const depthRatio = 1 - (z / gridMaxZ);
+                        const alpha = Math.max(0, Math.min(0.65, Math.pow(depthRatio, 1.3) * 0.7));
+
+                        ctx.strokeStyle = `rgba(240, 178, 62, ${alpha.toFixed(3)})`;
+                        ctx.lineWidth = 1 + (depthRatio * 1.2);
+                        ctx.beginPath();
+                        ctx.moveTo(pL.x, pL.y);
+                        ctx.lineTo(pR.x, pR.y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Horizon Seam Line
+                ctx.beginPath();
+                ctx.moveTo(0, horizonY);
+                ctx.lineTo(width, horizonY);
+                ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.restore();
+
+                // -------------------------------------------------------------
+                // B. PARTICLE SYSTEM (Floating dust & embers with twinkle)
+                // -------------------------------------------------------------
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+
+                    p.y -= p.speedY;
+                    if (p.y < -height * 0.65) {
+                        p.y = height * 0.65;
+                        p.x = (Math.random() - 0.5) * width * 1.5;
+                    }
+
+                    const twinkle = Math.sin(now * 0.001 * p.twinkleSpeed + p.phase);
+                    const currentAlpha = Math.max(0.08, Math.min(0.9, p.baseAlpha + twinkle * 0.35));
+
+                    const depthFactor = 1 - (p.z / 750);
+                    const proj = project(
+                        p.x + parallaxX * depthFactor * 1.4,
+                        p.y + parallaxY * depthFactor * 1.4,
+                        p.z,
+                        focalLength,
+                        cx,
+                        cy
+                    );
+
+                    if (proj.visible) {
+                        const radius = Math.max(0.8, p.size * proj.scale);
+
+                        ctx.beginPath();
+                        ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
+
+                        if (p.color === 'amber') {
+                            ctx.fillStyle = `rgba(245, 158, 11, ${currentAlpha.toFixed(2)})`;
+                            ctx.shadowColor = 'rgba(245, 158, 11, 0.6)';
+                            ctx.shadowBlur = radius * 3;
+                        } else {
+                            ctx.fillStyle = `rgba(255, 255, 255, ${(currentAlpha * 0.85).toFixed(2)})`;
+                            ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+                            ctx.shadowBlur = radius * 2;
+                        }
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+
+                // -------------------------------------------------------------
+                // C. 2.5D / PSEUDO-3D RETICLE TARGET RINGS (Around Logo)
+                // -------------------------------------------------------------
+                const rotX = (-this.tiltX / 9) * 0.28;
+                const rotY = (this.tiltY / 9) * 0.28;
+                reticleAngle += dt * 0.25;
+
+                const rings = [
+                    { r: baseR * 1.15, z: 0, rotSpeed: 0.15, width: 1.2, color: 'rgba(240, 178, 62, 0.45)', dash: [] },
+                    { r: baseR * 1.28, z: 12, rotSpeed: -0.22, width: 0.9, color: 'rgba(245, 158, 11, 0.35)', dash: [6, 8] },
+                    { r: baseR * 1.42, z: -12, rotSpeed: 0.10, width: 0.8, color: 'rgba(228, 85, 22, 0.25)', dash: [3, 12] }
+                ];
+
+                for (let rIdx = 0; rIdx < rings.length; rIdx++) {
+                    const ring = rings[rIdx];
+                    const currentRingRot = reticleAngle * (ring.rotSpeed > 0 ? 1 : -1);
+                    const steps = 48;
+                    const stepAngle = (Math.PI * 2) / steps;
+
+                    ctx.lineWidth = ring.width;
+                    ctx.strokeStyle = ring.color;
+                    if (ring.dash.length > 0) ctx.setLineDash(ring.dash);
+                    else ctx.setLineDash([]);
+
+                    ctx.beginPath();
+                    for (let s = 0; s <= steps; s++) {
+                        const phi = s * stepAngle + currentRingRot;
+                        const x0 = Math.cos(phi) * ring.r;
+                        const y0 = Math.sin(phi) * ring.r;
+                        const z0 = ring.z;
+
+                        const x1 = x0 * Math.cos(rotY) + z0 * Math.sin(rotY);
+                        const z1 = -x0 * Math.sin(rotY) + z0 * Math.cos(rotY);
+                        const y1 = y0 * Math.cos(rotX) - z1 * Math.sin(rotX);
+                        const z2 = y0 * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+                        const p = project(x1, y1, z2, focalLength, cx, cy);
+                        if (s === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+
+                // 3D Projected Crosshair Ticks (Tron / HUD Vector Style)
+                const tickAngles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+                ctx.strokeStyle = 'rgba(240, 178, 62, 0.55)';
+                ctx.lineWidth = 1.5;
+                for (let t = 0; t < tickAngles.length; t++) {
+                    const angle = tickAngles[t] + reticleAngle * 0.15;
+                    const cosA = Math.cos(angle);
+                    const sinA = Math.sin(angle);
+                    
+                    const rInner = baseR * 1.06;
+                    const rOuter = baseR * 1.22;
+
+                    // Inner tick point
+                    const xIn0 = cosA * rInner;
+                    const yIn0 = sinA * rInner;
+                    const xIn1 = xIn0 * Math.cos(rotY);
+                    const zIn1 = -xIn0 * Math.sin(rotY);
+                    const yIn1 = yIn0 * Math.cos(rotX) - zIn1 * Math.sin(rotX);
+                    const zIn2 = yIn0 * Math.sin(rotX) + zIn1 * Math.cos(rotX);
+                    const pIn = project(xIn1, yIn1, zIn2, focalLength, cx, cy);
+
+                    // Outer tick point
+                    const xOut0 = cosA * rOuter;
+                    const yOut0 = sinA * rOuter;
+                    const xOut1 = xOut0 * Math.cos(rotY);
+                    const zOut1 = -xOut0 * Math.sin(rotY);
+                    const yOut1 = yOut0 * Math.cos(rotX) - zOut1 * Math.sin(rotX);
+                    const zOut2 = yOut0 * Math.sin(rotX) + zOut1 * Math.cos(rotX);
+                    const pOut = project(xOut1, yOut1, zOut2, focalLength, cx, cy);
+
+                    if (pIn.visible && pOut.visible) {
+                        ctx.beginPath();
+                        ctx.moveTo(pIn.x, pIn.y);
+                        ctx.lineTo(pOut.x, pOut.y);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.restore();
+            };
+
+            this.animFrameId = requestAnimationFrame(render);
         }
-    }
+    };
 }
 
 function countdown() {
