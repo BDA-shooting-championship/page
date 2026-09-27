@@ -84,7 +84,7 @@ if (!in_array($buktiExt, $allowedExtensions, true)) {
 }
 
 // Validate MIME types via magic bytes
-$allowedMimes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'application/pdf'];
+$allowedMimes = ['image/jpeg', 'image/png', 'image/jpg', 'image/pjpeg', 'image/x-png', 'image/webp', 'application/pdf', 'application/x-pdf'];
 $ktaMime = mime_content_type($_FILES['foto_kta']['tmp_name']);
 $buktiMime = mime_content_type($_FILES['bukti_transfer']['tmp_name']);
 

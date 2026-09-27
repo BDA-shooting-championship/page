@@ -53,19 +53,36 @@ function requireAdmin(): void {
 
 function cors(): void {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-    $allowedOrigins = [
-        'https://bda-shooting-championship.sbs',
-        'http://bda-shooting-championship.sbs',
-        'http://localhost',
-        'http://localhost:3000',
-        'http://127.0.0.1'
-    ];
-    if (in_array($origin, $allowedOrigins, true)) {
-        header("Access-Control-Allow-Origin: $origin");
-        header('Access-Control-Allow-Credentials: true');
+    if ($origin) {
+        $parsed = parse_url($origin);
+        $host = strtolower($parsed['host'] ?? '');
+        $allowed = false;
+
+        if ($host === 'bda-shooting-championship.sbs' || 
+            $host === 'www.bda-shooting-championship.sbs' ||
+            str_ends_with($host, '.bda-shooting-championship.sbs') ||
+            $host === 'localhost' || 
+            $host === '127.0.0.1') {
+            $allowed = true;
+        }
+
+        $currentHost = strtolower(explode(':', $_SERVER['HTTP_HOST'] ?? '')[0]);
+        if ($currentHost && $host === $currentHost) {
+            $allowed = true;
+        }
+
+        if ($allowed) {
+            header("Access-Control-Allow-Origin: $origin");
+            header('Access-Control-Allow-Credentials: true');
+        }
+    } else {
+        header("Access-Control-Allow-Origin: *");
     }
-    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization");
+
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization, X-Requested-With");
+    header("Access-Control-Max-Age: 86400");
+
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         http_response_code(204);
         exit;

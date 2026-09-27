@@ -1,13 +1,13 @@
 # BDA Shooting Championship — Hostinger LiteSpeed / Apache Config
 RewriteEngine On
 
+# Canonical non-www redirect
+RewriteCond %{HTTP_HOST} ^www\.bda-shooting-championship\.sbs$ [NC]
+RewriteRule ^(.*)$ https://bda-shooting-championship.sbs/$1 [L,R=301]
+
 # Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Allow CORS preflight
-RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^(.*)$ $1 [R=204,L]
 
 # Prevent directory listing
 Options -Indexes

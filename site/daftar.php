@@ -436,51 +436,145 @@ function registrationForm() {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
         },
 
+        async compressImageIfNeeded(file, maxDimension = 1600, quality = 0.82) {
+            if (!file || !file.type || !file.type.startsWith('image/')) {
+                return file;
+            }
+            if (file.size < 700 * 1024) {
+                return file;
+            }
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let { width, height } = img;
+                        if (width <= maxDimension && height <= maxDimension && file.size < 1200 * 1024) {
+                            resolve(file);
+                            return;
+                        }
+                        if (width > height) {
+                            if (width > maxDimension) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            }
+                        } else {
+                            if (height > maxDimension) {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        canvas.toBlob((blob) => {
+                            if (!blob || blob.size >= file.size) {
+                                resolve(file);
+                            } else {
+                                const newFileName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
+                                const compressedFile = new File([blob], newFileName, {
+                                    type: 'image/jpeg',
+                                    lastModified: Date.now()
+                                });
+                                resolve(compressedFile);
+                            }
+                        }, 'image/jpeg', quality);
+                    };
+                    img.onerror = () => resolve(file);
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => resolve(file);
+                reader.readAsDataURL(file);
+            });
+        },
+
         async submitForm() {
             this.errorMessage = null;
 
             if (this.selectedKategori.length === 0) {
                 this.errorMessage = 'Pilih minimal satu kategori lomba';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
             if (!this.ktaFile) {
                 this.errorMessage = 'Upload foto KTA Polri wajib dilampirkan';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
             if (!this.buktiFile) {
                 this.errorMessage = 'Upload bukti transfer pembayaran wajib dilampirkan';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
 
             this.isSubmitting = true;
 
-            const fd = new FormData();
-            fd.append('nama', this.formData.nama);
-            fd.append('email', this.formData.email);
-            fd.append('telepon', this.formData.telepon);
-            fd.append('pangkat', this.formData.pangkat);
-            fd.append('nrp', this.formData.nrp);
-            fd.append('satuan', this.formData.satuan);
-            this.selectedKategori.forEach(k => fd.append('kategori[]', k));
-            fd.append('foto_kta', this.ktaFile);
-            fd.append('bukti_transfer', this.buktiFile);
-
             try {
+                // Optimasi kompresi otomatis untuk foto dari kamera HP agar upload instan & bebas timeout
+                const [ktaToSend, buktiToSend] = await Promise.all([
+                    this.compressImageIfNeeded(this.ktaFile),
+                    this.compressImageIfNeeded(this.buktiFile)
+                ]);
+
+                const fd = new FormData();
+                fd.append('nama', this.formData.nama);
+                fd.append('email', this.formData.email);
+                fd.append('telepon', this.formData.telepon);
+                fd.append('pangkat', this.formData.pangkat);
+                fd.append('nrp', this.formData.nrp);
+                fd.append('satuan', this.formData.satuan);
+                this.selectedKategori.forEach(k => fd.append('kategori[]', k));
+                fd.append('foto_kta', ktaToSend);
+                fd.append('bukti_transfer', buktiToSend);
+
                 const res = await fetch('/api/register.php', {
                     method: 'POST',
                     body: fd
                 });
-                const data = await res.json();
 
-                if (!res.ok || !data.success) {
-                    throw new Error(data.message || data.error || 'Gagal menyimpan pendaftaran');
+                let data = null;
+                const contentType = res.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    try {
+                        data = await res.json();
+                    } catch (jsonErr) {
+                        data = null;
+                    }
+                }
+
+                if (!res.ok) {
+                    let errMsg = (data && (data.message || data.error)) ? (data.message || data.error) : '';
+                    if (!errMsg) {
+                        if (res.status === 413) {
+                            errMsg = 'Ukuran file terlalu besar untuk diproses server. Silakan pilih foto dengan resolusi lebih rendah.';
+                        } else if (res.status === 409) {
+                            errMsg = 'NRP ini sudah terdaftar dan aktif dalam sistem.';
+                        } else if (res.status >= 500) {
+                            errMsg = 'Terjadi gangguan sementara pada server pendaftaran. Silakan coba beberapa saat lagi.';
+                        } else {
+                            errMsg = `Gagal mengirim pendaftaran (Kode status: ${res.status}). Silakan coba kembali.`;
+                        }
+                    }
+                    throw new Error(errMsg);
+                }
+
+                if (!data || !data.success) {
+                    throw new Error((data && (data.message || data.error)) || 'Gagal menyimpan pendaftaran');
                 }
 
                 this.successData = data;
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 100);
             } catch (err) {
-                this.errorMessage = err.message || 'Terjadi kesalahan sistem. Silakan coba kembali.';
+                console.error('Registration submit error:', err);
+                let msg = err.message || '';
+                if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Load failed')) {
+                    msg = 'Gagal terhubung ke server (koneksi terputus atau respon tertolak). Pastikan koneksi internet aktif, atau silakan hubungi kontak Seksi Pendaftaran via WhatsApp.';
+                }
+                this.errorMessage = msg || 'Terjadi kesalahan sistem saat mengirim pendaftaran. Silakan coba kembali.';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } finally {
                 this.isSubmitting = false;
                 setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 100);
