@@ -782,8 +782,8 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <a
-                        href="/JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
-                        download="JUKNIS_BDA_SHOOTING_CHAMPIONSHIP_2026.pdf"
+                        href="/JUKNIS%20BDA%20SHOOTING%20CHAMPIONSHIP%202026.pdf"
+                        download="JUKNIS BDA SHOOTING CHAMPIONSHIP 2026.pdf"
                         target="_blank"
                         class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-copper-600 hover:bg-copper-700 text-white rounded-xl text-xs font-bold shadow-md shadow-copper-600/20 transition hover:scale-[1.02] active:scale-95"
                     >
