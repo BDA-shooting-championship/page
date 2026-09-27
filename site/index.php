@@ -150,6 +150,7 @@ require_once __DIR__ . '/includes/header.php';
             ?>
             <!-- Tombol Petunjuk Teknis (Sebelum 16 Oktober) -->
             <a href="#juknis" 
+               @click.prevent="unlockAndScroll('juknis')"
                class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#060709]/85 hover:bg-[#060709] border border-white/20 hover:border-[#f0b23e] text-white hover:text-[#f0b23e] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm backdrop-blur-sm flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md">
                 <i data-lucide="book-open" class="w-4 h-4 text-[#f0b23e] group-hover:scale-110 transition-transform"></i>
                 <span>PETUNJUK TEKNIS</span>
@@ -171,10 +172,12 @@ require_once __DIR__ . '/includes/header.php';
             <?php endif; ?>
         </div>
 
-        <!-- 7. Scroll Down Indicator (Sesuai Desain Gambar) -->
+        <!-- 7. Scroll Down Indicator (Desain Asli dengan Teks KLIK DISINI) -->
         <div id="hero-scroll-box" class="flex justify-center pt-2 sm:pt-3 pb-3">
-            <a href="#tentang" class="group flex flex-col items-center gap-1 text-gray-400 hover:text-[#f0b23e] transition-colors cursor-pointer select-none">
-                <span class="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold">SCROLL</span>
+            <a href="#tentang" 
+               @click.prevent="unlockAndScroll('tentang')"
+               class="group flex flex-col items-center gap-1 text-gray-400 hover:text-[#f0b23e] transition-colors cursor-pointer select-none">
+                <span class="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold">KLIK DISINI</span>
                 <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform animate-bounce"></i>
             </a>
         </div>
@@ -244,7 +247,7 @@ require_once __DIR__ . '/includes/header.php';
 </div>
 
 <!-- About Section (Tight Padding & Lazy Rendering) -->
-<section id="tentang" class="section-lazy py-8 md:py-10 bg-gray-50">
+<section id="tentang" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <!-- Centered Dual Logos with X -->
@@ -305,7 +308,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Categories Section (Tight Padding) -->
-<section id="kategori" class="section-lazy py-8 md:py-10 bg-white">
+<section id="kategori" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Detail Pertandingan</span>
@@ -462,7 +465,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Prizes Section -->
-<section id="hadiah" class="section-lazy py-8 md:py-10 bg-gray-50">
+<section id="hadiah" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Penghargaan Resmi</span>
@@ -572,7 +575,7 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Schedule Section (Tight Padding) -->
-<section id="jadwal" class="section-lazy py-8 md:py-10 bg-white">
+<section id="jadwal" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Rundown Acara Resmi</span>
@@ -735,11 +738,11 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <!-- Rules Section (Accordion, Tight Padding) -->
-<section id="juknis" class="section-lazy py-8 md:py-10 bg-gray-50">
+<section id="juknis" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Regulasi &amp; Panduan</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Petunjuk Teknis</h2>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble data-scramble-text="PETUNJUK TEKNIS">Petunjuk Teknis</h2>
             <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed">
                 Panduan resmi pelaksanaan pertandingan, regulasi senjata, perlengkapan, dan sistem penilaian BDA Shooting Championship 2026.
             </p>
@@ -886,7 +889,7 @@ require_once __DIR__ . '/includes/header.php';
 <?php require_once __DIR__ . '/includes/simulasi-section.php'; ?>
 
 <!-- Contact & Payment Section (Tight Padding) -->
-<section id="kontak" class="section-lazy py-8 md:py-10 bg-white">
+<section id="kontak" class="section-lazy scroll-mt-20 py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
             <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Informasi & Bantuan</span>
@@ -1006,10 +1009,50 @@ function heroEngine() {
         targetTiltY: 0,
         isHovered: false,
         animFrameId: null,
+        heroLocked: true,
 
         initEngine() {
+            if (window.location.hash && window.location.hash.length > 1) {
+                this.heroLocked = false;
+                document.body.classList.remove('hero-locked');
+            } else {
+                this.heroLocked = true;
+                document.body.classList.add('hero-locked');
+            }
+
+            window.unlockHero = (targetId) => {
+                this.heroLocked = false;
+                document.body.classList.remove('hero-locked');
+                window.isHeroUnlocked = true;
+                if (targetId) {
+                    this.scrollToTarget(targetId);
+                }
+                if (window.lucide) window.lucide.createIcons();
+            };
+
             this.initCanvas();
             this.initGyroscope();
+        },
+
+        unlockAndScroll(targetId = 'tentang') {
+            this.heroLocked = false;
+            document.body.classList.remove('hero-locked');
+            window.isHeroUnlocked = true;
+            this.scrollToTarget(targetId);
+            if (window.lucide) window.lucide.createIcons();
+        },
+
+        scrollToTarget(targetId) {
+            if (!targetId) return;
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    const navHeight = 72;
+                    const targetY = target.getBoundingClientRect().top + window.scrollY - navHeight;
+                    window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+                }, 60);
+            });
         },
 
         handleMouseMove(e) {

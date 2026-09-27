@@ -68,10 +68,15 @@ $currentPage = $currentPage ?? '';
             -webkit-tap-highlight-color: transparent;
             text-size-adjust: 100%;
             -webkit-text-size-adjust: 100%;
+            scroll-padding-top: 5.5rem;
+            scroll-behavior: smooth;
         }
         body { 
             font-family: 'Rajdhani', sans-serif; 
             overflow-x: hidden;
+        }
+        section[id] {
+            scroll-margin-top: 5.5rem;
         }
         .font-display { font-family: 'Teko', sans-serif; letter-spacing: 0.02em; }
         .target-pattern { 
@@ -85,10 +90,42 @@ $currentPage = $currentPage ?? '';
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
         .section-lazy {
-            content-visibility: auto;
-            contain-intrinsic-size: 1px 650px;
+            /* Optimized for smooth scroll and zero layout shifting */
+        }
+        body.hero-locked {
+            overflow: hidden !important;
+            height: 100vh;
+            height: 100dvh;
+        }
+        body.hero-locked #hero-section {
+            overflow-y: auto;
+            max-height: calc(100dvh - 4rem);
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body.hero-locked #hero-section::-webkit-scrollbar {
+            display: none;
         }
     </style>
+    <script>
+        window.goToSection = function(sectionId, e) {
+            const isHomePage = window.location.pathname === '/' || window.location.pathname === '' || window.location.pathname.endsWith('index.php');
+            if (isHomePage) {
+                if (e && e.preventDefault) e.preventDefault();
+                if (window.unlockHero) {
+                    window.unlockHero(sectionId);
+                } else {
+                    const el = document.getElementById(sectionId);
+                    if (el) {
+                        const navHeight = 72;
+                        const targetY = el.getBoundingClientRect().top + window.scrollY - navHeight;
+                        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+                    }
+                }
+            }
+        };
+    </script>
 </head>
 <body class="bg-white text-gray-900 font-body" x-data="{ mobileMenu: false }">
 
@@ -120,6 +157,7 @@ $currentPage = $currentPage ?? '';
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6">
                 <a href="/" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'home' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Beranda</a>
+                <a href="/#juknis" @click="window.goToSection('juknis', $event)" class="text-sm font-medium hover:text-copper-600 transition text-gray-700">Juknis</a>
                 <a href="/daftar.php" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'daftar' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Pendaftaran</a>
                 <a href="/live-score.php" class="text-sm font-medium hover:text-copper-600 transition <?= $currentPage === 'live-score' ? 'text-copper-600 font-semibold' : 'text-gray-700' ?>">Live Score</a>
                 <a href="/simulasi-lesan.php" class="text-sm font-medium px-3 py-1.5 rounded-lg bg-copper-50 text-copper-700 hover:bg-copper-600 hover:text-white transition flex items-center gap-1.5 <?= $currentPage === 'simulasi' ? 'bg-copper-600 text-white font-semibold' : '' ?>">
@@ -140,6 +178,7 @@ $currentPage = $currentPage ?? '';
     <div x-show="mobileMenu" x-transition class="md:hidden border-t border-gray-200 bg-white">
         <div class="px-4 py-3 space-y-2">
             <a href="/" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Beranda</a>
+            <a href="/#juknis" @click="mobileMenu = false; window.goToSection('juknis', $event);" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Juknis</a>
             <a href="/daftar.php" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Pendaftaran</a>
             <a href="/live-score.php" class="block py-2 text-sm font-medium hover:text-copper-600 text-gray-700">Live Score</a>
             <a href="/simulasi-lesan.php" class="block py-2 text-sm font-semibold text-copper-600 flex items-center gap-1.5">

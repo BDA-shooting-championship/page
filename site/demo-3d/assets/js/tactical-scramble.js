@@ -23,9 +23,11 @@
             this.el = el;
             
             // Pastikan seluruh teks target menggunakan HURUF KAPITAL (Uppercase)
-            const baseText = el.getAttribute('data-scramble-text') || el.innerText.trim();
+            const baseText = el.getAttribute('data-scramble-text') || (el.textContent ? el.textContent.trim() : '') || (el.innerText ? el.innerText.trim() : '');
             this.rawText = baseText.toUpperCase();
-            el.setAttribute('data-scramble-text', this.rawText);
+            if (this.rawText) {
+                el.setAttribute('data-scramble-text', this.rawText);
+            }
             el.classList.add('uppercase');
 
             // Simpan atribut aksesibilitas untuk screen reader
@@ -213,11 +215,13 @@
 
             // Format seluruh teks elemen target langsung menjadi UPPERCASE
             elements.forEach(el => {
-                const text = (el.getAttribute('data-scramble-text') || el.innerText.trim()).toUpperCase();
-                el.setAttribute('data-scramble-text', text);
-                el.classList.add('uppercase');
-                if (el.children.length === 0) {
-                    el.innerText = text;
+                const text = (el.getAttribute('data-scramble-text') || (el.textContent ? el.textContent.trim() : '') || (el.innerText ? el.innerText.trim() : '')).toUpperCase();
+                if (text) {
+                    el.setAttribute('data-scramble-text', text);
+                    el.classList.add('uppercase');
+                    if (el.children.length === 0) {
+                        el.innerText = text;
+                    }
                 }
             });
 
