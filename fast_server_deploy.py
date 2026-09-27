@@ -13,6 +13,7 @@ bash_script = (
     "rm -rf /tmp/bda_deploy && "
     "git clone --depth 1 https://github.com/BDA-shooting-championship/page.git /tmp/bda_deploy && "
     f"cp -rf /tmp/bda_deploy/site/* {REMOTE_DOC_ROOT}/ && "
+    f"rm -f {REMOTE_DOC_ROOT}/assets/js/tactical-typewriter.js && "
     f"cp -f /tmp/bda_deploy/site/.htaccess {REMOTE_DOC_ROOT}/.htaccess && "
     "rm -rf /tmp/bda_deploy && "
     "echo DEPLOY_SUCCESSFUL_2026"
