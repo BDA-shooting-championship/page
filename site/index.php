@@ -87,7 +87,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- 5. Countdown Box Tactical (Sesuai Desain Gambar) -->
-        <div class="w-full max-w-sm sm:max-w-md mx-auto mb-5 sm:mb-6" x-data="countdown()" x-init="start()">
+        <div id="hero-countdown-box" class="w-full max-w-sm sm:max-w-md mx-auto mb-5 sm:mb-6" x-data="countdown()" x-init="start()">
             <!-- Subheader -->
             <p class="text-center font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.35em] text-gray-400 uppercase mb-2.5">
                 — COUNTDOWN HARI-H —
@@ -134,7 +134,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <!-- 6. Tombol Aksi Hero Full-Width Stacked (Sesuai Desain Gambar) -->
-        <div class="w-full max-w-sm sm:max-w-md mx-auto flex flex-col gap-2.5 sm:gap-3 mb-6">
+        <div id="hero-action-box" class="w-full max-w-sm sm:max-w-md mx-auto flex flex-col gap-2.5 sm:gap-3 mb-6">
             <!-- Tombol Daftar Sekarang (Solid Gold/Amber) -->
             <a href="/daftar.php" 
                class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#f0b23e] hover:bg-[#ffd97e] text-[#060709] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(240,178,62,0.3)] hover:shadow-[0_0_45px_rgba(240,178,62,0.5)] transition-all duration-300">
@@ -142,7 +142,20 @@ require_once __DIR__ . '/includes/header.php';
                 <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#060709] stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
             </a>
 
-            <!-- Tombol Live Skor (Dark with Red Pulsing Beacon & Radar Arcs) -->
+            <!-- Tombol Kedua: Sebelum 16 Oktober -> PETUNJUK TEKNIS (simbol buku -> #juknis) / Mulai 16 Oktober -> LIVE SKOR (/live-score.php) -->
+            <?php
+            // Batas pergantian tombol: 16 Oktober 2026 00:00:00 WIB
+            $isLiveScoreActive = (time() >= strtotime('2026-10-16 00:00:00'));
+            if (!$isLiveScoreActive):
+            ?>
+            <!-- Tombol Petunjuk Teknis (Sebelum 16 Oktober) -->
+            <a href="#juknis" 
+               class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#060709]/85 hover:bg-[#060709] border border-white/20 hover:border-[#f0b23e] text-white hover:text-[#f0b23e] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm backdrop-blur-sm flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md">
+                <i data-lucide="book-open" class="w-4 h-4 text-[#f0b23e] group-hover:scale-110 transition-transform"></i>
+                <span>PETUNJUK TEKNIS</span>
+            </a>
+            <?php else: ?>
+            <!-- Tombol Live Skor (Mulai 16 Oktober) -->
             <a href="/live-score.php" 
                class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#060709]/85 hover:bg-[#060709] border border-white/20 hover:border-[#f0b23e] text-white hover:text-[#f0b23e] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm backdrop-blur-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md">
                 <span class="inline-flex items-center gap-1 text-red-500 font-mono text-sm leading-none shrink-0">
@@ -155,10 +168,11 @@ require_once __DIR__ . '/includes/header.php';
                 </span>
                 <span>LIVE SKOR</span>
             </a>
+            <?php endif; ?>
         </div>
 
         <!-- 7. Scroll Down Indicator (Sesuai Desain Gambar) -->
-        <div class="flex justify-center pt-2 sm:pt-3 pb-2">
+        <div id="hero-scroll-box" class="flex justify-center pt-2 sm:pt-3 pb-3">
             <a href="#tentang" class="group flex flex-col items-center gap-1 text-gray-400 hover:text-[#f0b23e] transition-colors cursor-pointer select-none">
                 <span class="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold">SCROLL</span>
                 <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform animate-bounce"></i>
@@ -166,28 +180,11 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
     </div>
-
-    <!-- Professional Eased Gradient Transition to Section 1 (#tentang) -->
-    <div class="relative w-full pointer-events-none overflow-hidden">
-        <!-- Smooth multi-stop gradient from dark hero into #f9fafb -->
-        <div class="h-28 sm:h-36 md:h-44 w-full" style="background: linear-gradient(180deg, 
-            transparent 0%, 
-            rgba(15, 30, 55, 0.4) 20%, 
-            rgba(22, 33, 62, 0.7) 40%, 
-            rgba(51, 65, 85, 0.35) 65%, 
-            rgba(249, 250, 251, 0.85) 90%, 
-            #f9fafb 100%
-        );"></div>
-        <!-- Sleek Tactical Copper Accent Hairline at the transition seam -->
-        <div class="absolute bottom-0 inset-x-0 flex items-center justify-center">
-            <div class="w-full max-w-4xl h-[1.5px] bg-gradient-to-r from-transparent via-copper-400/50 to-transparent"></div>
-        </div>
-    </div>
 </section>
 
-<!-- Tactical Moving Police Line / Caution Marquee Tape -->
-<div class="relative w-full overflow-hidden z-20 -my-3.5 sm:-my-4 select-none">
-    <div class="relative -rotate-[1.2deg] scale-[1.06] border-y-2 border-[#060709] bg-[#f0b23e] py-2.5 sm:py-3 shadow-[0_10px_35px_rgba(240,178,62,0.35)] overflow-hidden">
+<!-- Tactical Moving Police Line / Caution Marquee Tape (Clear & Crisp, Tanpa Terpotong) -->
+<div class="relative w-full overflow-hidden z-20 -my-2.5 sm:-my-3 select-none">
+    <div class="relative -rotate-[1deg] w-[106%] -ml-[3%] border-y-[3px] border-[#060709] bg-[#f0b23e] py-3 sm:py-3.5 shadow-[0_12px_35px_rgba(0,0,0,0.5)]">
         <div class="flex w-max animate-police-line">
             <!-- Track A -->
             <div class="flex items-center shrink-0">
@@ -203,9 +200,9 @@ require_once __DIR__ . '/includes/header.php';
                 for ($cycle = 0; $cycle < 2; $cycle++):
                     foreach ($policeItems as $item):
                 ?>
-                    <span class="flex items-center gap-5 sm:gap-6 pr-5 sm:pr-6">
-                        <span class="whitespace-nowrap font-display text-sm sm:text-base font-extrabold tracking-wider text-[#060709]"><?= htmlspecialchars($item) ?></span>
-                        <svg class="w-4 h-4 shrink-0 text-[#060709]/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <span class="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8">
+                        <span class="whitespace-nowrap font-display text-sm sm:text-base md:text-lg font-black tracking-[0.18em] text-[#060709] uppercase drop-shadow-sm"><?= htmlspecialchars($item) ?></span>
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-[#060709]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <circle cx="12" cy="12" r="5"></circle>
                             <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
@@ -227,9 +224,9 @@ require_once __DIR__ . '/includes/header.php';
                 for ($cycle = 0; $cycle < 2; $cycle++):
                     foreach ($policeItems as $item):
                 ?>
-                    <span class="flex items-center gap-5 sm:gap-6 pr-5 sm:pr-6">
-                        <span class="whitespace-nowrap font-display text-sm sm:text-base font-extrabold tracking-wider text-[#060709]"><?= htmlspecialchars($item) ?></span>
-                        <svg class="w-4 h-4 shrink-0 text-[#060709]/75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <span class="flex items-center gap-6 sm:gap-8 pr-6 sm:pr-8">
+                        <span class="whitespace-nowrap font-display text-sm sm:text-base md:text-lg font-black tracking-[0.18em] text-[#060709] uppercase drop-shadow-sm"><?= htmlspecialchars($item) ?></span>
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-[#060709]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <circle cx="12" cy="12" r="5"></circle>
                             <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
@@ -742,10 +739,14 @@ require_once __DIR__ . '/includes/header.php';
 <!-- Rules Section (Accordion, Tight Padding) -->
 <section id="juknis" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Petunjuk Teknis Resmi</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Peraturan & Persyaratan</h2>
-            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1">
+        <div class="text-center mb-7 sm:mb-8">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-copper-100/70 border border-copper-200 text-xs sm:text-sm font-bold uppercase tracking-widest text-copper-700 mb-2">
+                <i data-lucide="book-open" class="w-3.5 h-3.5 text-copper-600"></i>
+                Buku Regulasi &amp; Panduan Resmi
+            </span>
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 uppercase tracking-tight" data-scramble>PETUNJUK TEKNIS</h2>
+            <p class="text-sm sm:text-base font-bold text-copper-600 uppercase tracking-wider mt-1.5">Peraturan &amp; Persyaratan Pertandingan</p>
+            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-2">
                 Panduan resmi pelaksanaan pertandingan, regulasi senjata, perlengkapan, dan sistem penilaian BDA Shooting Championship 2026.
             </p>
         </div>
@@ -987,7 +988,7 @@ require_once __DIR__ . '/includes/header.php';
 .animate-police-line {
     display: flex;
     width: max-content;
-    animation: policeLineMarquee 26s linear infinite;
+    animation: policeLineMarquee 48s linear infinite;
     will-change: transform;
 }
 .animate-police-line:hover {
@@ -1125,7 +1126,6 @@ function heroEngine() {
             }
 
             let lastTime = performance.now();
-            let reticleAngle = 0;
 
             const render = (now) => {
                 this.animFrameId = requestAnimationFrame(render);
@@ -1145,18 +1145,38 @@ function heroEngine() {
                 const logoBox = document.getElementById('hero-logo-canvas-box');
                 let cx = width / 2;
                 let cy = height * 0.36;
-                let baseR = Math.min(width * 0.32, 185);
                 if (logoBox) {
                     const lRect = logoBox.getBoundingClientRect();
                     const cRect = canvas.getBoundingClientRect();
                     cx = (lRect.left + lRect.width / 2) - cRect.left;
                     cy = (lRect.top + lRect.height / 2) - cRect.top;
-                    baseR = Math.max(lRect.width / 2, 100);
                 }
 
-                const horizonY = Math.max(height * 0.58, cy + baseR * 1.18);
-                const focalLength = 380;
+                const canvasRect = canvas.getBoundingClientRect();
+                const countdownEl = document.getElementById('hero-countdown-box');
+                const actionBox = document.getElementById('hero-action-box');
+                const scrollEl = document.getElementById('hero-scroll-box');
 
+                // Floor grid bagian atas: kurang lebih ujung atas countdown
+                let horizonY = height * 0.45;
+                if (countdownEl) {
+                    const cdRect = countdownEl.getBoundingClientRect();
+                    horizonY = Math.max(20, (cdRect.top - canvasRect.top) - 8);
+                }
+
+                // Floor grid bagian bawah: antara live skor (action buttons) dengan scroll
+                let gridBottomY = height * 0.90;
+                if (actionBox && scrollEl) {
+                    const abRect = actionBox.getBoundingClientRect();
+                    const scRect = scrollEl.getBoundingClientRect();
+                    const btnBottom = abRect.bottom - canvasRect.top;
+                    const scTop = scRect.top - canvasRect.top;
+                    gridBottomY = (btnBottom + scTop) / 2;
+                } else if (actionBox) {
+                    gridBottomY = (actionBox.getBoundingClientRect().bottom - canvasRect.top) + 20;
+                }
+
+                const focalLength = 380;
                 const parallaxX = (this.tiltY / 9) * 25;
                 const parallaxY = (-this.tiltX / 9) * 20;
 
@@ -1167,7 +1187,7 @@ function heroEngine() {
 
                 ctx.save();
                 ctx.beginPath();
-                ctx.rect(0, horizonY - 10, width, height - (horizonY - 10));
+                ctx.rect(0, horizonY - 2, width, Math.max(10, gridBottomY - horizonY + 4));
                 ctx.clip();
 
                 // Horizon Ambient Glow at vanishing point
@@ -1175,13 +1195,14 @@ function heroEngine() {
                     cx + parallaxX * 0.3, horizonY, 5,
                     cx + parallaxX * 0.3, horizonY, width * 0.65
                 );
-                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.28)');
+                horizonGrad.addColorStop(0, 'rgba(245, 158, 11, 0.32)');
                 horizonGrad.addColorStop(0.35, 'rgba(228, 85, 22, 0.12)');
                 horizonGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
                 ctx.fillStyle = horizonGrad;
-                ctx.fillRect(0, horizonY - 20, width, 140);
+                ctx.fillRect(0, horizonY - 15, width, 140);
 
-                const floorY = 160;
+                const gridSpan = Math.max(60, gridBottomY - horizonY);
+                const floorY = gridSpan * 1.12;
 
                 // Perspective Longitudinal Lines (Fanning out from vanishing point)
                 const lineCount = Math.floor(width / 45) + 6;
@@ -1278,88 +1299,6 @@ function heroEngine() {
                         }
                         ctx.fill();
                         ctx.shadowBlur = 0;
-                    }
-                }
-
-                // -------------------------------------------------------------
-                // C. 2.5D / PSEUDO-3D RETICLE TARGET RINGS (Around Logo)
-                // -------------------------------------------------------------
-                const rotX = (-this.tiltX / 9) * 0.28;
-                const rotY = (this.tiltY / 9) * 0.28;
-                reticleAngle += dt * 0.25;
-
-                const rings = [
-                    { r: baseR * 1.15, z: 0, rotSpeed: 0.15, width: 1.2, color: 'rgba(240, 178, 62, 0.45)', dash: [] },
-                    { r: baseR * 1.28, z: 12, rotSpeed: -0.22, width: 0.9, color: 'rgba(245, 158, 11, 0.35)', dash: [6, 8] },
-                    { r: baseR * 1.42, z: -12, rotSpeed: 0.10, width: 0.8, color: 'rgba(228, 85, 22, 0.25)', dash: [3, 12] }
-                ];
-
-                for (let rIdx = 0; rIdx < rings.length; rIdx++) {
-                    const ring = rings[rIdx];
-                    const currentRingRot = reticleAngle * (ring.rotSpeed > 0 ? 1 : -1);
-                    const steps = 48;
-                    const stepAngle = (Math.PI * 2) / steps;
-
-                    ctx.lineWidth = ring.width;
-                    ctx.strokeStyle = ring.color;
-                    if (ring.dash.length > 0) ctx.setLineDash(ring.dash);
-                    else ctx.setLineDash([]);
-
-                    ctx.beginPath();
-                    for (let s = 0; s <= steps; s++) {
-                        const phi = s * stepAngle + currentRingRot;
-                        const x0 = Math.cos(phi) * ring.r;
-                        const y0 = Math.sin(phi) * ring.r;
-                        const z0 = ring.z;
-
-                        const x1 = x0 * Math.cos(rotY) + z0 * Math.sin(rotY);
-                        const z1 = -x0 * Math.sin(rotY) + z0 * Math.cos(rotY);
-                        const y1 = y0 * Math.cos(rotX) - z1 * Math.sin(rotX);
-                        const z2 = y0 * Math.sin(rotX) + z1 * Math.cos(rotX);
-
-                        const p = project(x1, y1, z2, focalLength, cx, cy);
-                        if (s === 0) ctx.moveTo(p.x, p.y);
-                        else ctx.lineTo(p.x, p.y);
-                    }
-                    ctx.stroke();
-                }
-                ctx.setLineDash([]);
-
-                // 3D Projected Crosshair Ticks (Tron / HUD Vector Style)
-                const tickAngles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
-                ctx.strokeStyle = 'rgba(240, 178, 62, 0.55)';
-                ctx.lineWidth = 1.5;
-                for (let t = 0; t < tickAngles.length; t++) {
-                    const angle = tickAngles[t] + reticleAngle * 0.15;
-                    const cosA = Math.cos(angle);
-                    const sinA = Math.sin(angle);
-                    
-                    const rInner = baseR * 1.06;
-                    const rOuter = baseR * 1.22;
-
-                    // Inner tick point
-                    const xIn0 = cosA * rInner;
-                    const yIn0 = sinA * rInner;
-                    const xIn1 = xIn0 * Math.cos(rotY);
-                    const zIn1 = -xIn0 * Math.sin(rotY);
-                    const yIn1 = yIn0 * Math.cos(rotX) - zIn1 * Math.sin(rotX);
-                    const zIn2 = yIn0 * Math.sin(rotX) + zIn1 * Math.cos(rotX);
-                    const pIn = project(xIn1, yIn1, zIn2, focalLength, cx, cy);
-
-                    // Outer tick point
-                    const xOut0 = cosA * rOuter;
-                    const yOut0 = sinA * rOuter;
-                    const xOut1 = xOut0 * Math.cos(rotY);
-                    const zOut1 = -xOut0 * Math.sin(rotY);
-                    const yOut1 = yOut0 * Math.cos(rotX) - zOut1 * Math.sin(rotX);
-                    const zOut2 = yOut0 * Math.sin(rotX) + zOut1 * Math.cos(rotX);
-                    const pOut = project(xOut1, yOut1, zOut2, focalLength, cx, cy);
-
-                    if (pIn.visible && pOut.visible) {
-                        ctx.beginPath();
-                        ctx.moveTo(pIn.x, pIn.y);
-                        ctx.lineTo(pOut.x, pOut.y);
-                        ctx.stroke();
                     }
                 }
 
