@@ -28,9 +28,9 @@ require_once __DIR__ . '/includes/header.php';
             <span data-scramble class="text-transparent bg-clip-text bg-gradient-to-r from-copper-400 via-amber-300 to-copper-500">CHAMPIONSHIP 2026</span>
         </h1>
 
-        <!-- 3. Deskripsi Kejuaraan Menembak Pistol -->
-        <p class="text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-6">
-            Kejuaraan Menembak Pistol Presisi 20 Meter &amp; Dueling Plat Speed dalam rangka memperingati Anniversary Letting BDA 750 ke-7.
+        <!-- 3. Tanggal Pelaksanaan -->
+        <p class="font-display text-xl sm:text-2xl md:text-3xl text-copper-300 font-bold uppercase tracking-wider mb-6">
+            17 — 18 Oktober 2026
         </p>
 
         <!-- 4. Logo BDA Shooting dengan Latar Belakang Putih & Dual Concentric Reticle Motion -->
@@ -112,17 +112,10 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
-        <!-- 7. Tanggal Pelaksanaan & Countdown Panel -->
+        <!-- 7. Box Countdown -->
         <div class="max-w-md mx-auto pt-2" x-data="countdown()" x-init="start()">
-            <!-- Tanggal Pelaksanaan di atas Countdown -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-semibold text-copper-300 mb-3 backdrop-blur-sm shadow-sm">
-                <i data-lucide="calendar" class="w-4 h-4 text-copper-400"></i>
-                <span>17 — 18 Oktober 2026</span>
-            </div>
-
-            <!-- Countdown Cards -->
             <div class="bg-black/30 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-white/15 shadow-xl">
-                <p class="text-[11px] font-semibold text-gray-300 uppercase tracking-wider mb-2.5">Hitung Mundur Menuju Hari-H</p>
+                <p class="font-display text-lg sm:text-xl font-bold text-copper-300 uppercase tracking-widest mb-2.5">COUNTDOWN</p>
                 <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
                     <div class="bg-white/5 rounded-xl p-2.5 border border-white/10">
                         <span class="font-display text-2xl sm:text-4xl font-bold text-copper-400" x-text="days">0</span>
