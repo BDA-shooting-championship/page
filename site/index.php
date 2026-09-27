@@ -19,7 +19,7 @@ require_once __DIR__ . '/includes/header.php';
                     <img src="/assets/logo-bda.png" alt="Logo BDA" class="w-full h-full object-contain" width="36" height="36" loading="eager" decoding="async" onerror="this.style.display='none'">
                 </picture>
             </div>
-            <span class="tracking-wide uppercase text-[11px] font-bold text-copper-200">Brigade Diraya Adikara (BDA) 750</span>
+            <span class="tracking-wide uppercase text-[11px] font-bold text-copper-200" data-typewriter>Brigade Diraya Adikara (BDA) 750</span>
         </div>
 
         <!-- 2. Main Headline -->
@@ -29,7 +29,7 @@ require_once __DIR__ . '/includes/header.php';
         </h1>
 
         <!-- 3. Tanggal Pelaksanaan -->
-        <p class="font-display text-base sm:text-lg md:text-xl text-copper-300 font-bold uppercase tracking-widest mb-4 sm:mb-5">
+        <p class="font-display text-base sm:text-lg md:text-xl text-copper-300 font-bold uppercase tracking-widest mb-4 sm:mb-5" data-typewriter>
             17 — 18 Oktober 2026
         </p>
 
@@ -177,9 +177,9 @@ require_once __DIR__ . '/includes/header.php';
                     </picture>
                 </div>
             </div>
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Tentang Kejuaraan</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Tentang Kejuaraan</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Kejuaraan Menembak BDA 750</h2>
-            <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed">
+            <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto mt-2 leading-relaxed" data-typewriter>
                 Diselenggarakan oleh Brigade Diraya Adikara (BDA) 750 dalam rangka mempererat silaturahmi, sportivitas, dan mengasah ketangkasan menembak bagi anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.
             </p>
         </div>
@@ -190,7 +190,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="crosshair" class="w-6 h-6"></i>
                 </div>
                 <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>3 Kategori / Kelas Lomba</h3>
-                <p class="text-xs text-gray-600 leading-relaxed text-center">
+                <p class="text-xs text-gray-600 leading-relaxed text-center" data-typewriter>
                     Pistol Presisi 20M Umum, Dueling Plat 15M Umum POLRI, dan Dueling Plat Khusus BDA Korbrimob.
                 </p>
             </div>
@@ -200,7 +200,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="trophy" class="w-6 h-6"></i>
                 </div>
                 <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>Hadiah Uang Tunai</h3>
-                <p class="text-xs text-gray-600 leading-relaxed text-center">
+                <p class="text-xs text-gray-600 leading-relaxed text-center" data-typewriter>
                     Uang tunai Juara I, II, dan III per kategori + Tropi + Sertifikat penghargaan resmi.
                 </p>
             </div>
@@ -210,7 +210,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i data-lucide="shield-check" class="w-6 h-6"></i>
                 </div>
                 <h3 class="font-display text-lg font-bold mb-1.5 text-gray-900 text-center uppercase" data-scramble>Peserta Kejuaraan</h3>
-                <p class="text-xs text-gray-600 leading-relaxed text-center">
+                <p class="text-xs text-gray-600 leading-relaxed text-center" data-typewriter>
                     Terbuka untuk anggota POLRI dan Letting BDA 750 se-Korbrimob Polri.
                 </p>
             </div>
@@ -222,9 +222,9 @@ require_once __DIR__ . '/includes/header.php';
 <section id="kategori" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Detail Pertandingan</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Detail Pertandingan</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Kategori Lomba</h2>
-            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1">2 Cabang Materi Lomba dengan 3 Sub-Kelas Pertandingan Resmi</p>
+            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1" data-typewriter>2 Cabang Materi Lomba dengan 3 Sub-Kelas Pertandingan Resmi</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
@@ -320,7 +320,7 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 </div>
 
-                <div class="mt-4 py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-center text-[11px] text-gray-600 font-medium">
+                <div class="mt-4 py-2.5 px-3 rounded-xl bg-gray-50 border border-gray-200 text-center text-[11px] text-gray-600 font-medium" data-typewriter>
                     Bagan turnamen terbuka untuk seluruh anggota POLRI
                 </div>
             </div>
@@ -367,7 +367,7 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 </div>
 
-                <div class="mt-4 py-2.5 px-3 rounded-xl bg-amber-50 border border-amber-200 text-center text-[11px] text-amber-900 font-semibold">
+                <div class="mt-4 py-2.5 px-3 rounded-xl bg-amber-50 border border-amber-200 text-center text-[11px] text-amber-900 font-semibold" data-typewriter>
                     Eksklusif untuk personel BDA se-Korbrimob Polri
                 </div>
             </div>
@@ -379,9 +379,9 @@ require_once __DIR__ . '/includes/header.php';
 <section id="hadiah" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Penghargaan Resmi</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Penghargaan Resmi</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Hadiah Pemenang</h2>
-            <p class="text-xs text-gray-500 mt-1 max-w-xl mx-auto">Diberikan kepada penembak terbaik berupa Uang Tunai + Tropi + Piagam Resmi</p>
+            <p class="text-xs text-gray-500 mt-1 max-w-xl mx-auto" data-typewriter>Diberikan kepada penembak terbaik berupa Uang Tunai + Tropi + Piagam Resmi</p>
         </div>
 
         <div class="space-y-10 max-w-6xl mx-auto">
@@ -489,9 +489,9 @@ require_once __DIR__ . '/includes/header.php';
 <section id="jadwal" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Rundown Acara Resmi</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Rundown Acara Resmi</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Jadwal Pertandingan</h2>
-            <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Tahapan teknis, uji coba, dan jadwal pelaksanaan kejuaraan</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-0.5" data-typewriter>Tahapan teknis, uji coba, dan jadwal pelaksanaan kejuaraan</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -652,9 +652,9 @@ require_once __DIR__ . '/includes/header.php';
 <section id="juknis" class="section-lazy py-8 md:py-10 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Petunjuk Teknis Resmi</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Petunjuk Teknis Resmi</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Peraturan & Persyaratan</h2>
-            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1">
+            <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto mt-1" data-typewriter>
                 Panduan resmi pelaksanaan pertandingan, regulasi senjata, perlengkapan, dan sistem penilaian BDA Shooting Championship 2026.
             </p>
         </div>
@@ -755,7 +755,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <h4 class="font-display font-bold text-sm sm:text-base text-gray-900 uppercase" data-scramble>Lokasi Lapangan Tembak</h4>
-                            <p class="text-xs text-gray-500">Resimen I Pasukan Pelopor, Kedunghalang, Bogor.</p>
+                            <p class="text-xs text-gray-500" data-typewriter>Resimen I Pasukan Pelopor, Kedunghalang, Bogor.</p>
                         </div>
                     </div>
                     <a
@@ -778,7 +778,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <h4 class="font-display font-bold text-sm sm:text-base text-gray-900 uppercase" data-scramble>Buku Petunjuk Teknis Lengkap (PDF)</h4>
-                            <p class="text-xs text-gray-500">Unduh dokumen resmi Petunjuk Teknis BDA Shooting Championship 2026.</p>
+                            <p class="text-xs text-gray-500" data-typewriter>Unduh dokumen resmi Petunjuk Teknis BDA Shooting Championship 2026.</p>
                         </div>
                     </div>
                     <a
@@ -803,7 +803,7 @@ require_once __DIR__ . '/includes/header.php';
 <section id="kontak" class="section-lazy py-8 md:py-10 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-6">
-            <span class="text-xs font-bold uppercase tracking-widest text-copper-600">Informasi & Bantuan</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-copper-600" data-typewriter>Informasi & Bantuan</span>
             <h2 class="font-display text-2xl sm:text-3xl font-bold mt-1 text-gray-900 uppercase tracking-wide" data-scramble>Kontak Panitia Pelaksana</h2>
         </div>
         
@@ -851,7 +851,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="absolute inset-0 target-pattern opacity-20"></div>
     <div class="relative max-w-3xl mx-auto px-4">
         <h2 class="font-display text-2xl sm:text-3xl font-bold mb-2 uppercase tracking-wide" data-scramble>Daftarkan Diri Anda Sekarang</h2>
-        <p class="text-xs sm:text-sm text-gray-300 mb-5 max-w-lg mx-auto">
+        <p class="text-xs sm:text-sm text-gray-300 mb-5 max-w-lg mx-auto" data-typewriter>
             Kuota peserta terbatas untuk menjamin kenyamanan dan standar keselamatan kejuaraan.
         </p>
         <div class="flex flex-wrap justify-center gap-3">

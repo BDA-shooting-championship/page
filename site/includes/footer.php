@@ -79,5 +79,7 @@
 </script>
 <!-- Tactical Text Scramble & Sequential Decoder -->
 <script src="/assets/js/tactical-scramble.js?v=<?= filemtime(__DIR__ . '/../assets/js/tactical-scramble.js') ?? 2 ?>" defer></script>
+<!-- Tactical Terminal Typewriter Engine -->
+<script src="/assets/js/tactical-typewriter.js?v=<?= filemtime(__DIR__ . '/../assets/js/tactical-typewriter.js') ?? 1 ?>" defer></script>
 </body>
 </html>
