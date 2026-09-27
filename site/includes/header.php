@@ -92,29 +92,14 @@ $currentPage = $currentPage ?? '';
         .section-lazy {
             /* Optimized for smooth scroll and zero layout shifting */
         }
-        body.hero-locked {
-            overflow: hidden !important;
-            height: 100vh;
-            height: 100dvh;
-        }
-        body.hero-locked #hero-section {
-            overflow-y: auto;
-            max-height: calc(100dvh - 4rem);
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        body.hero-locked #hero-section::-webkit-scrollbar {
-            display: none;
-        }
     </style>
     <script>
         window.goToSection = function(sectionId, e) {
             const isHomePage = window.location.pathname === '/' || window.location.pathname === '' || window.location.pathname.endsWith('index.php');
             if (isHomePage) {
                 if (e && e.preventDefault) e.preventDefault();
-                if (window.unlockHero) {
-                    window.unlockHero(sectionId);
+                if (window.scrollToSection) {
+                    window.scrollToSection(sectionId);
                 } else {
                     const el = document.getElementById(sectionId);
                     if (el) {

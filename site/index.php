@@ -150,7 +150,7 @@ require_once __DIR__ . '/includes/header.php';
             ?>
             <!-- Tombol Petunjuk Teknis (Sebelum 16 Oktober) -->
             <a href="#juknis" 
-               @click.prevent="unlockAndScroll('juknis')"
+               @click.prevent="scrollToTarget('juknis')"
                class="group relative w-full py-3.5 sm:py-4 px-6 bg-[#060709]/85 hover:bg-[#060709] border border-white/20 hover:border-[#f0b23e] text-white hover:text-[#f0b23e] font-mono text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase rounded-sm backdrop-blur-sm flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md">
                 <i data-lucide="book-open" class="w-4 h-4 text-[#f0b23e] group-hover:scale-110 transition-transform"></i>
                 <span>PETUNJUK TEKNIS</span>
@@ -175,7 +175,7 @@ require_once __DIR__ . '/includes/header.php';
         <!-- 7. Scroll Down Indicator (Desain Asli dengan Teks KLIK DISINI) -->
         <div id="hero-scroll-box" class="flex justify-center pt-2 sm:pt-3 pb-3">
             <a href="#tentang" 
-               @click.prevent="unlockAndScroll('tentang')"
+               @click.prevent="scrollToTarget('tentang')"
                class="group flex flex-col items-center gap-1 text-gray-400 hover:text-[#f0b23e] transition-colors cursor-pointer select-none">
                 <span class="font-mono text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-bold">KLIK DISINI</span>
                 <i data-lucide="chevron-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform animate-bounce"></i>
@@ -1009,50 +1009,22 @@ function heroEngine() {
         targetTiltY: 0,
         isHovered: false,
         animFrameId: null,
-        heroLocked: true,
 
         initEngine() {
-            if (window.location.hash && window.location.hash.length > 1) {
-                this.heroLocked = false;
-                document.body.classList.remove('hero-locked');
-            } else {
-                this.heroLocked = true;
-                document.body.classList.add('hero-locked');
-            }
-
-            window.unlockHero = (targetId) => {
-                this.heroLocked = false;
-                document.body.classList.remove('hero-locked');
-                window.isHeroUnlocked = true;
-                if (targetId) {
-                    this.scrollToTarget(targetId);
-                }
-                if (window.lucide) window.lucide.createIcons();
-            };
+            window.scrollToSection = (targetId) => this.scrollToTarget(targetId);
+            window.unlockHero = (targetId) => this.scrollToTarget(targetId);
 
             this.initCanvas();
             this.initGyroscope();
-        },
-
-        unlockAndScroll(targetId = 'tentang') {
-            this.heroLocked = false;
-            document.body.classList.remove('hero-locked');
-            window.isHeroUnlocked = true;
-            this.scrollToTarget(targetId);
-            if (window.lucide) window.lucide.createIcons();
         },
 
         scrollToTarget(targetId) {
             if (!targetId) return;
             const target = document.getElementById(targetId);
             if (!target) return;
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    const navHeight = 72;
-                    const targetY = target.getBoundingClientRect().top + window.scrollY - navHeight;
-                    window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
-                }, 60);
-            });
+            const navHeight = 72;
+            const targetY = target.getBoundingClientRect().top + window.scrollY - navHeight;
+            window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
         },
 
         handleMouseMove(e) {
